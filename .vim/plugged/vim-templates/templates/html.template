@@ -1,0 +1,19 @@
+<!--
+{{FILE}}
+Descript:
+{{CURSOR}}
+
+File name:  {{FILEE}}
+Maintainer: Kyle Gortych
+created:    {{MONTH}}-{{DATE}}-{{YEAR}}
+-->
+
+<!DOCTYPE html>
+<html>
+    <header>
+        <title>{{FILE}}</title>
+    </header>
+    <body>
+        <div></div>
+    </body>
+</html>
