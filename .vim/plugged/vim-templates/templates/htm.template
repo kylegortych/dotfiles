@@ -1,0 +1,114 @@
+<!--
+{{FILE}}
+Descript:
+{{CURSOR}}
+ 
+File name:  {{FILEE}}
+Maintainer: Kyle Gortych
+created:    {{MONTH}}-{{DATE}}-{{YEAR}}
+-->
+ 
+<!DOCTYPE html>
+<html>
+    <header>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="...">
+        <title>{{FILE}}</title>
+        <link rel="icon" href="icon_name.type" type="image/png" />
+        <div>
+            <img id="image-header" src="img_name.type">
+            <h1>
+                {{FILE}}
+            </h1>
+        </div>
+        <style>
+            #image-header{
+                width: 100%;
+                margin: none;
+                padding: none;
+            }
+
+            #image-header-txt{
+                position: absolute;
+                top: %;
+                left: %;
+                transform: translate(-30%, -30%);
+                text-align: center;
+            }
+
+            #myBtn {
+                display: none;
+                position: fixed;
+                bottom: 20px;
+                right: 30px;
+                z-index: 99;
+                font-size: 18px;
+                border: none;
+                outline: none;
+                background-color: grey;
+                color: white;
+                cursor: pointer;
+                padding: 15px;
+                border-radius: 4px;
+            }
+            
+            #myBtn:hover {
+                background-color: #555;
+            }
+        </style>
+    </head>
+    <body>
+<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+<script>
+//Get the button
+var mybutton = document.getElementById("myBtn");
+
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    mybutton.style.display = "block";
+  } else {
+    mybutton.style.display = "none";
+  }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+}
+</script>
+        <main>
+            <h2 style="font-size:35px;">The Types of Cats</h2>
+            <div class="wrapper">
+                <nav>
+                    <ul>
+                        <li style="font-size:16px;"><a href="#heading_name">Heading_txt</a></li>
+                        <li style="font-size:16px;"><a href="#References">References</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="container">
+                <section>
+                <h2 id="Heading_name" style="font-size:25px;">Heading_txt</h2>
+                <img src="img_name.type" alt="Error" style="width:100px;border-radius:10px;">
+                <p style="font-size:12px;">Paragraph txt.</p>
+                <p style="font-size:12px;">To learn more <a href="url_here" target="_blank">click here.</a></p>
+                </section>
+            </div>
+        <main>
+            <footer>
+                <p align="center"><img src="my-user-icon.png" style="width:200px;border-radius:100px"></p>
+                <p align="center"><a href="https://github.com/KyleGortych" target="_blank">About the Author</a></p>
+                <h2 id="References" style="font-size:25px;">References<h2>
+                <nav>
+                    <ul>
+                        <li style="font-size:12px;"><a href="url_here" target="_blank">link_txt</a></li>
+                    </ul>
+                </nav>
+            <footer>
+    </body>
+</html>
