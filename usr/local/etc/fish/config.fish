@@ -68,15 +68,19 @@ end
 # aliases
 
 function aliases
-    echo -e 'brew-search-active-pkgs|brew-list-pkgs|list-lang-build-sys\nnpm-list-pkgs|pip3-list-pkgs|apl-run-script\nemacs-mac|verilog-compile|verilog-run' | column -t -s '|'
+    column -t -s '|' < /Users/kylegortych/Main\ Directory/cli\ scripts/list\ aliases/fish_aliases.txt | tr '*' ' ' 
+end
+
+function list-lang-build-sys
+    column -t -s '|' < /Users/kylegortych/Main\ Directory/cli\ scripts/list\ lang\ build\ sys/lang_build_sys.txt | tr '*' ' ' 
+end
+
+function brew-list-pkgs
+    column -t -s '|' < /Users/kylegortych/Main\ Directory/cli\ scripts/list\ brew\ packages/brew-pkgs.txt | tr '*' ' ' 
 end
 
 function brew-search-active-pkgs
     echo -e '\e[4mPackages no Depens\e[0m' ; brew leaves | column ; echo '' ; echo -e '\e[4mCasks\e[0m' ; brew list --cask
-end
-
-function brew-list-pkgs
-    column -t -s '|' < /Users/kylegortych/Main\ Directory/list\ brew\ packages/brew-pkgs.txt | tr '*' ' ' 
 end
 
 function pip3-list-pkgs
@@ -99,13 +103,13 @@ function verilog-run
     vvp $argv
 end
 
-function list-lang-build-sys
-    echo -e 'apl|interp gnu-apl|via homebrew\nverilog|compiler iverilog|via homebrew\nbash|via homebrew\nc|?\nfish|via homebrew\nf#|?\nhaskell|?\njava|?\njavascript|via npm|interp ?\nkotlin|?\npython|via pip3|interp ?|linter pylint|fixer ?\nrust|via cargo|compiler rustc|linter aysnc ?|fixer ?' | column -t -s '|'
+function unfog-toggle-prjc
+   unfog context $argv && unfog list ; unfog context
 end
 
-function emacs-mac
-    open -a /Applications/Emacs.app && exit
-end
+# function open-app
+#     open -a $argv && exit
+# end
 
 # function kotlin-run-script
 #     kotlinc $argv -include-runtime -d $argv && java -jar $argv
@@ -126,4 +130,3 @@ end
 #     if project has mkfiles in lang specific dirctories
 #     use mkfile_1& mkfile_2&
 # end
-
