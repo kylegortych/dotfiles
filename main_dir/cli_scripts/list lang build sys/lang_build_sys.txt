@@ -1,0 +1,27 @@
+build sys
+----------
+apl|interp: gnu-apl via homebrew
+verilog|compiler: iverilog via homebrew
+bash|linter: shellcheck via homebrew
+c|?
+fish|linter: shellcheck? via homebrew
+f#|?
+haskell|?
+java|?
+html|linter: tidy-html5 via homebrew
+css|linter: csslint via npm make prjk or global?
+javascript|interp: node via homebrew eslint and csslint via npm init then npx eslint --init?
+kotlin|?
+python|via pip3 interp ? linter pylint fixer ?
+rust|via cargo compiler rustc linter aysnc ? fixer ?
+cargo|add new prjc name?
+go|via homebrew also a dependency
+*
+vim ale
+--------
+html|linter: tidy-html5 via homebrew therefore vim ale auto detects
+node|javascript in dir npm init then npx eslint --init due to .eslintrc then npm install csslint
+*
+doom-emacs
+-----------
+company and ?
