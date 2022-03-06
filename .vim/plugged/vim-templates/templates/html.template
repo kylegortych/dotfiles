@@ -1,7 +1,7 @@
 <!--
 {{FILE}}
 Descript:
-
+{{CURSOR}}
  
 File name:  {{FILEE}}
 Maintainer: Kyle Gortych
@@ -10,21 +10,24 @@ created:    {{MONTH}}-{{DATE}}-{{YEAR}}
  
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="...">
-        <title>Tab Title</title>
-        <link rel="icon" href="icon_name.type" type="image/png" />
-        <div>
-            <img id="image-header" src="img_name.type">
-            <h1 style="font-size:35px;">
-                Doc Main Heading
-            </h1>
-        </div>
-    </head>
-    <body>
-        <main>
+
+<head>
+    <title>Tab Title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="...">
+    <link rel="icon" href="icon_name.type" type="image/png" />
+</head>
+
+<body>
+    <main>
+        <header>
+            <div>
+                <img id="image-header" src="img_name.type">
+                <h1 style="font-size:35px;">
+                    Doc Main Heading
+                </h1>
+            </div>
             <div class="wrapper">
                 <nav>
                     <ul>
@@ -33,21 +36,23 @@ created:    {{MONTH}}-{{DATE}}-{{YEAR}}
                     </ul>
                 </nav>
             </div>
-            <div class="container">
-                <section>
-                <h2 id="First Sub Heading" style="font-size:25px;">First Sub Heading</h2>
-                <p style="font-size:12px;">Paragraph txt.</p>
-                <p style="font-size:12px;">To learn more <a href="url_here" target="_blank">click here.</a></p>
-                </section>
-            </div>
-        <main>
-            <footer>
-                <h2 id="References" style="font-size:25px;">References<h2>
-                <nav>
-                    <ul>
-                        <li style="font-size:12px;"><a href="url_here" target="_blank">link_txt</a></li>
-                    </ul>
-                </nav>
-            <footer>
-    </body>
+        </header>
+        <div class="container">
+            <section>
+            <h2 id="First Sub Heading" style="font-size:25px;">First Sub Heading</h2>
+            <p style="font-size:12px;">Paragraph txt.</p>
+            <p style="font-size:12px;">To learn more <a href="url_here" target="_blank">click here.</a></p>
+            </section>
+        </div>
+    <main>
+    <footer>
+        <h2 id="References" style="font-size:25px;">References<h2>
+        <nav>
+            <ul>
+                <li style="font-size:12px;"><a href="url_here" target="_blank">link_txt</a></li>
+            </ul>
+        </nav>
+    <footer>
+</body>
+
 </html>
