@@ -1,6 +1,12 @@
+# note: colores can be diffrent for your shell color scheme
+# use of true colors is not discused for starship prompt documentation
+# as best practice terminal emulator should have all colors the same
+# each config file has color settings to avoid conflics
+
+# needed for nnn cd in current dir on quit
 command_timeout = 1000
 
 [character]
-success_symbol = "[»](bold red)"
-error_symbol = "[¬](red) "
-vicmd_symbol = "[](bold red) "
+success_symbol = "[»](bold red) "
+error_symbol   = "[¬](red) "
+vicmd_symbol   = "[](bold red) "
