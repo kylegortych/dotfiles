@@ -1,0 +1,6 @@
+command_timeout = 1000
+
+[character]
+success_symbol = "[»](bold red)"
+error_symbol = "[¬](red) "
+vicmd_symbol = "[](bold red) "
