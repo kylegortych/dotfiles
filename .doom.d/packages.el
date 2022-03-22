@@ -53,8 +53,11 @@
 (package! gnu-apl-mode)
 (package! cobol-mode)
 (package! spaceline)
+(package! afternoon-theme)
+(package! klere-theme)
+;;(package! )
 
-;; color themes from melp
-(package! molokai-theme)
-;; (package! flatland-black-theme)
-;; (package! klere-theme)
+;;(package! example :recipe
+;;  (:host github
+;;   :repo "url"
+;;   :files ("file-name.el" "url raw?"))
