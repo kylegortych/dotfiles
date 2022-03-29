@@ -321,24 +321,25 @@ let $config = {
 }
 
 # aliases
-alias aliases = column -t -s '|' < /Users/kylegortych/Main\ Directory/cli\ scripts/list\ aliases/fish_aliases.txt | tr '*' ' '
 
-alias list-lang-build-sys = column -t -s '|' < /Users/kylegortych/Main\ Directory/cli\ scripts/list\ lang\ build\ sys/lang_build_sys.txt | tr '*' ' '
+# alias aliases = column -t -s '|' < /Users/kylegortych/Main\ Directory/cli\ scripts/list\ aliases/fish_aliases.txt | tr '*' ' '
 
-alias brew-list-pkgs = column -t -s '|' < /Users/kylegortych/Main\ Directory/cli\ scripts/list\ brew\ packages/brew-pkgs.txt | tr '*' ' '
+# alias list-lang-build-sys = column -t -s '|' < /Users/kylegortych/Main\ Directory/cli\ scripts/list\ lang\ build\ sys/lang_build_sys.txt | tr '*' ' '
 
-alias brew-search-active-pkgs = echo -e '\e[4mPackages no Depens\e[0m' ; brew leaves | column ; echo '' ; echo -e '\e[4mCasks\e[0m' ; brew list --cask
+# alias brew-list-pkgs = column -t -s '|' < /Users/kylegortych/Main\ Directory/cli\ scripts/list\ brew\ packages/brew-pkgs.txt | tr '*' ' '
 
-alias pip3-list-pkgs = pip3 list --not-required
+# alias brew-search-active-pkgs = echo -e '\e[4mPackages no Depens\e[0m' ; brew leaves | column ; echo '' ; echo -e '\e[4mCasks\e[0m' ; brew list --cask
 
-alias npm-list-pkgs = npm list -g --depth=0
+# alias pip3-list-pkgs = pip3 list --not-required
+
+# alias npm-list-pkgs = npm list -g --depth=0
 
 # alias apl-run-script = apl --noSV --noColor --noCIN -q -f $argv
-# 
+
 # alias verilog-compile = iverilog -o $argv
-# 
+ 
 # alias verilog-run = vvp $argv
-# 
+ 
 # alias unfog-toggle-prjc = unfog context $argv && unfog list ; unfog context
 
 # alias open-app = open -a $argv && exit
