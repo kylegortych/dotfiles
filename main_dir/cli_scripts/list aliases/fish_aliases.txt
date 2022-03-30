@@ -1,5 +1,5 @@
 fish aliases
 -------------
-aliases|list-lang-build-sys|brew-list-pkgs|brew-search-active-pkgs
+aliases|list-build-sys|brew-list-pkgs|brew-search-active-pkgs
 pip3-list-pkgs|npm-list-pkgs|apl-run-script|verilog-compile
 verilog-run|unfog-toggle-prjc
