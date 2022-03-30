@@ -12,7 +12,8 @@ html|linter: tidy-html5 via homebrew
 css|linter: csslint via npm make prjk or global?
 javascript|interp: node via homebrew eslint and csslint via npm init then npx eslint --init?
 kotlin|?
-python|via pip3 interp ? linter pylint fixer ?
+python current|anaconda in home? pip3 via pip? linter: pylint via pip and pip3 lists same packages
+python note:|add to brew python, pip, pip3 and anaconda
 rust|via cargo compiler rustc linter aysnc ? fixer ?
 cargo|add new prjc name?
 go|via homebrew also a dependency
