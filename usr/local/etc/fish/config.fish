@@ -22,7 +22,7 @@ starship init fish | source
 
 # neofetch
 if status is-login
-neofetch --colors --backend iterm2 --source /Users/kylegortych/Downloads/vim2.png --size 20% 
+neofetch --colors --backend iterm2 --source /Users/kylegortych/Downloads/vim2.png --size 20%
 date +"-- %a %m-%d-%Y %I:%M%p -----------------------"
 echo -e ' '
 ps
@@ -68,15 +68,15 @@ end
 # aliases
 
 function aliases
-    column -t -s '|' < /Users/kylegortych/Main\ Directory/cli\ scripts/list\ aliases/fish_aliases.txt | tr '*' ' ' 
+    column -t -s '|' < /Users/kylegortych/Main\ Directory/cli\ scripts/list\ aliases/fish_aliases.txt | tr '*' ' '
 end
 
-function list-lang-build-sys
-    column -t -s '|' < /Users/kylegortych/Main\ Directory/cli\ scripts/list\ lang\ build\ sys/lang_build_sys.txt | tr '*' ' ' 
+function list-build-sys
+    column -t -s '|' < /Users/kylegortych/Main\ Directory/cli\ scripts/list\ build\ sys/list\ build\ sys.txt | tr '*' ' '
 end
 
 function brew-list-pkgs
-    column -t -s '|' < /Users/kylegortych/Main\ Directory/cli\ scripts/list\ brew\ packages/brew-pkgs.txt | tr '*' ' ' 
+    column -t -s '|' < /Users/kylegortych/Main\ Directory/cli\ scripts/list\ brew\ packages/brew-pkgs.txt | tr '*' ' '
 end
 
 function brew-search-active-pkgs
@@ -117,7 +117,7 @@ end
 
 # an alias to compile files in a project directory in parallel
 # given a projects directory there can by multiple langs
-# rather than a make file per project | automates 
+# rather than a make file per project | automates
 # use & subshell or gnu parallel
 
 # function parallel-compile
@@ -126,7 +126,7 @@ end
 #
 #     if $argv is .hs or .js or etc...
 #     use compiler_type with args | apl --noSv --noColor -q -f $argv
-#     
+#
 #     if project has mkfiles in lang specific dirctories
 #     use mkfile_1& mkfile_2&
 # end
