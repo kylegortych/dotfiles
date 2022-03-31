@@ -63,7 +63,8 @@ function n --wraps nnn --description 'support nnn quit and change directory'
     end
 end
 
-# Homebrew location?
+# $PATH added to /.config/fish and .profile?
+# resolve fragmented paths
 
 # aliases
 
@@ -72,7 +73,7 @@ function aliases
 end
 
 function list-build-sys
-    column -t -s '|' < /Users/kylegortych/Main\ Directory/cli\ scripts/list\ build\ sys/list\ build\ sys.txt | tr '*' ' '
+    cat /Users/kylegortych/Main\ Directory/cli\ scripts/list\ build\ sys/list\ build\ sys.txt | tr '*' ' '
 end
 
 function brew-list-pkgs
@@ -130,3 +131,5 @@ end
 #     if project has mkfiles in lang specific dirctories
 #     use mkfile_1& mkfile_2&
 # end
+
+# function fn call to cli script sys link xdg
