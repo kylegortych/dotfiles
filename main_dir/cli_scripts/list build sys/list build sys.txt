@@ -6,7 +6,7 @@ $PATH:
 *
 doom-emacs     vim ale
 -----------    --------
-company and ?  html|linter: tidy-html5 via homebrew therefore vim ale auto detects
+company and ?  html linter: tidy-html5 via homebrew therefore vim ale auto detects
                node javascript npm init then npx eslint --init via .eslintrc npm install csslint?
 *
 language
