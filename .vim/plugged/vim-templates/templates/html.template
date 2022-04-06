@@ -37,10 +37,10 @@ created:    {{MONTH}}-{{DATE}}-{{YEAR}}
             </h1>
         </div>
       <nav>
-        <a href="winter.html">Web Page 1</a>
-        <a href="spring.html">Web Page 2</a>
-        <a href="summer.html">Web Page 3</a>
-        <a href="autmun.html">Web Page 4</a>
+        <a href="">Web Page 1</a>
+        <a href="">Web Page 2</a>
+        <a href="">Web Page 3</a>
+        <a href="">Web Page 4</a>
       </nav>
     </header>
     <main>
