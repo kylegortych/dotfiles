@@ -20,23 +20,30 @@ created:    {{MONTH}}-{{DATE}}-{{YEAR}}
 </head>
 
 <body>
+   <div class="wrapper">
+       <h2>Table of Contents</h2>
+       <nav>
+           <ul>
+               <li><a href="#First Sub Heading">First Sub Heading</a></li>
+               <li><a href="#References">References</a></li>
+           </ul>
+       </nav>
+   </div>
+    <header>
+        <div>
+            <img id="image-header" src="img_name.type">
+            <h1 style="font-size:35px;">
+                Doc Main Heading
+            </h1>
+        </div>
+      <nav>
+        <a href="winter.html">Web Page 1</a>
+        <a href="spring.html">Web Page 2</a>
+        <a href="summer.html">Web Page 3</a>
+        <a href="autmun.html">Web Page 4</a>
+      </nav>
+    </header>
     <main>
-        <header>
-            <div>
-                <img id="image-header" src="img_name.type">
-                <h1 style="font-size:35px;">
-                    Doc Main Heading
-                </h1>
-            </div>
-            <div class="wrapper">
-                <nav>
-                    <ul>
-                        <li><a href="#First Sub Heading">First Sub Heading</a></li>
-                        <li><a href="#References">References</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </header>
         <div class="container">
             <section>
             <h2 id="First Sub Heading" style="font-size:25px;">First Sub Heading</h2>
@@ -44,15 +51,15 @@ created:    {{MONTH}}-{{DATE}}-{{YEAR}}
             <p style="font-size:12px;">To learn more <a href="url_here" target="_blank">click here.</a></p>
             </section>
         </div>
-    <main>
+    </main>
     <footer>
-        <h2 id="References" style="font-size:25px;">References<h2>
+        <h2 id="References" style="font-size:25px;">References</h2>
         <nav>
             <ul>
                 <li style="font-size:12px;"><a href="url_here" target="_blank">link_txt</a></li>
             </ul>
         </nav>
-    <footer>
+    </footer>
 </body>
 
 </html>
