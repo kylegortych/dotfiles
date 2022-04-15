@@ -145,8 +145,7 @@ let g:pear_tree_pairs ={
 \ '<body': {'closer': '></body>'},
 \ '<div': {'closer': '></div>'},
 \ '<h#': {'closer': '></h#>'},
-\ '<p': {'closer': '></p>'},
-\ '<br': {'closer': '></br>'}
+\ '<p': {'closer': '></p>'}
 \}
 
 " copy past tags and symbol pair 
@@ -207,7 +206,7 @@ let g:ale_fixers = {
 " ycm 
 
 
-" vim templat 
+" vim template 
 " edit templates in ~/.vim/plugged/vim-templates/templates
 " WARNING PlugUpdate could cause loss of template configs store on git or
 " seprate txt file
