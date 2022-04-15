@@ -4,13 +4,19 @@ env:           .profile vs /etc/profile and shell path fragmentation
 $PATH: 
 .env files:    omit sensitive info through gitignore, application dependent
 *
-doom-emacs     vim ale
------------    --------
-company and ?  html linter: tidy-html5 via homebrew therefore vim ale auto detects
-               node javascript npm init then npx eslint --init via .eslintrc npm install csslint?
+       == editors ==
+doom-emacs         vim
+-----------        ----
+via lsp          ? via ALE
+fixer: lsp or pkg? fixer: via vimrc via ALE sec via either lan pkg mgr or sys pkg mgr
+linter: company  ? linter: via vimrc via ALE sec via either lan pkg mgr or sys pkg mgr
 *
-language
----------
+lang pkg mgr
+-------------
+Check if tools via sys level pkg mgr or lang pkg mgr?
+Then resolve fragmentation.
+note: some fixers need config
+*
 apl            interp: gnu-apl via homebrew
 verilog        compiler: iverilog via homebrew
 bash           linter: shellcheck via homebrew
