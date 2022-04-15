@@ -198,8 +198,7 @@
   \ '<body': {'closer': '></body>'},
   \ '<div': {'closer': '></div>'},
   \ '<h#': {'closer': '></h#>'},
-  \ '<p': {'closer': '></p>'},
-  \ '<br': {'closer': '></br>'}
+  \ '<p': {'closer': '></p>'}
   \}
 
   " copy past tags and symbol pair 
