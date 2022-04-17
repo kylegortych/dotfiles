@@ -6,7 +6,7 @@
   " Vim config | version 8 via homebrew 
   " 
   " Maintainer:         Kyle Gortych 
-  " Date last modified: 04-15-2022
+  " Date last modified: 04-17-2022
   ```
 </details>
 
@@ -28,6 +28,7 @@
   Plug 'romainl/vim-cool'
   Plug 'tibabit/vim-templates'
   Plug 'tounaishouta/coq.vim'
+  " Plug 'szw/vim-ctrlspace'
   Plug 'yuttie/comfortable-motion.vim'
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
@@ -325,7 +326,9 @@
   " b register: shift i right-arrow2 del2, shift a del2
   " uncomment
 
-  " multi line: visual command auto-inserted-txt normal @reg_name
+  " multi linea and b: visual command auto-inserted-txt normal @reg_name
+  
+  " c register: visual } k zf
   ```
 </details>
 
