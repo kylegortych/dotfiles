@@ -17,8 +17,6 @@ Plug 'tmsvg/pear-tree'
 Plug 'romainl/vim-cool'
 Plug 'tibabit/vim-templates'
 Plug 'tounaishouta/coq.vim'
-" Plug 'szw/vim-ctrlspace'
-Plug 'yuttie/comfortable-motion.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'ryanoasis/powerline-extra-symbols'
@@ -90,10 +88,6 @@ let g:WebDevIconsUnicodeDecorateFileNodesPatternSymbols['.vim'] = ''
 
 let g:WebDevIconsUnicodeDecorateFileNodesPatternSymbols = {} " needed
 let g:WebDevIconsUnicodeDecorateFileNodesPatternSymbols['vim'] = ''
-
-" comfortable motion 
-let g:comfortable_motion_scroll_down_key = "j"
-let g:comfortable_motion_scroll_up_key = "k"
 
 " overide color scheme 
 " autocmd ColorScheme * highlight StatusLine ctermfg=166 
@@ -223,7 +217,7 @@ let g:ale_fixers = {
 " ycm 
 
 
-" vim template 
+" vim templat 
 " edit templates in ~/.vim/plugged/vim-templates/templates
 " WARNING PlugUpdate could cause loss of template configs store on git or
 " seprate txt file
@@ -257,6 +251,11 @@ augroup remember_folds
     autocmd BufWinLeave *.* mkview!
     autocmd BufWinEnter *.* silent loadview
 augroup END
+
+" Lex Netrw 
+let g:netrw_winsize=30
+" each tab | separate prj folder
+" minimizes buffer list | two per tab
 
 " default config 
 colorscheme fahrenheit
