@@ -28,8 +28,6 @@
   Plug 'romainl/vim-cool'
   Plug 'tibabit/vim-templates'
   Plug 'tounaishouta/coq.vim'
-  " Plug 'szw/vim-ctrlspace'
-  Plug 'yuttie/comfortable-motion.vim'
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
   Plug 'ryanoasis/powerline-extra-symbols'
@@ -119,16 +117,6 @@
 
   let g:WebDevIconsUnicodeDecorateFileNodesPatternSymbols = {} " needed
   let g:WebDevIconsUnicodeDecorateFileNodesPatternSymbols['vim'] = ''
-  ```
-</details>
-
-<details>
-  <summary>comfortable motion</summary>
-  
-  ```vim
-  " comfortable motion 
-  let g:comfortable_motion_scroll_down_key = "j"
-  let g:comfortable_motion_scroll_up_key = "k"
   ```
 </details>
 
@@ -360,6 +348,18 @@
   augroup END
   ```
 </details>
+  
+<details>
+  <summary>Lex Netrw</summary>
+  
+  ```vim
+  " Lex Netrw 
+  let g:netrw_winsize=30
+  " each tab | separate prj folder
+  " minimizes buffer list | two per tab
+  
+  ```
+</details>  
 
 <details>
   <summary>default config</summary>
