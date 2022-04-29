@@ -55,6 +55,7 @@
 (package! spaceline)
 (package! afternoon-theme)
 (package! klere-theme)
+(package! stripe-buffer)
 ;;(package! )
 
 ;;(package! example :recipe
