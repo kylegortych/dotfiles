@@ -76,6 +76,10 @@ function list-build-sys
     cat /Users/kylegortych/Main\ Directory/cli\ scripts/list\ build\ sys/list\ build\ sys.txt | tr '*' ' '
 end
 
+function list-env
+    env | column -t -s '='
+end
+
 function brew-list-pkgs
     column -t -s '|' < /Users/kylegortych/Main\ Directory/cli\ scripts/list\ brew\ packages/brew-pkgs.txt | tr '*' ' '
 end
