@@ -56,6 +56,7 @@
 (package! afternoon-theme)
 (package! klere-theme)
 (package! stripe-buffer)
+(package! beacon)
 ;;(package! )
 
 ;;(package! example :recipe
