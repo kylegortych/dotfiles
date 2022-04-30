@@ -22,7 +22,7 @@ starship init fish | source
 
 # neofetch
 if status is-login
-neofetch --colors --backend iterm2 --source /Users/kylegortych/Downloads/vim2.png --size 20%
+neofetch --colors --colors 9 2 3 39 15 15 --backend iterm2 --source /Users/kylegortych/Downloads/vim2.png --size 20%
 date +"-- %a %m-%d-%Y %I:%M%p -----------------------"
 echo -e ' '
 ps
