@@ -69,11 +69,11 @@ end
 # aliases
 
 function aliases
-    column -t -s '|' < /Users/kylegortych/Main\ Directory/cli\ scripts/list\ aliases/fish_aliases.txt | tr '*' ' '
+    column -t -s '|' < /Users/kylegortych/Main\ Directory/CLI\ Support/Aliase\ Support/fish_aliases.txt | tr '*' ' '
 end
 
 function list-build-sys
-    cat /Users/kylegortych/Main\ Directory/cli\ scripts/list\ build\ sys/list\ build\ sys.txt | tr '*' ' '
+    cat /Users/kylegortych/Main\ Directory/CLI\ Support/Aliase\ Support/list\ build\ sys.txt | tr '*' ' '
 end
 
 function list-env
@@ -81,7 +81,7 @@ function list-env
 end
 
 function brew-list-pkgs
-    column -t -s '|' < /Users/kylegortych/Main\ Directory/cli\ scripts/list\ brew\ packages/brew-pkgs.txt | tr '*' ' '
+    column -t -s '|' < /Users/kylegortych/Main\ Directory/CLI\ Support/Aliase\ Support/brew-pkgs.txt | tr '*' ' '
 end
 
 function brew-search-active-pkgs
@@ -108,8 +108,8 @@ function verilog-run
     vvp $argv
 end
 
-function unfog-toggle-prjc
-   unfog context $argv && unfog list ; unfog context
+function doom
+    ~/.emacs.d/bin/doom $argv
 end
 
 # function open-app
