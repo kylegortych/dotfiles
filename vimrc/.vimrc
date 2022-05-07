@@ -1,7 +1,7 @@
 " Vim config | version 8 via homebrew 
 " 
 " Maintainer:         Kyle Gortych 
-" Date last modified: 04-17-2022
+" Date last modified: 04-21-2022
 
 " Plugins 
 call plug#begin('~/.vim/plugged')
@@ -56,6 +56,7 @@ endif
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#formatter = 'default'
 let g:airline#extensions#whitespace#enabled = 0
+let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline_left_sep = "\uE0BC"
 let g:airline_right_sep = "\uE0BE"
 
@@ -108,7 +109,8 @@ autocmd ColorScheme * highlight Underlined ctermfg=67 ctermbg=Black
 " autocmd ColorScheme * highlight Type ctermbg=NONE
 " autocmd ColorScheme * highlight Statement ctermbg=NONE ctermfg=Blue
 " autocmd ColorScheme * highlight Number ctermbg=NONE
-" autocmd ColorScheme * highlight Cursor ctermbg=166 ctermfg=White
+" autocmd ColorScheme * highlight Cursor ctermfg=Blue ctermbg=NONE guifg=Blue guibg=NONE
+" autocmd ColorScheme * highlight CursorIM ctermfg=Blue ctermbg=NONE guifg=Blue guibg=NONE
 " autocmd ColorScheme * highlight CursorLine ctermbg=Grey ctermfg=White
 " autocmd ColorScheme * highlight CursorLineNr cterm=NONE ctermbg=Black ctermfg=166
 " autocmd ColorScheme * highlight String ctermbg=NONE
@@ -121,6 +123,7 @@ autocmd ColorScheme * highlight Underlined ctermfg=67 ctermbg=Black
 if $TERM_PROGRAM =~ "iTerm"
     let &t_SI = "\<Esc>]50;CursorShape=2\x7" " Underscore in insert mode
     let &t_EI = "\<Esc>]50;CursorShape=0\x7" " Block in normal mode
+    autocmd VimLeave * silent !echo -ne "\033]112\007"
 endif
 
 " pear tree 
@@ -146,7 +149,7 @@ let g:pear_tree_pairs ={
 \ '<di': {'closer': 'v></div>'},
 \ '<ul': {'closer': '></ul>'},
 \ '<ol': {'closer': '></ol>'},
-\ '<li': {'closer': '></li>'},
+\ '<li': {'closer': '><a></a></li>'},
 \ '<na': {'closer': 'v></nav>'},
 \ '<pa': {'closer': 'th></path>'},
 \ '<bu': {'closer': 'tton></button>'},
@@ -156,13 +159,11 @@ let g:pear_tree_pairs ={
 \ '<h1': {'closer': '></h1>'},
 \ '<h2': {'closer': '></h2>'},
 \ '<h3': {'closer': '></h3>'},
+\ '<se': {'closer': 'ction></section>'},
 \ '<p': {'closer': '></p>'}
 \}
 
 " copy past tags and symbol pair 
-
-" \ '': {'closer': ''}
-" \ '<': {'closer': '></>'},
 
 " spelling 
 set spelllang=en_us
@@ -233,17 +234,19 @@ let g:ale_fixers = {
 
 " macros 
 
-" invoke via @reg_name
+" invoke single line via @letter
 
-" a register: shift i /*, shift a */
-" single line commenting /*txt*/
+" to clear use :let @letter = ''
 
-" b register: shift i right-arrow2 del2, shift a del2
-" uncomment
+" multi line: shift v command 
+" result: :'<,'>normal @letter 
 
-" multi line a and b: visual command auto-inserted-txt normal @reg_name
+" Outline
+" @letter:      comands
+" macro result: result
 
-" c register: visual } k zf
+" @a: 
+" macro result:
 
 " save folds 
 augroup remember_folds
