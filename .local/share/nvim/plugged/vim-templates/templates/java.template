@@ -1,0 +1,17 @@
+/* {{FILE}}
+ * Descript:
+ * {{CURSOR}}
+ *
+ * File name:     {{FILEE}}
+ * Maintainer:    Kyle Gortych
+ * Created:       {{MONTH}}-{{DATE}}-{{YEAR}}
+ * Last Modified: xx-xx-xxxx
+ */
+
+public class {{CLASS}}
+{
+    public {{CLASS}}()
+    {
+
+    }
+}
