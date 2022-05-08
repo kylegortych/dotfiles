@@ -1,0 +1,98 @@
+/* 
+  {{FILE}}
+  Descript:
+  {{CURSOR}}
+ 
+  File name:     {{FILEE}}
+  Maintainer:    Kyle Gortych
+  Created:       {{MONTH}}-{{DATE}}-{{YEAR}}
+  Last Modified: xx-xx-xxxx
+ */
+
+* {
+  box-sizing: border-box;    
+}
+
+body {
+  margin: 0px;
+  background-color: #;
+}
+
+img {
+  height: auto;
+  width: 100%;
+}
+
+main {
+  display: ;
+  max-width: 1000px;
+  margin-inline: auto;
+  width: 100%;
+}
+
+header {
+  background-color: #;
+  position: sticky;
+  top: 0;
+  /* z-index: ; */
+}
+
+footer {
+  background-color: #;
+}
+
+section {
+
+}
+
+h2 {
+  font-size: 25px;
+  text-align: center;
+}
+
+.link-style {
+  color: #;
+  text-decoration: none;
+}
+
+/* To prevent header covering title when jumping */
+
+:root {
+  scroll-padding-top: ;
+}
+
+/* media queri | mobile to desktop */
+
+@media screen and (min-width: 768px) {
+  main {
+
+  }
+  
+  header {
+
+  }
+
+  :root {
+    scroll-padding-top: ;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+    header, footer {
+
+  }
+  
+  main {
+
+  }
+
+  body {
+    display: ;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  main {
+
+  }
+}
