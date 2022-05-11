@@ -1,0 +1,24 @@
+Packages no Depens
+-------------------
+bash|fd|libuninameslist|qt@5
+bat|fish|lolcat|emacs-mac
+bfg|ghq|markdown|ripgrep
+btop|git|meson|rustup-init
+cabal-install|gnu-apl|mono|sc-im
+calcurse|gnu-cobol|mujs|shellcheck
+checkbashisms|go|neofetch|sphinx-doc
+cmake|httpstat|neovim|starship
+cmake-docs|icarus-verilog|nghttp2|tidy-html5
+cmus|intltool|nnn|uchardet
+coq|kotlin|node|utf8proc
+coreutils|kubernetes-cli|nushell|vapoursynth
+desktop-file-utils|libmagic|openjdk@11|vim
+entr|libnotify|openjdk@8|watchman
+evince|libspiro|osx-cpu-temp|watson
+exa|libssh2|parallel|youtube-dl
+*
+Casks
+------
+adoptopenjdk8|cool-retro-term|keycastr|mactex-no-gui|openshot-video-editor
+android-sdk|fontforge|kicad|mpv|timemachineeditor
+balenaetcher|freecad|libreoffice|neovide
