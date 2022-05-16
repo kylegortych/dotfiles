@@ -17,6 +17,6 @@ entr|kubernetes-cli|mujs|sc-im
 *
 Casks
 ------
-adoptopenjdk8|cool-retro-term|keycastr|mactex-no-gui|timemachineeditor
-android-sdk|fontforge|kicad|mpv
-balenaetcher|freecad|libreoffice|openshot-video-editor
+adoptopenjdk8|cool-retro-term|keycastr|mactex-no-gui|openshot-video-editor
+android-sdk|fontforge|kicad|mpv|timemachineeditor
+balenaetcher|freecad|libreoffice|neovide
