@@ -39,11 +39,11 @@ end
 # aliases
 
 function aliases
-    column -t -s '|' < /Users/kylegortych/Main\ Directory/CLI\ Support/Aliase\ Support/fish_aliases.txt | tr '*' ' '
+    column -t -s '|' < ~/Main\ Directory/CLI\ Support/Aliase\ Support/fish_aliases.txt | tr '*' ' '
 end
 
 function list-build-sys
-    cat /Users/kylegortych/Main\ Directory/CLI\ Support/Aliase\ Support/list\ build\ sys.txt | tr '*' ' '
+    cat ~/Main\ Directory/CLI\ Support/Aliase\ Support/list\ build\ sys.txt | tr '*' ' '
 end
 
 function list-env
@@ -51,7 +51,7 @@ function list-env
 end
 
 function brew-list-pkgs
-    column -t -s '|' < /Users/kylegortych/Main\ Directory/CLI\ Support/Aliase\ Support/brew-pkgs.txt | tr '*' ' '
+    column -t -s '|' < ~/Main\ Directory/CLI\ Support/Aliase\ Support/brew-pkgs.txt | tr '*' ' '
 end
 
 function brew-search-active-pkgs
