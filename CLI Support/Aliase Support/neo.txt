@@ -9,3 +9,4 @@ Terminal:| iTerm2
 CPU:| Apple M1
 GPU:| Apple M1
 Memory:| 2288MiB / 16384MiB
+
