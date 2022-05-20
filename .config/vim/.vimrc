@@ -1,7 +1,7 @@
 " Vim config | version 8 via homebrew 
 " 
 " Maintainer:         Kyle Gortych 
-" Date last modified: 05-11-2022
+" Date last modified: 05-20-2022
 
 " Plugins 
 call plug#begin('~/.vim/plugged')
@@ -35,6 +35,11 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline_left_sep = "\uE0BC"
 let g:airline_right_sep = "\uE0BE"
 
+" let g:airline#extensions#tabline#left_sep = '\uE0BC'
+" let g:airline#extensions#tabline#left_alt_sep = '\uE0BC'
+" let g:airline#extensions#tabline#right_sep = '\uE0BE'
+" let g:airline#extensions#tabline#right_alt_sep = '\uE0BE'
+
 let g:airline_theme='lucius'
 
 " devicons 
@@ -66,17 +71,22 @@ let g:WebDevIconsUnicodeDecorateFileNodesPatternSymbols = {} " needed
 let g:WebDevIconsUnicodeDecorateFileNodesPatternSymbols['vim'] = ''
 
 " overide color scheme 
-" autocmd ColorScheme * highlight Normal ctermbg=None
-autocmd ColorScheme * highlight NonText ctermfg=208 ctermbg=None
+"autocmd ColorScheme * highlight Normal ctermfg=black ctermbg=208
+autocmd ColorScheme * highlight NonText ctermfg=208 ctermbg=NONE
+" autocmd ColorScheme * highlight ColorColumn ctermfg=208 ctermbg=black
+autocmd ColorScheme * highlight Folded ctermfg=black ctermbg=245
 " autocmd ColorScheme * highlight FoldColumn ctermfg=white ctermbg=white
 autocmd ColorScheme * highlight Search ctermfg=black ctermbg=208
-autocmd ColorScheme * highlight ModeMsg ctermfg=208 ctermbg=None
-autocmd ColorScheme * highlight MoreMsg ctermfg=208 ctermbg=None
+autocmd ColorScheme * highlight ModeMsg ctermfg=208 ctermbg=NONE
+autocmd ColorScheme * highlight MoreMsg ctermfg=208 ctermbg=NONE
 autocmd ColorScheme * highlight WarningMsg ctermfg=black ctermbg=208
-" autocmd ColorScheme * highlight  ctermfg=black ctermbg=208
-" autocmd ColorScheme * highlight TabLine ctermfg=208 ctermbg=black
-" autocmd ColorScheme * highlight TabLineSelc ctermfg=black ctermbg=208
-" autocmd ColorScheme * highlight TabLineFill ctermfg=black ctermbg=208
+autocmd ColorScheme * highlight SpellBad term=bold,underline cterm=bold,underline ctermfg=9 ctermbg=8 guifg=#EFEFEF guibg=#515151
+autocmd ColorScheme * highlight SpellRare cterm=bold,underline ctermfg=220 ctermbg=8
+autocmd ColorScheme * highlight SpellLocal cterm=bold,underline ctermfg=208 ctermbg=8
+autocmd ColorScheme * highlight airline_tabmod ctermfg=black ctermbg=208
+autocmd ColorScheme * highlight Visual ctermfg=black ctermbg=208
+autocmd ColorScheme * highlight DiffAdd ctermfg=black ctermbg=39
+" autocmd ColorScheme * highlight airline_Tabtype ctermfg=black ctermbg=39
 
 " terminal cursor shape overide 
 if $TERM_PROGRAM =~ "iTerm"
@@ -138,20 +148,29 @@ set omnifunc=syntaxcomplete#Complete
 let g:ale_lint_on_enter = 0
 let g:ale_completion_enabled = 1
 let g:rustfmt_autosave = 1
+" let g:ale_linters_explicit = 1
 " set omnifunc=ale#completion#OmniFunc
 
 let g:ale_linters = {
 \    'bash': ['shellcheck'],
-\    'javascript': ['eslint'],
-\    'rust': ['cargo', 'rustfmt']
+\    'rust': ['cargo', 'rustfmt'],
+\    'python': ['pylint'],
+\    'java': ['uncrustify'],
+\    'javascript': ['eslint']
 \}
  
 let g:ale_fixers = {
 \    'bash': ['shellcheck'],
-\    'javascript': ['eslint'],
-\    'rust': ['rustfmt']
+\    'rust': ['rustfmt'],
+\    'python': ['autopep8'],
+\    'java': ['uncrustify'],
+\    'javascript': ['eslint']
 \}
 
+" \    'html': ['tidy-html5'],
+" \    'htm': ['tidy-html5'],
+" \    'css': ['csslint']
+" 
 " each language has linter, fixer, and compiler
 " try to orginize by one package manager
 
@@ -231,9 +250,11 @@ set expandtab
 set backspace=2
 set autoindent
 set encoding=UTF-8
-set wrap linebreak nolist
-set tw=78
-set whichwrap+=<,>,h,l
+set nowrap
+" set wrap linebreak nolist
+" set tw=78
+" set cc=78
+" set whichwrap+=<,>,h,l
 set cursorline
 set hidden
 set scrolloff=5
