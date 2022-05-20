@@ -30,7 +30,7 @@ starship init fish | source
 
 # neofetch
 if status is-interactive
-  # ~/CLI\ Support/sh\ Scripts/./info.sh
+  # ~/CLI\ Support/sh\ scripts/./info.sh
  
   neofetch --colors --colors 9 2 3 39 15 15 --backend iterm2 --source ~/Downloads/vim2.png --size 20%
   date +"-- %a %m-%d-%Y %I:%M%p --"
@@ -41,7 +41,7 @@ end
 # aliases
 
 function aliases
-  column -t -s '|' < ~/CLI\ Support/Aliase\ Support/fish_aliases.txt | tr '*' ' '
+  column -t -s '|' < ~/CLI\ Support/aliase\ \&\ script\ support/fish_aliases.txt | tr '*' ' '
 end
 
 function neo
@@ -49,7 +49,7 @@ function neo
 end
 
 function list-build-sys
-  cat ~/CLI\ Support/Aliase\ Support/list\ build\ sys.txt | tr '*' ' '
+  cat ~/CLI\ Support/aliase\ \&\ script\ support/list\ build\ sys.txt | tr '*' ' '
 end
 
 function list-env
@@ -57,7 +57,7 @@ function list-env
 end
 
 function brew-list-pkgs
-  column -t -s '|' < ~/CLI\ Support/Aliase\ Support/brew-pkgs.txt | tr '*' ' '
+  column -t -s '|' < ~/CLI\ Support/aliase\ \&\ script\ support/brew-pkgs.txt | tr '*' ' '
 end
 
 function brew-search-active-pkgs
