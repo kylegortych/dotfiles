@@ -1,0 +1,23 @@
+Packages no Depens
+-------------------
+arduino-cli|espeak|kotlin|neofetch|sphinx-doc
+bash|evince|kubernetes-cli|neovim|starship
+bat|exa|libelf|nghttp2|tidy-html5
+bfg|fd|libftdi0|node|uchardet
+btop|fish|libhid|nushell|uncrustify
+cabal-install|ghq|libmagic|openjdk@11|utf8proc
+calcurse|git|libnotify|openjdk@8|vapoursynth
+checkbashisms|gnu-apl|libspiro|osx-cpu-temp|vim
+cmake|gnu-cobol|libssh2|parallel|watchman
+cmake-docs|gnu-sed|libuninameslist|qt@5|watson
+cmus|go|lolcat|emacs-mac|xplr
+coq|hidapi|markdown|ripgrep|youtube-dl
+coreutils|httpstat|meson|rustup-init
+desktop-file-utils|icarus-verilog|mono|sc-im
+entr|intltool|mujs|shellcheck
+*
+Casks
+------
+adoptopenjdk8|cool-retro-term|keycastr|mactex-no-gui|openshot-video-editor
+android-sdk|fontforge|kicad|mpv|timemachineeditor
+balenaetcher|freecad|libreoffice|neovide

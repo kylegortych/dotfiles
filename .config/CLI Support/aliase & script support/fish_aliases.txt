@@ -1,0 +1,6 @@
+fish aliases
+-------------
+open-app|file-manager|list-env|list-build-sys
+brew-list-pkgs|brew-search-active-pkgs|pip3-list-pkgs|npm-env
+apl-run-script|verilog-compile|verilog-run|doom
+neo
