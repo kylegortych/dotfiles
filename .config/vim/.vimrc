@@ -252,7 +252,7 @@ set autoindent
 set encoding=UTF-8
 set nowrap
 " set wrap linebreak nolist
-" set tw=78
+set tw=45
 " set cc=78
 " set whichwrap+=<,>,h,l
 set cursorline
