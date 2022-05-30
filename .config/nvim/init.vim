@@ -7,10 +7,9 @@
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'widatama/vim-phoenix'
 " Plug 'dylanaraps/wal.vim'
-Plug 'sjl/vitality.vim'
 Plug 'dense-analysis/ale'
-" Plug 'sheerun/vim-polyglot'
-" Plug 'valloric/youcompleteme'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'sheerun/vim-polyglot'
 Plug 'tmsvg/pear-tree'
 Plug 'romainl/vim-cool'
 Plug 'tibabit/vim-templates'
@@ -71,20 +70,20 @@ let g:WebDevIconsUnicodeDecorateFileNodesPatternSymbols = {} " needed
 let g:WebDevIconsUnicodeDecorateFileNodesPatternSymbols['vim'] = ''
 
 " overide color scheme 
-"autocmd ColorScheme * highlight Normal ctermfg=black ctermbg=208
-autocmd ColorScheme * highlight NonText ctermfg=208 ctermbg=NONE
-" autocmd ColorScheme * highlight ColorColumn ctermfg=208 ctermbg=black
-autocmd ColorScheme * highlight Folded ctermfg=black ctermbg=245
-" autocmd ColorScheme * highlight FoldColumn ctermfg=white ctermbg=white
-autocmd ColorScheme * highlight Search ctermfg=black ctermbg=208
-autocmd ColorScheme * highlight ModeMsg ctermfg=208 ctermbg=NONE
-autocmd ColorScheme * highlight MoreMsg ctermfg=208 ctermbg=NONE
-autocmd ColorScheme * highlight WarningMsg ctermfg=black ctermbg=208
-autocmd ColorScheme * highlight SpellBad cterm=NONE ctermfg=black ctermbg=red
-autocmd ColorScheme * highlight airline_tabmod ctermfg=black ctermbg=208
-autocmd ColorScheme * highlight Visual ctermfg=black ctermbg=208
-autocmd ColorScheme * highlight DiffAdd ctermfg=black ctermbg=39
-" autocmd ColorScheme * highlight airline_Tabtype ctermfg=black ctermbg=39
+"autocmd ColorScheme * highlight Normal guifg=black guibg=#ff8700
+autocmd ColorScheme * highlight NonText guifg=#ff8700 guibg=NONE
+" autocmd ColorScheme * highlight ColorColumn guifg=#ff8700 guibg=black
+autocmd ColorScheme * highlight Folded guifg=black guibg=#8a8a8a
+" autocmd ColorScheme * highlight FoldColumn guifg=white guibg=white
+autocmd ColorScheme * highlight Search guifg=black guibg=#ff8700
+autocmd ColorScheme * highlight ModeMsg guifg=#ff8700 guibg=NONE
+autocmd ColorScheme * highlight MoreMsg guifg=#ff8700 guibg=NONE
+autocmd ColorScheme * highlight WarningMsg guifg=black guibg=#ff8700
+"autocmd ColorScheme * highlight SpellBad gui=NONE guifg=black guibg=red
+autocmd ColorScheme * highlight airline_tabmod guifg=black guibg=#ff8700
+autocmd ColorScheme * highlight Visual guifg=black guibg=#ff8700
+autocmd ColorScheme * highlight DiffAdd guifg=black guibg=39
+" autocmd ColorScheme * highlight airline_Tabtype guifg=black guibg=39
 
 " terminal cursor shape overide 
 " if $TERM_PROGRAM =~ "iTerm"
@@ -191,7 +190,7 @@ let g:ale_fixers = {
 " \    'jsx': [''],
 " \    'java': [''],
 
-" ycm 
+" coc 
 
 
 " vim template 
