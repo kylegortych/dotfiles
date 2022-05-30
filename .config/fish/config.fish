@@ -30,6 +30,7 @@ starship init fish | source
 
 # neofetch
 if status is-interactive
+  # move script to bin | ps outputs interpreter running?
   # ~/.config/CLI\ Support/sh\ scripts/./info.sh
  
   neofetch --colors --colors 9 2 3 39 15 15 --backend iterm2 --source ~/Downloads/vim2.png --size 20%
@@ -56,11 +57,11 @@ function list-env
   env | column -t -s '='
 end
 
-function brew-list-pkgs
+function brew-list-pkgs-nodepens
   column -t -s '|' < ~/.config/CLI\ Support/aliase\ \&\ script\ support/brew-pkgs.txt | tr '*' ' '
 end
 
-function brew-search-active-pkgs
+function brew-active-pkgs-nodepens
   echo -e '\e[4mPackages no Depens\e[0m' ; brew leaves | column ; echo '' ; echo -e '\e[4mCasks\e[0m' ; brew list --cask
 end
 
@@ -70,6 +71,10 @@ end
 
 function npm-env
   echo -e pkgs\n----- && npm list -g --depth=0 && echo -e env\n---- && npm config list
+end
+
+function weather
+  curl wttr.in
 end
 
 function open-app
