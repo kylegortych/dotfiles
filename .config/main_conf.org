@@ -1,0 +1,80 @@
+#+title: Main Conf
+#+description: This org file is a markdown that transpiles multiple configs to their respective paths using org-babel-tangle
+#+Author: Kyle Gortych
+
+* Main Literate Config File
+Note: Make sure not to write to symbolic links but, there actual location. I moved many of my config files to .config directory using symbolic links for faster access however, using org mode makes this even better because not all configuration files can be symbolicly linked to .config. This makes org mode all the more useful for organization and fast editing.
+
+
+* CLI Support Files
+eminder: Move script possibly to bin | ps interpreter on startup
+
+# #+begin_src txt :tangle ./CLI\ Support/alias\ &\ script\ support/ brew-pkgs.txt fish_aliases.txt list\ build\ sys.txt neo.txt
+#
+# #+end_src
+
+* Doom Config
+
+# #+begin_src txt :tangle ./doom/ config.el custom.el init.el packages.el
+#
+# #+end_src
+
+* Fish Shell
+
+# #+begin_src txt :tangle ./fish/config.fish
+#
+# #+end_src
+
+* mpv
+
+# #+begin_src txt :tangle ./mpv/mpv.conf
+#
+# #+end_src
+
+* Neofetch
+
+# #+begin_src txt :tangle ./neofetch/config.conf
+#
+# #+end_src
+
+* nushell
+
+# #+begin_src txt :tangle ~/Library/Application\ Support/nushell config.nu env.nu
+#
+# #+end_src
+
+* nvim
+
+# #+begin_src txt :tangle ./nvim/init.vim ~/.local/share/nvim/
+#
+# #+end_src
+
+* sc-im
+
+# #+begin_src txt :tangle ./sc-im/scimrc
+#
+# #+end_src
+
+* vim
+
+# #+begin_src txt :tangle ~/.vimrc ~/.vim
+#
+# #+end_src
+
+* xplr
+
+# #+begin_src txt :tangle ./xplr/ init.lua plugins
+#
+# #+end_src
+
+* starship.toml
+
+# #+begin_src txt :tangle ./starship.toml
+#
+# #+end_src
+
+* blank
+
+# #+begin_src txt :tangle ./path-to-config
+#
+# #+end_src
