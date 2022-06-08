@@ -1,5 +1,7 @@
 # dotfiles
-sys config files for various applications 
+sys config files for various applications
+## Literate Refactoring 
+Reminder to view raw on main_conf.org to see actual syntax.
 ## dir descript
 This repo's root is treated as home, as such any paths that are up a directory will follow normal path conventions. Any config files that don't have a symbolic link to .config will also follow normal path conventions. 
 ## Reminder
