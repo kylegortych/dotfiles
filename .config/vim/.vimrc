@@ -1,7 +1,7 @@
 " Vim config | version 8 via homebrew 
 " 
 " Maintainer:         Kyle Gortych 
-" Date last modified: 05-20-2022
+" Date last modified: 06-08-2022
 
 " Plugins 
 call plug#begin('~/.vim/plugged')
@@ -236,12 +236,13 @@ let g:netrw_winsize=20
 " each tab | separate prj folder
 " minimizes buffer list | two per tab
 
-" default config 
+" defaults 
 colorscheme phoenix 
 syntax on
 filetype on
 filetype plugin on
 filetype indent on
+set clipboard=unnamed
 set nocp
 set number
 set tabstop=2
@@ -250,11 +251,12 @@ set expandtab
 set backspace=2
 set autoindent
 set encoding=UTF-8
-set nowrap
-" set wrap linebreak nolist
 set tw=45
-" set cc=78
+set nowrap 
+set fo-=t fo-=c
+" set wrap linebreak nolist
 " set whichwrap+=<,>,h,l
+" set cc=78
 set cursorline
 set hidden
 set scrolloff=5
