@@ -9,11 +9,11 @@ btop|fd|libnotify|openjdk@11|uncrustify
 cabal-install|fish|libspiro|openjdk@8|utf8proc
 calcurse|ghq|libssh2|osx-cpu-temp|vapoursynth
 checkbashisms|git|libuninameslist|parallel|vim
-cmake|gnu-apl|lolcat|qt@5|watchman
-cmake-docs|gnu-cobol|markdown|emacs-mac|watson
-cmus|gnu-sed|meson|ripgrep|xplr
-coq|go|mono|rustup-init|youtube-dl
-coreutils|httpstat|mujs|sc-im
+cmake|gnu-apl|lolcat|qt@5|w3m
+cmake-docs|gnu-cobol|markdown|emacs-mac|watchman
+cmus|gnu-sed|meson|ripgrep|watson
+coq|go|mono|rustup-init|xplr
+coreutils|httpstat|mujs|sc-im|youtube-dl
 *
 Casks
 ------
