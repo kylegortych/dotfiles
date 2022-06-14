@@ -49,15 +49,15 @@ function neo
   neofetch --colors --colors 9 2 3 39 15 15 --backend iterm2 --source ~/Downloads/vim2.png --size 20%
 end
 
-function list-build-sys
+function ls-build-sys
   cat ~/.config/CLI\ Support/aliase\ \&\ script\ support/list\ build\ sys.txt | tr '*' ' '
 end
 
-function list-env
+function ls-env
   env | column -t -s '='
 end
 
-function brew-list-pkgs-nodepens
+function brew-pkgs-nodepens
   column -t -s '|' < ~/.config/CLI\ Support/aliase\ \&\ script\ support/brew-pkgs.txt | tr '*' ' '
 end
 
@@ -65,7 +65,7 @@ function brew-active-pkgs-nodepens
   echo -e '\e[4mPackages no Depens\e[0m' ; brew leaves | column ; echo '' ; echo -e '\e[4mCasks\e[0m' ; brew list --cask
 end
 
-function pip3-list-pkgs
+function pip3-ls-pkgs
   pip3 list --not-required
 end
 
@@ -73,15 +73,19 @@ function npm-env
   echo -e pkgs\n----- && npm list -g --depth=0 && echo -e env\n---- && npm config list
 end
 
-function weather
-  curl wttr.in
+function npm-update-self
+  npm install npm@latest -g
 end
 
-function open-app
+function weather
+  curl wttr.in/$argv
+end
+
+function open:
   open -a "$argv" && exit
 end
 
-function file-manager
+function xplr-open
   cd $(xplr --print-pwd-as-result)
 end
 
