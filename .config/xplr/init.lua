@@ -1,11 +1,3 @@
---[[
-  config for xplr file manager
-
-  Maintainer:    Kyle Gortych
-  created:       05-14-2022
-  last modified: 05-14-2022
---]]
-
 ---@diagnostic disable
 local xplr = xplr -- The globally exposed configuration to be overridden.
 ---@diagnostic enable
@@ -21,8 +13,8 @@ local xplr = xplr -- The globally exposed configuration to be overridden.
 --
 -- See https://xplr.dev/en/upgrade-guide
 --
--- ```xplr version ?
-version = "0.17.6"
+-- ```lua
+version = "0.19.0"
 -- ```
 
 -- # Configuration ------------------------------------------------------------
@@ -166,10 +158,10 @@ xplr.config.general.logs.error.style = { fg = "Red" }
 -- * style: [Style](https://xplr.dev/en/style)
 xplr.config.general.table.header.cols = {
   { format = " index", style = {} },
-  { format = "╭──── path", style = {} },
+  { format = "╭─── path", style = {} },
   { format = "permissions", style = {} },
   { format = "size", style = {} },
-  { format = "type", style = {} },
+  { format = "modified", style = {} },
 }
 
 -- Style of the table header.
@@ -233,9 +225,9 @@ xplr.config.general.table.style = {}
 -- * format: nullable string
 -- * style: [Style](https://xplr.dev/en/style)
 xplr.config.general.table.tree = {
-  { format = "├─", style = {} },
-  { format = "├─", style = {} },
-  { format = "╰─", style = {} },
+  { format = "├", style = {} },
+  { format = "├", style = {} },
+  { format = "╰", style = {} },
 }
 
 -- Spacing between the columns in the table.
@@ -257,7 +249,7 @@ xplr.config.general.table.col_widths = {
 -- The content that is placed before the item name for each row by default.
 --
 -- Type: nullable string
-xplr.config.general.default_ui.prefix = "  "
+xplr.config.general.default_ui.prefix = "─ "
 
 -- The content which is appended to each item name for each row by default.
 --
@@ -286,7 +278,7 @@ xplr.config.general.focus_ui.style = { add_modifiers = { "Bold" } }
 -- The string placed before the item name for a selected row.
 --
 -- Type: nullable string
-xplr.config.general.selection_ui.prefix = " {"
+xplr.config.general.selection_ui.prefix = "─{"
 
 -- The string placed after the item name for a selected row.
 --
@@ -344,26 +336,22 @@ xplr.config.general.sort_and_filter_ui.default_identifier.style = {}
 -- The shape of the forward direction indicator for sort identifiers in Sort & filter panel.
 --
 -- Type: nullable string
-xplr.config.general.sort_and_filter_ui.sort_direction_identifiers.forward.format =
-  "↓"
+xplr.config.general.sort_and_filter_ui.sort_direction_identifiers.forward.format = "↓"
 
 -- Style of forward direction indicator in Sort & filter panel.
 --
 -- Type: [Style](https://xplr.dev/en/style)
-xplr.config.general.sort_and_filter_ui.sort_direction_identifiers.forward.style =
-  nil
+xplr.config.general.sort_and_filter_ui.sort_direction_identifiers.forward.style = nil
 
 -- The shape of the reverse direction indicator for sort identifiers in Sort & filter panel.
 --
 -- Type: nullable string
-xplr.config.general.sort_and_filter_ui.sort_direction_identifiers.reverse.format =
-  "↑"
+xplr.config.general.sort_and_filter_ui.sort_direction_identifiers.reverse.format = "↑"
 
 -- Style of reverse direction indicator in Sort & filter panel.
 --
 -- Type: [Style](https://xplr.dev/en/style)
-xplr.config.general.sort_and_filter_ui.sort_direction_identifiers.reverse.style =
-  nil
+xplr.config.general.sort_and_filter_ui.sort_direction_identifiers.reverse.style = nil
 
 -- The identifiers used to denote applied sorters in the Sort & filter panel.
 --
@@ -374,13 +362,6 @@ xplr.config.general.sort_and_filter_ui.sort_direction_identifiers.reverse.style 
 --   * format: nullable string
 --   * style: [Style](https://xplr.dev/en/style)
 xplr.config.general.sort_and_filter_ui.sorter_identifiers = {
-  ByCanonicalAbsolutePath = { format = "[c]abs", style = {} },
-  ByCanonicalExtension = { format = "[c]ext", style = {} },
-  ByCanonicalIsDir = { format = "[c]dir", style = {} },
-  ByCanonicalIsFile = { format = "[c]file", style = {} },
-  ByCanonicalIsReadonly = { format = "[c]ro", style = {} },
-  ByCanonicalMimeEssence = { format = "[c]mime", style = {} },
-  ByCanonicalSize = { format = "[c]size", style = {} },
   ByExtension = { format = "ext", style = {} },
   ByICanonicalAbsolutePath = { format = "[ci]abs", style = {} },
   ByIRelativePath = { format = "[i]rel", style = {} },
@@ -393,6 +374,17 @@ xplr.config.general.sort_and_filter_ui.sorter_identifiers = {
   ByMimeEssence = { format = "mime", style = {} },
   ByRelativePath = { format = "rel", style = {} },
   BySize = { format = "size", style = {} },
+  ByCreated = { format = "created", style = {} },
+  ByLastModified = { format = "modified", style = {} },
+  ByCanonicalAbsolutePath = { format = "[c]abs", style = {} },
+  ByCanonicalExtension = { format = "[c]ext", style = {} },
+  ByCanonicalIsDir = { format = "[c]dir", style = {} },
+  ByCanonicalIsFile = { format = "[c]file", style = {} },
+  ByCanonicalIsReadonly = { format = "[c]ro", style = {} },
+  ByCanonicalMimeEssence = { format = "[c]mime", style = {} },
+  ByCanonicalSize = { format = "[c]size", style = {} },
+  ByCanonicalCreated = { format = "[c]created", style = {} },
+  ByCanonicalLastModified = { format = "[c]modified", style = {} },
   BySymlinkAbsolutePath = { format = "[s]abs", style = {} },
   BySymlinkExtension = { format = "[s]ext", style = {} },
   BySymlinkIsDir = { format = "[s]dir", style = {} },
@@ -400,6 +392,8 @@ xplr.config.general.sort_and_filter_ui.sorter_identifiers = {
   BySymlinkIsReadonly = { format = "[s]ro", style = {} },
   BySymlinkMimeEssence = { format = "[s]mime", style = {} },
   BySymlinkSize = { format = "[s]size", style = {} },
+  BySymlinkCreated = { format = "[s]created", style = {} },
+  BySymlinkLastModified = { format = "[s]modified", style = {} },
 }
 
 -- The identifiers used to denote applied filters in the Sort & filter panel.
@@ -411,30 +405,6 @@ xplr.config.general.sort_and_filter_ui.sorter_identifiers = {
 --   * format: nullable string
 --   * style: [Style](https://xplr.dev/en/style)
 xplr.config.general.sort_and_filter_ui.filter_identifiers = {
-  AbsolutePathDoesContain = { format = "abs=~", style = {} },
-  AbsolutePathDoesEndWith = { format = "abs=$", style = {} },
-  AbsolutePathDoesNotContain = { format = "abs!~", style = {} },
-  AbsolutePathDoesNotEndWith = { format = "abs!$", style = {} },
-  AbsolutePathDoesNotStartWith = { format = "abs!^", style = {} },
-  AbsolutePathDoesStartWith = { format = "abs=^", style = {} },
-  AbsolutePathIs = { format = "abs==", style = {} },
-  AbsolutePathIsNot = { format = "abs!=", style = {} },
-  IAbsolutePathDoesContain = { format = "[i]abs=~", style = {} },
-  IAbsolutePathDoesEndWith = { format = "[i]abs=$", style = {} },
-  IAbsolutePathDoesNotContain = { format = "[i]abs!~", style = {} },
-  IAbsolutePathDoesNotEndWith = { format = "[i]abs!$", style = {} },
-  IAbsolutePathDoesNotStartWith = { format = "[i]abs!^", style = {} },
-  IAbsolutePathDoesStartWith = { format = "[i]abs=^", style = {} },
-  IAbsolutePathIs = { format = "[i]abs==", style = {} },
-  IAbsolutePathIsNot = { format = "[i]abs!=", style = {} },
-  IRelativePathDoesContain = { format = "[i]rel=~", style = {} },
-  IRelativePathDoesEndWith = { format = "[i]rel=$", style = {} },
-  IRelativePathDoesNotContain = { format = "[i]rel!~", style = {} },
-  IRelativePathDoesNotEndWith = { format = "[i]rel!$", style = {} },
-  IRelativePathDoesNotStartWith = { format = "[i]rel!^", style = {} },
-  IRelativePathDoesStartWith = { format = "[i]rel=^", style = {} },
-  IRelativePathIs = { format = "[i]rel==", style = {} },
-  IRelativePathIsNot = { format = "[i]rel!=", style = {} },
   RelativePathDoesContain = { format = "rel=~", style = {} },
   RelativePathDoesEndWith = { format = "rel=$", style = {} },
   RelativePathDoesNotContain = { format = "rel!~", style = {} },
@@ -443,6 +413,41 @@ xplr.config.general.sort_and_filter_ui.filter_identifiers = {
   RelativePathDoesStartWith = { format = "rel=^", style = {} },
   RelativePathIs = { format = "rel==", style = {} },
   RelativePathIsNot = { format = "rel!=", style = {} },
+  RelativePathDoesMatchRegex = { format = "rel=/", style = {} },
+  RelativePathDoesNotMatchRegex = { format = "rel!/", style = {} },
+
+  IRelativePathDoesContain = { format = "[i]rel=~", style = {} },
+  IRelativePathDoesEndWith = { format = "[i]rel=$", style = {} },
+  IRelativePathDoesNotContain = { format = "[i]rel!~", style = {} },
+  IRelativePathDoesNotEndWith = { format = "[i]rel!$", style = {} },
+  IRelativePathDoesNotStartWith = { format = "[i]rel!^", style = {} },
+  IRelativePathDoesStartWith = { format = "[i]rel=^", style = {} },
+  IRelativePathIs = { format = "[i]rel==", style = {} },
+  IRelativePathIsNot = { format = "[i]rel!=", style = {} },
+  IRelativePathDoesMatchRegex = { format = "[i]rel=/", style = {} },
+  IRelativePathDoesNotMatchRegex = { format = "[i]rel!/", style = {} },
+
+  AbsolutePathDoesContain = { format = "abs=~", style = {} },
+  AbsolutePathDoesEndWith = { format = "abs=$", style = {} },
+  AbsolutePathDoesNotContain = { format = "abs!~", style = {} },
+  AbsolutePathDoesNotEndWith = { format = "abs!$", style = {} },
+  AbsolutePathDoesNotStartWith = { format = "abs!^", style = {} },
+  AbsolutePathDoesStartWith = { format = "abs=^", style = {} },
+  AbsolutePathIs = { format = "abs==", style = {} },
+  AbsolutePathIsNot = { format = "abs!=", style = {} },
+  AbsolutePathDoesMatchRegex = { format = "abs=/", style = {} },
+  AbsolutePathDoesNotMatchRegex = { format = "abs!/", style = {} },
+
+  IAbsolutePathDoesContain = { format = "[i]abs=~", style = {} },
+  IAbsolutePathDoesEndWith = { format = "[i]abs=$", style = {} },
+  IAbsolutePathDoesNotContain = { format = "[i]abs!~", style = {} },
+  IAbsolutePathDoesNotEndWith = { format = "[i]abs!$", style = {} },
+  IAbsolutePathDoesNotStartWith = { format = "[i]abs!^", style = {} },
+  IAbsolutePathDoesStartWith = { format = "[i]abs=^", style = {} },
+  IAbsolutePathIs = { format = "[i]abs==", style = {} },
+  IAbsolutePathIsNot = { format = "[i]abs!=", style = {} },
+  IAbsolutePathDoesMatchRegex = { format = "[i]abs=/", style = {} },
+  IAbsolutePathDoesNotMatchRegex = { format = "[i]abs!/", style = {} },
 }
 
 -- The content for panel title by default.
@@ -655,6 +660,25 @@ xplr.config.general.initial_layout = "default"
 -- Type: nullable string
 xplr.config.general.start_fifo = nil
 
+-- Use it to define a set of key bindings that are available by default in
+-- every [mode](https://xplr.dev/en/mode). They can be overwritten.
+--
+-- Type: [Key Bindings](https://xplr.dev/en/configure-key-bindings#key-bindings)
+xplr.config.general.global_key_bindings = {
+  on_key = {
+    esc = {
+      messages = {
+        "PopMode",
+      },
+    },
+    ["ctrl-c"] = {
+      messages = {
+        "Terminate",
+      },
+    },
+  },
+}
+
 -- ### Node Types -------------------------------------------------------------
 --
 -- This section defines how to deal with different kinds of nodes (files,
@@ -674,22 +698,38 @@ xplr.config.node_types.directory.style = {
   add_modifiers = { "Bold" },
 }
 
--- Metadata for the directory nodes
+-- Metadata for the directory nodes.
+-- You can set as many metadata as you want.
 --
 -- Type: nullable string
+--
+-- Example:
+--
+-- ```lua
+-- xplr.config.node_types.directory.meta.foo = "foo"
+-- xplr.config.node_types.directory.meta.bar = "bar"
+-- ```
 xplr.config.node_types.directory.meta.icon = "ð"
 
--- The style for the file nodes
+-- The style for the file nodes.
 --
 -- Type: [Style](https://xplr.dev/en/style)
 xplr.config.node_types.file.style = {}
 
--- Metadata for the file nodes
+-- Metadata for the file nodes.
+-- You can set as many metadata as you want.
 --
 -- Type: nullable string
+--
+-- Example:
+--
+-- ```lua
+-- xplr.config.node_types.file.meta.foo = "foo"
+-- xplr.config.node_types.file.meta.bar = "bar"
+-- ```
 xplr.config.node_types.file.meta.icon = "ƒ"
 
--- The style for the symlink nodes
+-- The style for the symlink nodes.
 --
 -- Type: [Style](https://xplr.dev/en/style)
 xplr.config.node_types.symlink.style = {
@@ -697,9 +737,17 @@ xplr.config.node_types.symlink.style = {
   add_modifiers = { "Italic" },
 }
 
--- Metadata for the symlink nodes
+-- Metadata for the symlink nodes.
+-- You can set as many metadata as you want.
 --
 -- Type: nullable string
+--
+-- Example:
+--
+-- ```lua
+-- xplr.config.node_types.symlink.meta.foo = "foo"
+-- xplr.config.node_types.symlink.meta.bar = "bar"
+-- ```
 xplr.config.node_types.symlink.meta.icon = "§"
 
 -- Metadata and style based on mime types.
@@ -723,13 +771,12 @@ xplr.config.node_types.symlink.meta.icon = "§"
 --
 --     -- application/pdf
 --     pdf = { meta = { icon = "" }, style = { fg = "Blue" } },
-
+--
 --     -- application/zip
 --     zip = { meta = { icon = ""} },
 --   },
 -- }
 -- ```
-
 xplr.config.node_types.mime_essence = {}
 
 -- Metadata and style based on extension.
@@ -1013,18 +1060,13 @@ xplr.config.modes.builtin.default = {
           "ToggleSelectAll",
         },
       },
-      ["ctrl-c"] = {
-        help = "terminate",
-        messages = {
-          "Terminate",
-        },
-      },
       ["ctrl-f"] = {
         help = "search",
         messages = {
           "PopMode",
           { SwitchModeBuiltin = "search" },
-          { SetInputBuffer = "" },
+          { SetInputPrompt = "/" },
+          { SetInputBuffer = "(?i)" },
           "ExplorePwdAsync",
         },
       },
@@ -1077,10 +1119,6 @@ xplr.config.modes.builtin.default = {
           "PrintResultAndQuit",
         },
       },
-      esc = {
-        help = nil,
-        messages = {},
-      },
       ["f"] = {
         help = "filter",
         messages = {
@@ -1114,7 +1152,8 @@ xplr.config.modes.builtin.default = {
           { SwitchModeBuiltin = "rename" },
           {
             BashExecSilently = [===[
-              echo SetInputBuffer: "'"$(basename "${XPLR_FOCUS_PATH}")"'" >> "${XPLR_PIPE_MSG_IN:?}"
+              NAME=$(basename "${XPLR_FOCUS_PATH:?}")
+              echo SetInputBuffer: "'"${NAME:?}"'" >> "${XPLR_PIPE_MSG_IN:?}"
             ]===],
           },
         },
@@ -1126,7 +1165,8 @@ xplr.config.modes.builtin.default = {
           { SwitchModeBuiltin = "duplicate_as" },
           {
             BashExecSilently = [===[
-              echo SetInputBuffer: "'"$(basename "${XPLR_FOCUS_PATH}")"'" >> "${XPLR_PIPE_MSG_IN:?}"
+              NAME=$(basename "${XPLR_FOCUS_PATH:?}")
+              echo SetInputBuffer: "'"${NAME:?}"'" >> "${XPLR_PIPE_MSG_IN:?}"
             ]===],
           },
         },
@@ -1173,6 +1213,7 @@ xplr.config.modes.builtin.default = {
       messages = {
         "PopMode",
         { SwitchModeBuiltin = "number" },
+        { SetInputPrompt = ":" },
         "BufferInputFromKey",
       },
     },
@@ -1241,12 +1282,6 @@ xplr.config.modes.builtin.debug_error = {
   },
   key_bindings = {
     on_key = {
-      ["ctrl-c"] = {
-        help = "terminate",
-        messages = {
-          "Terminate",
-        },
-      },
       enter = {
         help = "open logs in editor",
         messages = {
@@ -1255,12 +1290,6 @@ xplr.config.modes.builtin.debug_error = {
               ${EDITOR:-vi} "${XPLR_PIPE_LOGS_OUT:?}"
             ]===],
           },
-        },
-      },
-      esc = {
-        help = "escape",
-        messages = {
-          "PopMode",
         },
       },
       q = {
@@ -1298,22 +1327,45 @@ xplr.config.modes.builtin.recover = {
     },
   },
   key_bindings = {
+    default = {
+      messages = {},
+    },
+  },
+}
+
+-- The builtin go to path mode.
+--
+-- Type: [Mode](https://xplr.dev/en/mode)
+xplr.config.modes.builtin.go_to_path = {
+  name = "go to path",
+  key_bindings = {
     on_key = {
-      ["ctrl-c"] = {
-        help = "terminate",
+      enter = {
+        help = "submit",
         messages = {
-          "Terminate",
+          {
+            BashExecSilently = [===[
+              if [ -d "$XPLR_INPUT_BUFFER" ]; then
+                echo ChangeDirectory: "'"$XPLR_INPUT_BUFFER"'" >> "${XPLR_PIPE_MSG_IN:?}"
+              elif [ -e "$XPLR_INPUT_BUFFER" ]; then
+                echo FocusPath: "'"$XPLR_INPUT_BUFFER"'" >> "${XPLR_PIPE_MSG_IN:?}"
+              fi
+            ]===],
+          },
+          "PopMode",
         },
       },
-      esc = {
-        help = "escape",
+      tab = {
+        help = "try complete",
         messages = {
-          "PopMode",
+          { CallLuaSilently = "builtin.try_complete_path" },
         },
       },
     },
     default = {
-      messages = {},
+      messages = {
+        "UpdateInputBufferFromKey",
+      },
     },
   },
 }
@@ -1342,18 +1394,6 @@ xplr.config.modes.builtin.selection_ops = {
               read -p "[enter to continue]"
             ]===],
           },
-          "PopMode",
-        },
-      },
-      ["ctrl-c"] = {
-        help = "terminate",
-        messages = {
-          "Terminate",
-        },
-      },
-      esc = {
-        help = "cancel",
-        messages = {
           "PopMode",
         },
       },
@@ -1411,31 +1451,21 @@ xplr.config.modes.builtin.create = {
   name = "create",
   key_bindings = {
     on_key = {
-      ["ctrl-c"] = {
-        help = "terminate",
-        messages = {
-          "Terminate",
-        },
-      },
-      ["d"] = {
+      d = {
         help = "create directory",
         messages = {
           "PopMode",
-          { SwitchModeBuiltin = "create directory" },
+          { SwitchModeBuiltin = "create_directory" },
+          { SetInputPrompt = "ð ❯ " },
           { SetInputBuffer = "" },
         },
       },
-      esc = {
-        help = "cancel",
-        messages = {
-          "PopMode",
-        },
-      },
-      ["f"] = {
+      f = {
         help = "create file",
         messages = {
           "PopMode",
-          { SwitchModeBuiltin = "create file" },
+          { SwitchModeBuiltin = "create_file" },
+          { SetInputPrompt = "ƒ ❯ " },
           { SetInputBuffer = "" },
         },
       },
@@ -1450,14 +1480,14 @@ xplr.config.modes.builtin.create_directory = {
   name = "create directory",
   key_bindings = {
     on_key = {
-      ["ctrl-c"] = {
-        help = "terminate",
+      tab = {
+        help = "try complete",
         messages = {
-          "Terminate",
+          { CallLuaSilently = "builtin.try_complete_path" },
         },
       },
       enter = {
-        help = "create directory",
+        help = "submit",
         messages = {
           {
             BashExecSilently = [===[
@@ -1473,12 +1503,6 @@ xplr.config.modes.builtin.create_directory = {
               fi
             ]===],
           },
-        },
-      },
-      esc = {
-        help = "cancel",
-        messages = {
-          "PopMode",
         },
       },
     },
@@ -1497,12 +1521,14 @@ xplr.config.modes.builtin.create_file = {
   name = "create file",
   key_bindings = {
     on_key = {
-      ["ctrl-c"] = {
-        help = "terminate",
-        messages = { "Terminate" },
+      tab = {
+        help = "try complete",
+        messages = {
+          { CallLuaSilently = "builtin.try_complete_path" },
+        },
       },
       enter = {
-        help = "create file",
+        help = "submit",
         messages = {
           {
             BashExecSilently = [===[
@@ -1521,12 +1547,6 @@ xplr.config.modes.builtin.create_file = {
           },
         },
       },
-      esc = {
-        help = "cancel",
-        messages = {
-          "PopMode",
-        },
-      },
     },
     default = {
       messages = {
@@ -1543,12 +1563,6 @@ xplr.config.modes.builtin.number = {
   name = "number",
   key_bindings = {
     on_key = {
-      ["ctrl-c"] = {
-        help = "terminate",
-        messages = {
-          "Terminate",
-        },
-      },
       down = {
         help = "to down",
         messages = {
@@ -1560,12 +1574,6 @@ xplr.config.modes.builtin.number = {
         help = "to index",
         messages = {
           "FocusByIndexFromInput",
-          "PopMode",
-        },
-      },
-      esc = {
-        help = "cancel",
-        messages = {
           "PopMode",
         },
       },
@@ -1603,33 +1611,29 @@ xplr.config.modes.builtin.go_to = {
   name = "go to",
   key_bindings = {
     on_key = {
-      ["ctrl-c"] = {
-        help = "terminate",
-        messages = {
-          "Terminate",
-        },
-      },
-      esc = {
-        help = "cancel",
-        messages = {
-          "PopMode",
-        },
-      },
-      ["f"] = {
+      f = {
         help = "follow symlink",
         messages = {
           "FollowSymlink",
           "PopMode",
         },
       },
-      ["g"] = {
+      g = {
         help = "top",
         messages = {
           "FocusFirst",
           "PopMode",
         },
       },
-      ["x"] = {
+      p = {
+        help = "path",
+        messages = {
+          "PopMode",
+          { SwitchModeBuiltin = "go_to_path" },
+          { SetInputBuffer = "" },
+        },
+      },
+      x = {
         help = "open in gui",
         messages = {
           {
@@ -1662,14 +1666,14 @@ xplr.config.modes.builtin.rename = {
   name = "rename",
   key_bindings = {
     on_key = {
-      ["ctrl-c"] = {
-        help = "terminate",
+      tab = {
+        help = "try complete",
         messages = {
-          "Terminate",
+          { CallLuaSilently = "builtin.try_complete_path" },
         },
       },
       enter = {
-        help = "rename",
+        help = "submit",
         messages = {
           {
             BashExecSilently = [===[
@@ -1685,12 +1689,6 @@ xplr.config.modes.builtin.rename = {
               fi
             ]===],
           },
-          "PopMode",
-        },
-      },
-      esc = {
-        help = "cancel",
-        messages = {
           "PopMode",
         },
       },
@@ -1710,14 +1708,14 @@ xplr.config.modes.builtin.duplicate_as = {
   name = "duplicate as",
   key_bindings = {
     on_key = {
-      ["ctrl-c"] = {
-        help = "terminate",
+      tab = {
+        help = "try complete",
         messages = {
-          "Terminate",
+          { CallLuaSilently = "builtin.try_complete_path" },
         },
       },
       enter = {
-        help = "duplicate",
+        help = "submit",
         messages = {
           {
             BashExecSilently = [===[
@@ -1733,12 +1731,6 @@ xplr.config.modes.builtin.duplicate_as = {
               fi
             ]===],
           },
-          "PopMode",
-        },
-      },
-      esc = {
-        help = "cancel",
-        messages = {
           "PopMode",
         },
       },
@@ -1777,12 +1769,6 @@ xplr.config.modes.builtin.delete = {
           "PopMode",
         },
       },
-      ["ctrl-c"] = {
-        help = "terminate",
-        messages = {
-          "Terminate",
-        },
-      },
       ["d"] = {
         help = "delete",
         messages = {
@@ -1807,12 +1793,6 @@ xplr.config.modes.builtin.delete = {
               read -p "[enter to continue]"
             ]===],
           },
-          "PopMode",
-        },
-      },
-      esc = {
-        help = "cancel",
-        messages = {
           "PopMode",
         },
       },
@@ -1842,12 +1822,6 @@ xplr.config.modes.builtin.action = {
           { SwitchModeBuiltin = "create" },
         },
       },
-      ["ctrl-c"] = {
-        help = "terminate",
-        messages = {
-          "Terminate",
-        },
-      },
       ["e"] = {
         help = "open in editor",
         messages = {
@@ -1856,12 +1830,6 @@ xplr.config.modes.builtin.action = {
               ${EDITOR:-vi} "${XPLR_FOCUS_PATH:?}"
             ]===],
           },
-          "PopMode",
-        },
-      },
-      esc = {
-        help = "cancel",
-        messages = {
           "PopMode",
         },
       },
@@ -1904,6 +1872,7 @@ xplr.config.modes.builtin.action = {
       messages = {
         "PopMode",
         { SwitchModeBuiltin = "number" },
+        { SetInputPrompt = ":" },
         "BufferInputFromKey",
       },
     },
@@ -1947,18 +1916,6 @@ xplr.config.modes.builtin.quit = {
           "PrintResultAndQuit",
         },
       },
-      esc = {
-        help = "cancel",
-        messages = {
-          "PopMode",
-        },
-      },
-      ["ctrl-c"] = {
-        help = "terminate",
-        messages = {
-          "Terminate",
-        },
-      },
     },
   },
 }
@@ -1970,12 +1927,6 @@ xplr.config.modes.builtin.search = {
   name = "search",
   key_bindings = {
     on_key = {
-      ["ctrl-c"] = {
-        help = "terminate",
-        messages = {
-          "Terminate",
-        },
-      },
       down = {
         help = "down",
         messages = {
@@ -1983,9 +1934,9 @@ xplr.config.modes.builtin.search = {
         },
       },
       enter = {
-        help = "focus",
+        help = "submit",
         messages = {
-          { RemoveNodeFilterFromInput = "IRelativePathDoesContain" },
+          { RemoveNodeFilterFromInput = "RelativePathDoesMatchRegex" },
           "PopMode",
           "ExplorePwdAsync",
         },
@@ -1993,18 +1944,18 @@ xplr.config.modes.builtin.search = {
       right = {
         help = "enter",
         messages = {
-          { RemoveNodeFilterFromInput = "IRelativePathDoesContain" },
+          { RemoveNodeFilterFromInput = "RelativePathDoesMatchRegex" },
           "Enter",
-          { SetInputBuffer = "" },
+          { SetInputBuffer = "(?i)" },
           "ExplorePwdAsync",
         },
       },
       left = {
         help = "back",
         messages = {
-          { RemoveNodeFilterFromInput = "IRelativePathDoesContain" },
+          { RemoveNodeFilterFromInput = "RelativePathDoesMatchRegex" },
           "Back",
-          { SetInputBuffer = "" },
+          { SetInputBuffer = "(?i)" },
           "ExplorePwdAsync",
         },
       },
@@ -2024,9 +1975,9 @@ xplr.config.modes.builtin.search = {
     },
     default = {
       messages = {
-        { RemoveNodeFilterFromInput = "IRelativePathDoesContain" },
+        { RemoveNodeFilterFromInput = "RelativePathDoesMatchRegex" },
         "UpdateInputBufferFromKey",
-        { AddNodeFilterFromInput = "IRelativePathDoesContain" },
+        { AddNodeFilterFromInput = "RelativePathDoesMatchRegex" },
         "ExplorePwdAsync",
       },
     },
@@ -2047,19 +1998,35 @@ xplr.config.modes.builtin.filter = {
   name = "filter",
   key_bindings = {
     on_key = {
-      ["R"] = {
-        help = "relative does not contain",
+      ["r"] = {
+        help = "relative path does match regex",
         messages = {
-          { SwitchModeBuiltin = "relative_path_does_not_contain" },
+          { SwitchModeBuiltin = "relative_path_does_match_regex" },
+          {
+            SetInputPrompt = xplr.config.general.sort_and_filter_ui.filter_identifiers.RelativePathDoesMatchRegex.format,
+          },
           { SetInputBuffer = "" },
-          { AddNodeFilterFromInput = "IRelativePathDoesNotContain" },
+          { AddNodeFilterFromInput = "RelativePathDoesMatchRegex" },
           "ExplorePwdAsync",
         },
       },
-      ["ctrl-c"] = {
-        help = "terminate",
+      ["R"] = {
+        help = "relative path does not match regex",
         messages = {
-          "Terminate",
+          { SwitchModeBuiltin = "relative_path_does_not_match_regex" },
+          {
+            SetInputPrompt = xplr.config.general.sort_and_filter_ui.filter_identifiers.RelativePathDoesNotMatchRegex.format,
+          },
+          { SetInputBuffer = "" },
+          { AddNodeFilterFromInput = "RelativePathDoesNotMatchRegex" },
+          "ExplorePwdAsync",
+        },
+      },
+      backspace = {
+        help = "remove last filter",
+        messages = {
+          "RemoveLastNodeFilter",
+          "ExplorePwdAsync",
         },
       },
       ["ctrl-r"] = {
@@ -2076,51 +2043,26 @@ xplr.config.modes.builtin.filter = {
           "ExplorePwdAsync",
         },
       },
-      enter = {
-        help = "done",
-        messages = {
-          "PopMode",
-        },
-      },
-      ["r"] = {
-        help = "relative does contain",
-        messages = {
-          { SwitchModeBuiltin = "relative_path_does_contain" },
-          { SetInputBuffer = "" },
-          { AddNodeFilterFromInput = "IRelativePathDoesContain" },
-          "ExplorePwdAsync",
-        },
-      },
     },
   },
 }
 
-xplr.config.modes.builtin.filter.key_bindings.on_key["esc"] =
-  xplr.config.modes.builtin.filter.key_bindings.on_key.enter
-
--- The builtin relative_path_does_contain mode.
+-- The builtin relative_path_does_match_regex mode.
 --
 -- Type: [Mode](https://xplr.dev/en/mode)
-xplr.config.modes.builtin.relative_path_does_contain = {
-  name = "relative path does contain",
+xplr.config.modes.builtin.relative_path_does_match_regex = {
+  name = "relative path does match regex",
   key_bindings = {
     on_key = {
-      ["ctrl-c"] = {
-        help = "terminate",
-        messages = {
-          "Terminate",
-        },
-      },
       enter = {
-        help = "apply filter",
+        help = "submit",
         messages = {
           "PopMode",
         },
       },
       esc = {
-        help = "cancel",
         messages = {
-          { RemoveNodeFilterFromInput = "IRelativePathDoesContain" },
+          { RemoveNodeFilterFromInput = "RelativePathDoesMatchRegex" },
           "PopMode",
           "ExplorePwdAsync",
         },
@@ -2128,38 +2070,31 @@ xplr.config.modes.builtin.relative_path_does_contain = {
     },
     default = {
       messages = {
-        { RemoveNodeFilterFromInput = "IRelativePathDoesContain" },
+        { RemoveNodeFilterFromInput = "RelativePathDoesMatchRegex" },
         "UpdateInputBufferFromKey",
-        { AddNodeFilterFromInput = "IRelativePathDoesContain" },
+        { AddNodeFilterFromInput = "RelativePathDoesMatchRegex" },
         "ExplorePwdAsync",
       },
     },
   },
 }
 
--- The builtin relative_path_does_not_contain mode.
+-- The builtin relative_path_does_not_match_regex mode.
 --
 -- Type: [Mode](https://xplr.dev/en/mode)
-xplr.config.modes.builtin.relative_path_does_not_contain = {
-  name = "relative path does not contain",
+xplr.config.modes.builtin.relative_path_does_not_match_regex = {
+  name = "relative path does not match regex",
   key_bindings = {
     on_key = {
-      ["ctrl-c"] = {
-        help = "terminate",
-        messages = {
-          "Terminate",
-        },
-      },
       enter = {
-        help = "apply filter",
+        help = "submit",
         messages = {
           "PopMode",
         },
       },
       esc = {
-        help = "cancel",
         messages = {
-          { RemoveNodeFilterFromInput = "IRelativePathDoesNotContain" },
+          { RemoveNodeFilterFromInput = "RelativePathDoesNotMatchRegex" },
           "PopMode",
           "ExplorePwdAsync",
         },
@@ -2167,9 +2102,9 @@ xplr.config.modes.builtin.relative_path_does_not_contain = {
     },
     default = {
       messages = {
-        { RemoveNodeFilterFromInput = "IRelativePathDoesNotContain" },
+        { RemoveNodeFilterFromInput = "RelativePathDoesNotMatchRegex" },
         "UpdateInputBufferFromKey",
-        { AddNodeFilterFromInput = "IRelativePathDoesNotContain" },
+        { AddNodeFilterFromInput = "RelativePathDoesNotMatchRegex" },
         "ExplorePwdAsync",
       },
     },
@@ -2269,12 +2204,6 @@ xplr.config.modes.builtin.sort = {
           "ExplorePwdAsync",
         },
       },
-      ["ctrl-c"] = {
-        help = "terminate",
-        messages = {
-          "Terminate",
-        },
-      },
       ["ctrl-r"] = {
         help = "reset sorters",
         messages = {
@@ -2302,7 +2231,7 @@ xplr.config.modes.builtin.sort = {
         },
       },
       enter = {
-        help = "done",
+        help = "submit",
         messages = {
           "PopMode",
         },
@@ -2348,12 +2277,41 @@ xplr.config.modes.builtin.sort = {
           "ExplorePwdAsync",
         },
       },
+
+      ["c"] = {
+        help = "by created",
+        messages = {
+          { AddNodeSorter = { sorter = "ByCreated", reverse = false } },
+          "ExplorePwdAsync",
+        },
+      },
+
+      ["C"] = {
+        help = "by created reverse",
+        messages = {
+          { AddNodeSorter = { sorter = "ByCreated", reverse = true } },
+          "ExplorePwdAsync",
+        },
+      },
+
+      ["l"] = {
+        help = "by last modified",
+        messages = {
+          { AddNodeSorter = { sorter = "ByLastModified", reverse = false } },
+          "ExplorePwdAsync",
+        },
+      },
+
+      ["L"] = {
+        help = "by last modified reverse",
+        messages = {
+          { AddNodeSorter = { sorter = "ByLastModified", reverse = true } },
+          "ExplorePwdAsync",
+        },
+      },
     },
   },
 }
-
-xplr.config.modes.builtin.sort.key_bindings.on_key["esc"] =
-  xplr.config.modes.builtin.sort.key_bindings.on_key.enter
 
 -- The builtin switch layout mode.
 --
@@ -2387,18 +2345,6 @@ xplr.config.modes.builtin.switch_layout = {
         help = "no help or selection",
         messages = {
           { SwitchLayoutBuiltin = "no_help_no_selection" },
-          "PopMode",
-        },
-      },
-      ["ctrl-c"] = {
-        help = "terminate",
-        messages = {
-          "Terminate",
-        },
-      },
-      esc = {
-        help = "cancel",
-        messages = {
           "PopMode",
         },
       },
@@ -2444,6 +2390,62 @@ xplr.config.modes.custom = {}
 --
 -- As always, `xplr.fn.builtin` is where the built-in functions are defined
 -- that can be overwritten.
+
+-- Tries to auto complete the path in the input buffer
+xplr.fn.builtin.try_complete_path = function(m)
+  if not m.input_buffer then
+    return
+  end
+
+  local function splitlines(str)
+    local res = {}
+    for s in str:gmatch("[^\r\n]+") do
+      table.insert(res, s)
+    end
+    return res
+  end
+
+  local function matches_all(str, files)
+    for _, p in ipairs(files) do
+      if string.sub(p, 1, #str) ~= str then
+        return false
+      end
+    end
+    return true
+  end
+
+  local path = m.input_buffer
+
+  local p = assert(io.popen(string.format("ls -d %q* 2>/dev/null", path)))
+  local out = p:read("*all")
+  p:close()
+
+  local found = splitlines(out)
+  local count = #found
+
+  if count == 0 then
+    return
+  elseif count == 1 then
+    return {
+      { SetInputBuffer = found[1] },
+    }
+  else
+    local first = found[1]
+    while #first > #path and matches_all(path, found) do
+      path = string.sub(found[1], 1, #path + 1)
+    end
+
+    if matches_all(path, found) then
+      return {
+        { SetInputBuffer = path },
+      }
+    end
+
+    return {
+      { SetInputBuffer = string.sub(path, 1, #path - 1) },
+    }
+  end
+end
 
 -- Renders the first column in the table
 xplr.fn.builtin.fmt_general_table_row_cols_0 = function(m)
@@ -2587,11 +2589,7 @@ end
 
 -- Renders the fifth column in the table
 xplr.fn.builtin.fmt_general_table_row_cols_4 = function(m)
-  if m.is_symlink and not m.is_broken then
-    return m.symlink.mime_essence
-  else
-    return m.mime_essence
-  end
+  return tostring(os.date("%a %b %d %H:%M:%S %Y", m.last_modified / 1000000000))
 end
 
 -- This is where the custom functions can be added.
@@ -2603,7 +2601,6 @@ end
 -- `xplr.fn.custom.my_plugin.my_function` to define custom functions.
 xplr.fn.custom = {}
 
--- packages 
 local home = os.getenv("HOME")
 package.path = home
 .. "/.config/xplr/plugins/?/init.lua;"
@@ -2612,7 +2609,3 @@ package.path = home
 .. package.path
 
 require"icons".setup()
-
--- require("material-landscape").setup{
---   keep_default_layout = true
--- }
