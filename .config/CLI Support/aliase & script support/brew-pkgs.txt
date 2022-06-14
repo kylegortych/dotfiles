@@ -19,4 +19,4 @@ Casks
 ------
 adoptopenjdk8|cool-retro-term|keycastr|mactex-no-gui|openshot-video-editor
 android-sdk|fontforge|kicad|mpv|timemachineeditor
-balenaetcher|freecad|libreoffice|neovide
+balenaetcher|freecad|libreoffice|neovide|vieb
