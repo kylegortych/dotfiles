@@ -28,6 +28,11 @@ set fish_greeting
 # starship prompt
 starship init fish | source
 
+# negate fish vi cursor
+function fish_vi_cursor
+  ;
+end
+
 # neofetch
 if status is-interactive
   # move script to bin | ps outputs interpreter running?
