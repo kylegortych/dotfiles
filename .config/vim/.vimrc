@@ -1,7 +1,7 @@
 " Vim config | version 8 via homebrew 
 " 
 " Maintainer:         Kyle Gortych 
-" Date last modified: 06-08-2022
+" Date last modified: 06-19-2022
 
 " Plugins 
 call plug#begin('~/.vim/plugged')
@@ -86,6 +86,8 @@ autocmd ColorScheme * highlight SpellLocal cterm=bold,underline ctermfg=208 cter
 autocmd ColorScheme * highlight airline_tabmod ctermfg=black ctermbg=208
 autocmd ColorScheme * highlight Visual ctermfg=black ctermbg=208
 autocmd ColorScheme * highlight DiffAdd ctermfg=black ctermbg=39
+autocmd ColorScheme * highlight DiffChange ctermfg=black ctermbg=245
+autocmd ColorScheme * highlight DiffDelete ctermfg=black ctermbg=245
 " autocmd ColorScheme * highlight airline_Tabtype ctermfg=black ctermbg=39
 
 " terminal cursor shape overide 
@@ -251,6 +253,8 @@ set expandtab
 set backspace=2
 set autoindent
 set encoding=UTF-8
+set lz
+set smc=80
 set tw=45
 set nowrap 
 set fo-=t fo-=c
