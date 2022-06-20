@@ -18,6 +18,7 @@ desktop-file-utils|intltool|mujs|sd
 *
 Casks
 ------
-adoptopenjdk8|cool-retro-term|keycastr|mactex-no-gui|openshot-video-editor
-android-sdk|fontforge|kicad|mpv|timemachineeditor
-balenaetcher|freecad|libreoffice|neovide|vieb
+adoptopenjdk8|fontforge|libreoffice|obs
+android-sdk|freecad|mactex-no-gui|openshot-video-editor
+balenaetcher|keycastr|mpv|timemachineeditor
+cool-retro-term|kicad|neovide|vieb

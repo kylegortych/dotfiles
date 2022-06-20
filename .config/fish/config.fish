@@ -86,7 +86,7 @@ function weather
   curl wttr.in/$argv
 end
 
-function open:
+function open-exit
   open -a "$argv" && exit
 end
 
