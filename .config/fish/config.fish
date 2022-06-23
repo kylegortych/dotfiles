@@ -47,7 +47,7 @@ end
 # aliases
 
 function aliases
-  column -t -s '|' < ~/.config/CLI\ Support/aliase\ \&\ script\ support/fish_aliases.txt | tr '*' ' '
+  column -t -s '|' ~/.config/CLI\ Support/aliase\ \&\ script\ support/fish_aliases.txt | tr '*' ' '
 end
  
 function neo
@@ -63,11 +63,15 @@ function ls-env
 end
 
 function brew-pkgs-nodepens
-  column -t -s '|' < ~/.config/CLI\ Support/aliase\ \&\ script\ support/brew-pkgs.txt | tr '*' ' '
+  column -t -s '|' ~/.config/CLI\ Support/aliase\ \&\ script\ support/brew-pkgs.txt | tr '*' ' '
 end
 
 function brew-active-pkgs-nodepens
   echo -e '\e[4mPackages no Depens\e[0m' ; brew leaves | column ; echo '' ; echo -e '\e[4mCasks\e[0m' ; brew list --cask
+end
+
+function tips
+  less ~/.config/CLI\ Support/aliase\ \&\ script\ support/tips.txt
 end
 
 function pip3-ls-pkgs
@@ -90,7 +94,7 @@ function open-exit
   open -a "$argv" && exit
 end
 
-function xplr-open
+function filemgr
   cd $(xplr --print-pwd-as-result)
 end
 

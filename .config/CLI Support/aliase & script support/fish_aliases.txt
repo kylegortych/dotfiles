@@ -3,3 +3,4 @@ fish aliases
 neo|ls-build-sys|ls-env|brew-pkgs-nodepens|brew-active-pkgs-nodepens
 pip3-ls-pkgs|npm-env|npm-update-self|weather|open-exit
 xplr-open|apl-run-script|verilog-compile|verilog-run|doom
+tips

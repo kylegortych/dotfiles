@@ -79,10 +79,12 @@ autocmd ColorScheme * highlight Folded ctermfg=black ctermbg=245
 autocmd ColorScheme * highlight Search ctermfg=black ctermbg=208
 autocmd ColorScheme * highlight ModeMsg ctermfg=208 ctermbg=NONE
 autocmd ColorScheme * highlight MoreMsg ctermfg=208 ctermbg=NONE
-autocmd ColorScheme * highlight WarningMsg ctermfg=black ctermbg=208
-autocmd ColorScheme * highlight SpellBad term=bold,underline cterm=bold,underline ctermfg=9 ctermbg=8 guifg=#EFEFEF guibg=#515151
-autocmd ColorScheme * highlight SpellRare cterm=bold,underline ctermfg=220 ctermbg=8
-autocmd ColorScheme * highlight SpellLocal cterm=bold,underline ctermfg=208 ctermbg=8
+autocmd ColorScheme * highlight WarningMsg ctermfg=NONE ctermbg=208
+autocmd ColorScheme * highlight Todo ctermfg=208 ctermbg=NONE
+autocmd ColorScheme * highlight SpellCap cterm=bold ctermfg=black ctermbg=208
+autocmd ColorScheme * highlight SpellBad cterm=bold ctermfg=9 ctermbg=8 guifg=#EFEFEF guibg=#515151
+autocmd ColorScheme * highlight SpellRare cterm=bold ctermfg=220 ctermbg=8
+autocmd ColorScheme * highlight SpellLocal cterm=bold ctermfg=208 ctermbg=8
 autocmd ColorScheme * highlight airline_tabmod ctermfg=black ctermbg=208
 autocmd ColorScheme * highlight Visual ctermfg=black ctermbg=208
 autocmd ColorScheme * highlight DiffAdd ctermfg=black ctermbg=39
@@ -261,7 +263,7 @@ set fo-=t fo-=c
 " set wrap linebreak nolist
 " set whichwrap+=<,>,h,l
 " set cc=78
-set cursorline
+set cul
 set hidden
 set scrolloff=5
 set foldopen-=block
