@@ -1,74 +1,32 @@
-" Vim config | version 8 via homebrew 
+"///////////////////////////////////////////////////////////
+"         _                              _      
+"  _   __(_)___ ___  __________   _   __(_)___ _
+" | | / / / __ `__ \/ ___/ ___/  | | / / / __ `/
+" | |/ / / / / / / / /  / /__    | |/ / / /_/ / 
+" |___/_/_/ /_/ /_/_/   \___/    |___/_/\__,_/  
+"     __                         __                     
+"    / /_  ____  ____ ___  ___  / /_  ________ _      __
+"   / __ \/ __ \/ __ `__ \/ _ \/ __ \/ ___/ _ \ | /| / /
+"  / / / / /_/ / / / / / /  __/ /_/ / /  /  __/ |/ |/ / 
+" /_/ /_/\____/_/ /_/ /_/\___/_.___/_/   \___/|__/|__/  
 " 
 " Maintainer:         Kyle Gortych 
-" Date last modified: 06-19-2022
+" Date last modified: 06-27-2022
+"///////////////////////////////////////////////////
 
 " Plugins 
-call plug#begin('~/.vim/plugged')
-Plug 'widatama/vim-phoenix'
-" Plug 'dylanaraps/wal.vim'
-Plug 'sjl/vitality.vim'
-Plug 'dense-analysis/ale'
-Plug 'sheerun/vim-polyglot'
-Plug 'valloric/youcompleteme'
-Plug 'tmsvg/pear-tree'
-Plug 'romainl/vim-cool'
-Plug 'tibabit/vim-templates'
-Plug 'tounaishouta/coq.vim'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'ryanoasis/powerline-extra-symbols'
-Plug 'ryanoasis/vim-devicons'
-call plug#end()
-
-" airline 
-let g:airline_powerline_fonts = 1
-
-if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
-endif
-
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#formatter = 'default'
-let g:airline#extensions#whitespace#enabled = 0
-let g:airline#extensions#tabline#fnamemod = ':t'
-let g:airline_left_sep = "\uE0BC"
-let g:airline_right_sep = "\uE0BE"
-
-" let g:airline#extensions#tabline#left_sep = '\uE0BC'
-" let g:airline#extensions#tabline#left_alt_sep = '\uE0BC'
-" let g:airline#extensions#tabline#right_sep = '\uE0BE'
-" let g:airline#extensions#tabline#right_alt_sep = '\uE0BE'
-
-let g:airline_theme='lucius'
-
-" devicons 
-" Out side vim env apply icon to nnn file manager, starship prompt
-
-" let g:WebDevIconsUnicodeDecorateFileNodesPatternSymbols = {} " needed
-" let g:WebDevIconsUnicodeDecorateFileNodesPatternSymbols['.*jquery.*\.js$'] = 'ƛ'
-
-
-let g:WebDevIconsUnicodeDecorateFileNodesPatternSymbols = {} " needed
-let g:WebDevIconsUnicodeDecorateFileNodesPatternSymbols['.vimrc'] = ''
-
-let g:WebDevIconsUnicodeDecorateFileNodesPatternSymbols = {} " needed
-let g:WebDevIconsUnicodeDecorateFileNodesPatternSymbols['vimrc'] = ''
-
-let g:WebDevIconsUnicodeDecorateFileNodesPatternSymbols = {} " needed
-let g:WebDevIconsUnicodeDecorateFileNodesPatternSymbols['.gvimrc'] = ''
-
-let g:WebDevIconsUnicodeDecorateFileNodesPatternSymbols = {} " needed
-let g:WebDevIconsUnicodeDecorateFileNodesPatternSymbols['_gvimrc'] = ''
-
-let g:WebDevIconsUnicodeDecorateFileNodesPatternSymbols = {} " needed
-let g:WebDevIconsUnicodeDecorateFileNodesPatternSymbols['test.vim'] = ''
-
-let g:WebDevIconsUnicodeDecorateFileNodesPatternSymbols = {} " needed
-let g:WebDevIconsUnicodeDecorateFileNodesPatternSymbols['.vim'] = ''
-
-let g:WebDevIconsUnicodeDecorateFileNodesPatternSymbols = {} " needed
-let g:WebDevIconsUnicodeDecorateFileNodesPatternSymbols['vim'] = ''
+runtime */jetpack.vim
+call jetpack#begin()
+Jetpack 'widatama/vim-phoenix'
+" Jetpack 'dylanaraps/wal.vim'
+Jetpack 'sjl/vitality.vim'
+Jetpack 'dense-analysis/ale'
+Jetpack 'valloric/youcompleteme'
+Jetpack 'tmsvg/pear-tree'
+Jetpack 'romainl/vim-cool'
+Jetpack 'tibabit/vim-templates'
+Jetpack 'tounaishouta/coq.vim'
+call jetpack#end()
 
 " overide color scheme 
 "autocmd ColorScheme * highlight Normal ctermfg=black ctermbg=208
@@ -85,19 +43,11 @@ autocmd ColorScheme * highlight SpellCap cterm=bold ctermfg=black ctermbg=208
 autocmd ColorScheme * highlight SpellBad cterm=bold ctermfg=9 ctermbg=8 guifg=#EFEFEF guibg=#515151
 autocmd ColorScheme * highlight SpellRare cterm=bold ctermfg=220 ctermbg=8
 autocmd ColorScheme * highlight SpellLocal cterm=bold ctermfg=208 ctermbg=8
-autocmd ColorScheme * highlight airline_tabmod ctermfg=black ctermbg=208
+"autocmd ColorScheme * highlight airline_tabmod ctermfg=black ctermbg=208
 autocmd ColorScheme * highlight Visual ctermfg=black ctermbg=208
 autocmd ColorScheme * highlight DiffAdd ctermfg=black ctermbg=39
 autocmd ColorScheme * highlight DiffChange ctermfg=black ctermbg=245
 autocmd ColorScheme * highlight DiffDelete ctermfg=black ctermbg=245
-" autocmd ColorScheme * highlight airline_Tabtype ctermfg=black ctermbg=39
-
-" terminal cursor shape overide 
-if $TERM_PROGRAM =~ "iTerm"
-    let &t_SI = "\<Esc>]50;CursorShape=2\x7" " Underscore in insert mode
-    let &t_EI = "\<Esc>]50;CursorShape=0\x7" " Block in normal mode
-    autocmd VimLeave * let &t_me = "\<Esc>]50;CursorShape=2\x7"
-endif
 
 " pear tree 
 let g:pear_tree_pairs ={
@@ -136,17 +86,6 @@ let g:pear_tree_pairs ={
 \ '<p': {'closer': '></p>'}
 \}
 
-" spelling 
-set spell spelllang=en_us
-set spellfile=en.utf-8.add
-set complete+=kspell
-set secure
-
-" wildmenu 
-set wildmenu
-set wildmode=list:longest
-set wildignore=*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx"
-
 " ale 
 set omnifunc=syntaxcomplete#Complete
 let g:ale_lint_on_enter = 0
@@ -171,30 +110,6 @@ let g:ale_fixers = {
 \    'javascript': ['eslint']
 \}
 
-" \    'html': ['tidy-html5'],
-" \    'htm': ['tidy-html5'],
-" \    'css': ['csslint']
-" 
-" each language has linter, fixer, and compiler
-" try to orginize by one package manager
-
-" compiled languages require a makefile
-"let g:ale_language-name_parse_makefile = 1
-
-"if compile to json such as node or cargo prj struct
-"let g:ale_parse_compile_commands = 1 
-
-" check mactex for preinstalled linter and fixer and compiler
-" should have packages like zed-csp aka z notation and tikz-uml
-
-"js and jsx use eslint also set up airbnb in json 
-
-" \    'html': [''],
-" \    'css': [''],
-" \    'javascript': [''],
-" \    'jsx': [''],
-" \    'java': [''],
-
 " ycm 
 
 
@@ -202,6 +117,55 @@ let g:ale_fixers = {
 " edit templates in ~/.vim/plugged/vim-templates/templates
 " WARNING PlugUpdate could cause loss of template configs store on git or
 " seprate txt file
+
+" defaults 
+
+" main defaults
+colorscheme phoenix 
+syntax on
+filetype on
+filetype plugin on
+filetype indent on
+set clipboard=unnamed
+\ nocp
+\ number
+\ tabstop=2
+\ shiftwidth=2
+\ expandtab
+\ backspace=2
+\ autoindent
+\ encoding=UTF-8
+\ lz
+\ tf 
+\ smc=80
+\ tw=45
+\ nowrap 
+\ fo-=t 
+\ fo-=c
+" set wrap linebreak nolist
+" set whichwrap+=<,>,h,l
+" set cc=78
+\ cul
+\ hidden
+\ scrolloff=5
+\ foldopen-=block
+\ foldopen-=hor
+\ incsearch
+\ hlsearch
+\ nrformats=bin,alpha,octal,hex
+" spelling 
+\ spell spelllang=en_us
+\ spellfile=en.utf-8.add
+\ complete+=kspell
+\ secure
+" wildmenu 
+\ wildmenu
+\ wildmode=list:longest
+\ wildignore=*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx"
+" Lex Netrw 
+let g:netrw_winsize=20
+" each tab | separate prj folder
+" minimizes buffer list | two per tab
 
 " remappings current [0] 
 " remappinig for spell and suyntax error jumping same as / command's jumping n
@@ -228,50 +192,31 @@ let g:ale_fixers = {
 " @a: 
 " macro result:
 
+" functions
+
+" terminal cursor shape overide 
+if $TERM_PROGRAM =~ "iTerm"
+    let &t_EI = "\<Esc>]50;CursorShape=0\x7" " Block in normal mode
+    let &t_SI = "\<Esc>]50;CursorShape=2\x7" " Underscore in insert mode
+    autocmd VimLeave * let &t_me = "\<Esc>]50;CursorShape=2\x7"
+endif
+
 " save folds 
+" conflict | :diffoff! can't override
+" workaround | manual reset :mkview :loadview 
 augroup remember_folds
     autocmd!
     autocmd BufWinLeave *.* mkview
     autocmd BufWinEnter *.* silent! loadview
 augroup END
 
-" Lex Netrw 
-let g:netrw_winsize=20
-" each tab | separate prj folder
-" minimizes buffer list | two per tab
+"statusline git 
 
-" defaults 
-colorscheme phoenix 
-syntax on
-filetype on
-filetype plugin on
-filetype indent on
-set clipboard=unnamed
-set nocp
-set number
-set tabstop=2
-set shiftwidth=2
-set expandtab
-set backspace=2
-set autoindent
-set encoding=UTF-8
-set lz
-set smc=80
-set tw=45
-set nowrap 
-set fo-=t fo-=c
-" set wrap linebreak nolist
-" set whichwrap+=<,>,h,l
-" set cc=78
-set cul
-set hidden
-set scrolloff=5
-set foldopen-=block
-set foldopen-=hor
 
-" highlighting word searches with / 
-set incsearch
-set hlsearch
-
-" visual block increment 
-set nrformats=bin,alpha,octal,hex
+" statusline 
+set ls=2
+\ stl+=%#Search#
+\ stl+=%f\ %m\ %y\ %{&fileencoding?&fileencoding:&encoding}\ [%{&fileformat}\]
+\ stl+=%#CursorLineFold#
+\ stl+=%=%#Search#
+\ stl+=\ Buff:\%n\ Pos:\%l\:\%c 

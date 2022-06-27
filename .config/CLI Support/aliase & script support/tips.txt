@@ -185,7 +185,7 @@ Vim work flow
 9.)	 Visual block | ctrl v | to comment | ctrl v move cursor then shift i esc
 
 for files with long lines -- Command --
-:NoMatchParen | set nocul
+:NoMatchParen | set nocul | set lz
 
 zt at current cursor row moves view to top
 
