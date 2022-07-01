@@ -49,13 +49,14 @@ end
 function aliases
   column -t -s '|' ~/.config/CLI\ Support/aliase\ \&\ script\ support/fish_aliases.txt | tr '*' ' '
 end
- 
+
+# concat commands with mktemp auto rm after termination? 
+# function network-info
+#   ((ifconfig | rg "inet" | rg -v 127.0.0.1) && networksetup -listallhardwareports) | less
+# end 
+
 function neo
   neofetch --colors --colors 9 2 3 39 15 15 --backend iterm2 --source ~/Downloads/vim2.png --size 20%
-end
-
-function ls-build-sys
-  cat ~/.config/CLI\ Support/aliase\ \&\ script\ support/list\ build\ sys.txt | tr '*' ' '
 end
 
 function ls-env
@@ -78,12 +79,10 @@ function pip3-ls-pkgs
   pip3 list --not-required
 end
 
-function npm-env
-  echo -e pkgs\n----- && npm list -g --depth=0 && echo -e env\n---- && npm config list
-end
-
-function npm-update-self
-  npm install npm@latest -g
+# add input?
+# yarn list --pattern "$argv" --depth=1
+function yarn-nodepens 
+  yarn list --depth=0
 end
 
 function weather
@@ -117,3 +116,8 @@ end
 # function kotlin-run-script
 #   kotlinc $argv -include-runtime -d $argv && java -jar $argv
 # end
+
+# git aliases
+function git-ls
+  git diff --staged --name-only
+end
