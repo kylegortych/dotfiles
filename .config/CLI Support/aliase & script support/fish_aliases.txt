@@ -1,6 +1,6 @@
 fish aliases
 -------------
-neo|ls-build-sys|ls-env|brew-pkgs-nodepens|brew-active-pkgs-nodepens
-pip3-ls-pkgs|npm-env|npm-update-self|weather|open-exit
-filemgr|apl-run-script|verilog-compile|verilog-run|doom
-tips
+neo|ls-env|brew-pkgs-nodepens|brew-active-pkgs-nodepens|pip3-ls-pkgs
+apl-run-script|yarn-nodepens|weather|open-exit|filemgr
+verilog-compile|verilog-run|doom|tips|git-ls
+

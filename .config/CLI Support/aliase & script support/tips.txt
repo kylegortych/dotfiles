@@ -158,7 +158,7 @@ Questions
 -	How to organize programming languages lsp clients, frameworks, and compilers | one build system?
 -	Should homebrew path be /opt/homebrew or in /usr/local?
 -	Change non interactive shell sh to dash by resymlink?
-o	readlink /var/select/sh , outputs /bin/dash
+  -	readlink /var/select/sh , outputs /bin/dash
 -	Check if any scripts including homebrew aren’t POSIX compliant ex. #!/bin/sh shebang  
 -	Bench test fish running as a command in dashrc dash shell vs making fish default shell?
  
@@ -174,15 +174,15 @@ homebrew.
 
 Vim work flow 
 
-1.)	 nnn command n | file manager | q quit | changes path to current directory
-2.)	 Vim Tabs | current dir | vim -p file.extention file.extention ./dirname/file.extention ../dirname/file.extention | tabnew & tabfind
-3.)	 Vim templates plugin
-4.)	 Movements jklh and w b and dw | delet word
-5.)	 Fold by shift v then zf highlighted text | za toggles a fold under cursor and zR opens all while zM closes all
-6.)	 /word enter | n to toggle between words | :number,number/search/replace
-7.)	 / also can move between tags ex. <> {} | /> or /} or /< for <htm>_</htm>
-8.)	 :set spell and : set nospell | n to toggle between misspelled words
-9.)	 Visual block | ctrl v | to comment | ctrl v move cursor then shift i esc
+1.) nnn command n | file manager | q quit | changes path to current directory
+2.) Vim Tabs | current dir | vim -p file.extention file.extention ./dirname/file.extention ../dirname/file.extention | tabnew & tabfind
+3.) Vim templates plugin
+4.) Movements jklh and w b and dw | delet word
+5.) Fold by shift v then zf highlighted text | za toggles a fold under cursor and zR opens all while zM closes all
+6.) /word enter | n to toggle between words | :number,number/search/replace
+7.) / also can move between tags ex. <> {} | /> or /} or /< for <htm>_</htm>
+8.) :set spell and : set nospell | n to toggle between misspelled words
+9.) Visual block | ctrl v | to comment | ctrl v move cursor then shift i esc
 
 for files with long lines -- Command --
 :NoMatchParen | set nocul | set lz
@@ -236,3 +236,52 @@ Shebang
 Chmod +x ./filename.sh
 
 To run type ./filename.sh
+
+Doom Emacs
+
+Leader key: SPC
+
+org mode
+  export:
+  blank
+  tangle:
+
+Magit 
+  unstaged files
+
+build sys
+----------
+env:           .profile vs /etc/profile and shell path fragmentation
+$PATH: 
+.env files:    omit sensitive info through gitignore, application dependent
+*
+       == editors ==
+doom-emacs         vim
+-----------        ----
+via lsp          ? via ALE
+fixer: lsp or pkg? fixer: via vimrc via ALE sec via either lan pkg mgr or sys pkg mgr
+linter: company  ? linter: via vimrc via ALE sec via either lan pkg mgr or sys pkg mgr
+*
+lang pkg mgr
+-------------
+Check if tools via sys level pkg mgr or lang pkg mgr?
+Then resolve fragmentation.
+note: some fixers need config
+*
+apl            interp: gnu-apl via homebrew
+verilog        compiler: iverilog via homebrew
+bash           linter: shellcheck via homebrew
+c              ?
+fish           linter: shellcheck? via homebrew
+f#             ?
+haskell        ?
+java           ?
+html           linter: tidy-html5 via homebrew
+css            linter: csslint via npm make prjk or global?
+javascript     interp: node via homebrew eslint and csslint via npm init then npx eslint --init?
+kotlin         ?
+python current anaconda in home? pip3 via pip? linter: pylint via pip and pip3 lists same packages
+python note:   add to brew python, pip, pip3 and anaconda
+rust           via cargo compiler rustc linter aysnc ? fixer ?
+cargo          add new prjc name cargo build?
+go             via homebrew also a dependency
