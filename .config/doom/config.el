@@ -28,6 +28,7 @@
 ;;(setq doom-theme 'doom-one)
 ;;(setq doom-theme 'afternoon)
 (setq doom-theme 'klere)
+(add-to-list 'default-frame-alist '(background-mode . dark))
 ;;(setq doom-theme ')
 
 ;; If you use `org' and don't want your org files in the default location below,
@@ -58,12 +59,54 @@
 
 ;; start of my config
 
+;; screen size
+;;(add-hook 'window-setup-hook #'toggle-frame-maximized)
+(setq initial-frame-alist '((top . 1) (right . 1) (width . 150) (height . 150)))
+
 ;; font
 (setq doom-font (font-spec :family "TerminessTTF Nerd Font Mono" :size 16))
 
 ;; dashboard
-(setq fancy-splash-image "/Users/kylegortych/Downloads/doom-emacs-bw-light.svg")
+;;(setq fancy-splash-image "/Users/kylegortych/Downloads/doom-emacs-bw-light.svg")
 
+(defun skull ()
+  (let* ((banner '("   .o oOOOOOOOo                                            OOOo    "
+                   "   Ob.OOOOOOOo  OOOo.      oOOo.                      .adOOOOOOO   "
+                   "   OboO000000000000.OOo. .oOOOOOo.    OOOo.oOOOOOo..0000000000OO   "
+                   "   OOP.oOOOOOOOOOOO iPOOOOOOOOOOOo.   `iOOOOOOOOOP,OOOOOOOOOOOB'   "
+                   "   `O'OOOO'     `OOOOo'OOOOOOOOOOO` .adOOOOOOOOO'oOOO'    `OOOOo   "
+                   "   .OOOO'            `OOOOOOOOOOOOOOOOOOOOOOOOOO'            `OO   "
+                   "   OOOOO                 'iOOOOOOOOOOOOOOOOi`                oOO   "
+                   "  oOOOOOba.                .adOOOOOOOOOOba               .adOOOOo. "
+                   " oOOOOOOOOOOOOOba.    .adOOOOOOOOOO@^OOOOOOOba.     .adOOOOOOOOOOOO"
+                   "OOOOOOOOOOOOOOOOO.OOOOOOOOOOOOOO'`  ''OOOOOOOOOOOOO.OOOOOOOOOOOOOO "
+                   "'OOOO'       'YOoOOOOMOIONODOO'`  .   ''OOROAOPOEOOOoOY'     'OOO' "
+                   "   Y           'OOOOOOOOOOOOOO: .oOOo. :OOOOOOOOOOO?'         :`   "
+                   "   :            .oO%OOOOOOOOOOo.OOOOOO.oOOOOOOOOOOOO?         .    "
+                   "   .            oOOPi%OOOOOOOOoOOOOOOO?oOOOOO?OOOOiOOo             "
+                   "                '%o  OOOO'%OOOO%'%OOOOO'OOOOOO'OOO':               "
+                   "                     `$i  `OOOO' `O'Y ' `OOOO'  o             .    "
+                   "   .                  .     OP'          : o     .                 "
+                   "                             :                                     "
+                   "                             .                                     "
+                   "                                                                   "))
+         (longest-line (apply #'max (mapcar #'length banner))))
+    (put-text-property
+     (point)
+     (dolist (line banner (point))
+       (insert (+doom-dashboard--center
+                +doom-dashboard--width
+                (concat line (make-string (max 0 (- longest-line (length line))) 68)))
+               "\n"))
+     'face 'doom-dashboard-banner)))
+
+(setq +doom-dashboard-ascii-banner-fn #'skull)
+
+(remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-loaded)
+(remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-footer)
+
+(add-hook! '+doom-dashboard-functions :append
+  (insert "\n" (+doom-dashboard--center +doom-dashboard--width "config by Kyle Gortych")))
 ;; apply icons to dired?
 
 
@@ -99,3 +142,18 @@
 (beacon-mode 1)
 ;; (beacon-color "#00afff")
 ;; (beacon--colored-overlay )
+
+;; lsp-sonarlint
+(require 'lsp-sonarlint)
+
+(require 'lsp-sonarlint-php)
+(setq lsp-sonarlint-php-enabled t)
+
+(require 'lsp-sonarlint-html)
+(setq lsp-sonarlint-html-enabled t)
+
+(require 'lsp-sonarlint-javascript)
+(setq lsp-sonarlint-javascript-enabled t)
+
+(require 'lsp-sonarlint-typescript)
+(setq lsp-sonarlint-typescript-enabled t)
