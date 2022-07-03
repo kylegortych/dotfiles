@@ -1,6 +1,0 @@
-fish aliases
--------------
-neo|ls-env|brew-pkgs-nodepens|brew-active-pkgs-nodepens|pip3-ls-pkgs
-apl-run-script|yarn-nodepens|weather|open-exit|filemgr
-verilog-compile|verilog-run|doom|tips|git-ls
-
