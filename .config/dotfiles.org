@@ -1,27 +1,42 @@
-# /////////////////////////////////////////////
-#        __      __  _____ __
-#   ____/ /___  / /_/ __(_) /__  _____
-#  / __  / __ \/ __/ /_/ / / _ \/ ___/
-# / /_/ / /_/ / /_/ __/ / /  __(__  )
-# \__,_/\____/\__/_/ /_/_/\___/____/
-#
-#+title: dotfiles
-#+description: exports multiple configs
-#+Author: Kyle Gortych
-#+PROPERTY: header-args :tangle
-# /////////////////////////////////
+#+title: Dotfiles
+#+begin_comment
+        __      __  _____ __
+   ____/ /___  / /_/ __(_) /__  _____
+  / __  / __ \/ __/ /_/ / / _ \/ ___/
+ / /_/ / /_/ / /_/ __/ / /  __(__  )
+ \__,_/\____/\__/_/ /_/_/\___/____/
 
-* Main Literate Config File
-Note: I moved most of my config files to .config directory. Insted of a bare git repo and updating the index, I just symbolically linked this one file to the git working directory. Make sure code snippets don't write to symbolic links but, the config files actual location. Also, all file paths should be absolute not relative to the org doc. All code blocks can be evaluated as txt. If you need to test a subsection use :! rather than a shell code snippet.
+ Maintainer: Kyle Gortych
+ github:     [[https://github.com/KyleGortych][My github account]]
+ Linkedin:   [[https://www.linkedin.com/in/kyle-gortych-163449240][My Linkedin account]]
+
+ DESC:               config for vim via homebrew via iTerm2.
+ WARNING:            Run this script at your own risk.
+ License:            Declared in repo
+ DEPENDENCIES:       emacs-mac ±, Doom ±
+ Date last modified: 07-04-2022
+#+end_comment
+
+* Dotfiles
+Note: I moved most of my config files to .config directory. Insted of a bare git repo and updating the index, I just symbolically linked this one file to the git working directory. Make sure code snippets don’t write to symbolic links but, the config files actual location. Also, all file paths should be absolute not relative to the org doc. All code blocks can be evaluated as txt. If you need to test a subsection use :! rather than a shell code snippet.
 
 Commands
-  - Export to files C-c C-c t
-  - For fast pasting :.!cat /path/file_name
+  - insert snippet: <s tab
+  - Export to files: C-c C-v t
+  - For fast pasting: :.!cat /path/file_name
+  -
 
-* CLI Support Files
-reminder: Move script possibly to bin | ps interpreter on startup
+* Shell Alias Support
 
-#+begin_src txt :tangle ~/.config/CLI\ Support/aliase\ \&\ script\ support/brew-pkgs
+#+begin_src txt :tangle ~/.config/CLI Support/aliase & script support/fish_aliases.txt
+fish aliases
+-------------
+neo|ls-env|brew-pkgs-nodepens|brew-active-pkgs-nodepens|pip3-ls-pkgs
+apl-run-script|yarn-nodepens|weather|open-exit|filemgr
+verilog-compile|verilog-run|doom|tips|git-ls
+#+end_src
+
+#+begin_src txt :tangle ~/.config/CLI Support/aliase & script support/brew-pkgs.txt
 Packages no Depens
 -------------------
 arduino-cli|espeak|kubernetes-cli|nghttp2|starship
@@ -48,15 +63,7 @@ android-sdk|fontforge|kicad|mactex-no-gui|openshot-video-editor
 balenaetcher|freecad|kitty|mpv|timemachineeditor
 #+end_src
 
-#+begin_src txt :tangle ~/.config/CLI\ Support/aliase\ \&\ script\ support/fish_aliases
-fish aliases
--------------
-neo|ls-env|brew-pkgs-nodepens|brew-active-pkgs-nodepens|pip3-ls-pkgs
-apl-run-script|yarn-nodepens|weather|open-exit|filemgr
-verilog-compile|verilog-run|doom|tips|git-ls
-#+end_src
-
-#+begin_src txt :tangle ~/.config/CLI\ Support/aliase\ \&\ script\ support/neo.txt
+#+begin_src txt :tangle ~/.config/CLI Support/aliase & script support/neo.txt
 OS:| macOS 12.4 21F79 x86_64
 Host:| MacBookPro17,1
 Kernel:| 21.5.0
@@ -71,7 +78,7 @@ Memory:| 2288MiB / 16384MiB
 
 #+end_src
 
-#+begin_src txt :tangle ~/.config/CLI\ Support/aliase\ \&\ script\ support/tips.txt
+#+begin_src txt :tangle ~/.config/CLI Support/aliase & script support/tips.txt
 Main concepts for most programming languages
 
 Importing modules
@@ -361,7 +368,647 @@ cargo          add new prjc name cargo build?
 go             via homebrew also a dependency
 #+end_src
 
-* Doom Config
+* Fish Shell
+
+#+begin_src txt :tangle ~/.config/fish/config.fish
+# Put system-wide fish configuration entries here
+# or in .fish files in conf.d/
+# Files in conf.d can be overridden by the user
+# by files with the same name in $XDG_CONFIG_HOME/fish/conf.d
+
+# This file is run by all fish instances.
+# To include configuration only for login shells, use
+# if status is-login
+#    ...
+# end
+# To include configuration only for interactive shells, use
+# if status is-interactive
+#   ...
+# end
+
+# Paths
+# fish_add_path /usr/local/sbin
+
+# $PATH added to /.config/fish and .profile?
+# resolve fragmented paths
+
+# nvim to neovide.app ?
+# fish_add_path /usr/local/bin/brew shellenv
+
+# disable fish greeting
+set fish_greeting
+
+# starship prompt
+starship init fish | source
+
+# negate fish vi cursor
+function fish_vi_cursor
+  ;
+end
+
+# neofetch
+if status is-interactive
+  # move script to bin | ps outputs interpreter running?
+  # ~/.config/CLI\ Support/sh\ scripts/./info.sh
+
+  neofetch --colors --colors 9 2 3 39 15 15 --backend iterm2 --source ~/Downloads/vim2.png --size 20%
+  date +"-- %a %m-%d-%Y %I:%M%p --"
+  printf '\n'
+  ps
+end
+
+# aliases
+
+function aliases
+  column -t -s '|' ~/.config/CLI\ Support/aliase\ \&\ script\ support/fish_aliases.txt | tr '*' ' '
+end
+
+# pkill verify pid match
+# function terminate
+#   ps | rg $argv && pkill $argv
+# end
+
+# concat commands with mktemp auto rm after termination?
+# function network-info
+#   ((ifconfig | rg "inet" | rg -v 127.0.0.1) && networksetup -listallhardwareports) | less
+# end
+
+function ls-env
+  env | column -t -s '='
+end
+
+function brew-pkgs-nodepens
+  column -t -s '|' ~/.config/CLI\ Support/aliase\ \&\ script\ support/brew-pkgs.txt | tr '*' ' '
+end
+
+function brew-active-pkgs-nodepens
+  echo -e '\e[4mPackages no Depens\e[0m' ; brew leaves | column ; echo '' ; echo -e '\e[4mCasks\e[0m' ; brew list --cask
+end
+
+function tips
+  less ~/.config/CLI\ Support/aliase\ \&\ script\ support/tips.txt
+end
+
+function neo
+  neofetch --colors --colors 9 2 3 39 15 15 --backend iterm2 --source ~/Downloads/vim2.png --size 20%
+end
+
+function pip3-ls-pkgs
+  pip3 list --not-required
+end
+
+# add input?
+# yarn list --pattern "$argv" --depth=1
+function yarn-nodepens
+  yarn list --depth=0
+end
+
+function weather
+  curl wttr.in/$argv
+end
+
+function open-exit
+  open -a "$argv" && exit
+end
+
+function filemgr
+  cd $(xplr --print-pwd-as-result)
+end
+
+function apl-run-script
+  apl --noSV --noColor --noCIN -q -f $argv
+end
+
+function verilog-compile
+  iverilog -o $argv
+end
+
+function verilog-run
+  vvp $argv
+end
+
+function doom
+  ~/.emacs.d/bin/doom $argv
+end
+
+# function kotlin-run-script
+#   kotlinc $argv -include-runtime -d $argv && java -jar $argv
+# end
+
+# git aliases
+function git-ls
+  git diff --staged --name-only
+end
+#+end_src
+
+* starship prompt
+
+#+begin_src txt :tangle ~/.config/starship.toml
+# note: colores can be diffrent for your shell color scheme
+# use of true colors is not discused for starship prompt documentation
+# as best practice terminal emulator should have all colors the same
+# each config file has color settings to avoid conflics
+
+# needed for nnn cd in current dir on quit
+command_timeout = 1000
+
+[character]
+success_symbol = "[❯❯](bold #ff8700)"
+error_symbol   = "[✘](red)"
+vicmd_symbol   = "[❮❮](bold #ff8700)"
+
+[directory]
+style = "#00afff"
+
+[cmd_duration]
+style = "#ff8700"
+#+end_src
+
+* vim
+notes: Finish refactoring to vim9 script
+
+#+begin_src txt :tangle ~/.vim/vimrc
+vim9script
+#////////////////////////////////////////////////////////////////////
+#         _
+#  _   __(_)___ ___  __________
+# | | / / / __ `__ \/ ___/ ___/
+# | |/ / / / / / / / /  / /__
+# |___/_/_/ /_/ /_/_/   \___/
+#
+# Maintainer: Kyle Gortych
+# github:     https://github.com/KyleGortych
+# Linkedin:   https://www.linkedin.com/in/kyle-gortych-163449240
+#
+# DESC:               config for vim via homebrew via iTerm2.
+# WARNING:            Run this script at your own risk.
+# License:            Declared in repo
+# DEPENDENCIES:       vim 9+
+# Date last modified: 07-03-2022
+#////////////////////////////////////////////////////////////
+
+# Plugins
+plug#begin()
+Plug 'widatama/vim-phoenix'
+Plug 'fcpg/vim-fahrenheit'
+# Plug 'dylanaraps/wal.vim'
+Plug 'sjl/vitality.vim'
+Plug 'dense-analysis/ale'
+Plug 'valloric/youcompleteme'
+Plug 'tmsvg/pear-tree'
+Plug 'romainl/vim-cool'
+Plug 'tibabit/vim-templates'
+Plug 'tounaishouta/coq.vim'
+plug#end()
+
+# overide color scheme
+augroup overidetheme
+  autocmd!
+  autocmd ColorScheme * highlight NonText ctermfg = 208 ctermbg = NONE
+  autocmd ColorScheme * highlight Folded ctermfg = black ctermbg = 245
+  autocmd ColorScheme * highlight Search ctermfg = black ctermbg = 208
+  autocmd ColorScheme * highlight ModeMsg ctermfg = 208 ctermbg = NONE
+  autocmd ColorScheme * highlight MoreMsg ctermfg = 208 ctermbg = NONE
+  autocmd ColorScheme * highlight WarningMsg ctermfg = NONE ctermbg = 208
+  autocmd ColorScheme * highlight Todo ctermfg = 208 ctermbg = NONE
+  autocmd ColorScheme * highlight SpellCap cterm = bold ctermfg = black ctermbg = 208
+  autocmd ColorScheme * highlight SpellBad cterm = bold ctermfg = 9 ctermbg = 8
+  autocmd ColorScheme * highlight SpellRare cterm = bold ctermfg = 220 ctermbg = 8
+  autocmd ColorScheme * highlight SpellLocal cterm = bold ctermfg = 208 ctermbg = 8
+  autocmd ColorScheme * highlight Visual ctermfg = black ctermbg = 208
+  autocmd ColorScheme * highlight DiffAdd ctermfg = black ctermbg = 39
+  autocmd ColorScheme * highlight DiffChange ctermfg = black ctermbg = 245
+  autocmd ColorScheme * highlight DiffDelete ctermfg = black ctermbg = 245
+augroup end
+
+# pear tree
+g:pear_tree_pairs = {
+  '(': {'closer': ')'},
+  '[': {'closer': ']'},
+  '{': {'closer': '}'},
+  "'": {'closer': "'"},
+  '"': {'closer': '"'},
+  '<': {'closer': '>'},
+  '<!-': {'closer': '- -->'},
+  '<!D': {'closer': 'OCTYPE html>'},
+  '<ht': {'closer': 'ml></html>'},
+  '<he': {'closer': 'ad></head>'},
+  '<header': {'closer': '></header>'},
+  '<ti': {'closer': 'tle></title>'},
+  '<sc': {'closer': 'ript></script>'},
+  '<st': {'closer': 'yle></style>'},
+  '<bo': {'closer': 'dy></body>'},
+  '<ta': {'closer': 'ble></table>'},
+  '<tr': {'closer': '></tr>'},
+  '<td': {'closer': '></td>'},
+  '<di': {'closer': 'v></div>'},
+  '<ul': {'closer': '></ul>'},
+  '<ol': {'closer': '></ol>'},
+  '<li': {'closer': '><a></a></li>'},
+  '<na': {'closer': 'v></nav>'},
+  '<pa': {'closer': 'th></path>'},
+  '<bu': {'closer': 'tton></button>'},
+  '<sv': {'closer': 'g></svg>'},
+  '<a': {'closer': '></a>'},
+  '<ma': {'closer': 'in></main>'},
+  '<h1': {'closer': '></h1>'},
+  '<h2': {'closer': '></h2>'},
+  '<h3': {'closer': '></h3>'},
+  '<se': {'closer': 'ction></section>'},
+  '<p': {'closer': '></p>'}
+}
+
+# ale
+set omnifunc=syntaxcomplete"Complete
+g:ale_lint_on_enter = 0
+g:ale_completion_enabled = 1
+g:rustfmt_autosave = 1
+# g:ale_linters_explicit = 1
+# set omnifunc=ale"completion"OmniFunc
+
+g:ale_linters = {
+  'bash': ['shellcheck'],
+  'rust': ['cargo', 'rustfmt'],
+  'python': ['pylint'],
+  'java': ['uncrustify'],
+  'javascript': ['eslint']
+}
+
+g:ale_fixers = {
+  'bash': ['shellcheck'],
+  'rust': ['rustfmt'],
+  'python': ['autopep8'],
+  'java': ['uncrustify'],
+  'javascript': ['eslint']
+}
+
+# ycm
+
+
+# vim template
+# edit templates in ~/.vim/plugged/vim-templates/templates
+# WARNING JetpackUpdate could cause loss of template configs store on git or
+# seprate txt file
+
+# defaults
+
+# main defaults
+#set nocp
+colorscheme phoenix
+syntax on
+filetype on
+filetype plugin on
+filetype indent on
+set clipboard=unnamed
+set number
+set tabstop=2
+set shiftwidth=2
+set expandtab
+set backspace=2
+set autoindent
+set encoding=UTF-8
+set lz
+set tf
+set smc=80
+set tw=45
+set nowrap
+set fo-=t
+set fo-=c
+#set wrap linebreak nolist
+#set whichwrap+=<,>,h,l
+#set cc=78
+set cul
+set hidden
+set scrolloff=5
+set foldopen-=block
+set foldopen-=hor
+set incsearch
+set hlsearch
+set nrformats=bin,alpha,octal,hex
+# spelling
+set spell spelllang=en_us
+set spellfile=en.utf-8.add
+set complete+=kspell
+set secure
+# wildmenu
+set wildmenu
+set wildmode=list:longest
+#wildoptions='pum'
+set wildignore=*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx"
+# Lex Netrw
+g:netrw_winsize = 20
+# each tab | separate prj folder
+# minimizes buffer list | two per tab
+
+# remappings current [0]
+# remappinig for spell and suyntax error jumping same as / command's jumping n
+
+# noremap n ]s
+
+# remapping for para jump curly braces and horizontal word jump e and b
+
+# noremap hjkl | hold 3 jumps | (h -> b) & (l -> e) & (j -> }) & (k -> {)
+
+# macros
+
+# invoke single line via @letter
+
+# to clear use :let @letter = ''
+
+# multi line: shift v command
+# result: :'<,'>normal @letter
+
+# Outline
+# @letter:      comands
+# macro result: result
+
+# @a:
+# macro result:
+
+# functions
+
+# terminal cursor shape overide
+#if $TERM_PROGRAM =~ "iTerm"
+#    &t_EI = "\<Esc>]50;CursorShape = 0\x7" # Block in normal mode
+#    &t_SI = "\<Esc>]50;CursorShape = 2\x7" # Underscore in insert mode
+#    autocmd VimLeave * &t_me = "\<Esc>]50;CursorShape = 2\x7"
+#endif
+
+# save folds
+# conflict | :diffoff! wont work
+# workaround | manual reset :mkview :loadview
+#augroup remember_folds
+#    autocmd!
+#    autocmd BufWinLeave *.* mkview
+#    autocmd BufWinEnter *.* silent! loadview
+#augroup END
+
+# statusline git
+
+
+# statusline
+set ls=2
+set stl+=%#CursorLineFold#
+set stl+=\%f
+set stl+=\%y
+set stl+=\%m
+set stl+=\%r
+set stl+=%#StatusLine#
+set stl+=\ %{&fileencoding?&fileencoding:&encoding}
+set stl+=\[%{&fileformat}\]
+set stl+=%=
+set stl+=\char:
+set stl+=\%b
+set stl+=\ pos:
+set stl+=\%l:
+set stl+=\%c
+set stl+=\ Buf:
+set stl+=\%n
+#+end_src
+
+* nvim
+notes: refactor to lua
+
+#+begin_src txt :tangle ~/.config/nvim/init.lua
+--[[
+     _       _ __    __
+    (_)___  (_) /_  / /_  ______ _
+   / / __ \/ / __/ / / / / / __ `/
+  / / / / / / /__ / / /_/ / /_/ /
+ /_/_/ /_/_/\__(_)_/\__,_/\__,_/
+
+ Maintainer: Kyle Gortych
+ github:     https://github.com/KyleGortych
+ Linkedin:   https://www.linkedin.com/in/kyle-gortych-163449240
+
+ DESC:               config for vim via homebrew via iTerm2.
+ WARNING:            Run this script at your own risk.
+ License:            Declared in repo
+ DEPENDENCIES:       nvim +
+ Date last modified: 07-04-2022
+--]]
+
+-- Plugins
+local Plug = vim.fn['plug#']
+vim.call('plug#begin', '~/.config/nvim/plugged')
+Plug 'widatama/vim-phoenix'
+Plug 'fcpg/vim-fahrenheit'
+-- Plug 'dylanaraps/wal.vim'
+Plug 'sjl/vitality.vim'
+Plug 'dense-analysis/ale'
+Plug 'valloric/youcompleteme'
+Plug 'tmsvg/pear-tree'
+Plug 'romainl/vim-cool'
+Plug 'tibabit/vim-templates'
+Plug 'tounaishouta/coq.vim'
+vim.call('plug#end')
+
+-- overide color scheme
+augroup overidetheme
+  autocmd!
+  autocmd ColorScheme * highlight NonText ctermfg = 208 ctermbg = NONE
+  autocmd ColorScheme * highlight Folded ctermfg = black ctermbg = 245
+  autocmd ColorScheme * highlight Search ctermfg = black ctermbg = 208
+  autocmd ColorScheme * highlight ModeMsg ctermfg = 208 ctermbg = NONE
+  autocmd ColorScheme * highlight MoreMsg ctermfg = 208 ctermbg = NONE
+  autocmd ColorScheme * highlight WarningMsg ctermfg = NONE ctermbg = 208
+  autocmd ColorScheme * highlight Todo ctermfg = 208 ctermbg = NONE
+  autocmd ColorScheme * highlight SpellCap cterm = bold ctermfg = black ctermbg = 208
+  autocmd ColorScheme * highlight SpellBad cterm = bold ctermfg = 9 ctermbg = 8
+  autocmd ColorScheme * highlight SpellRare cterm = bold ctermfg = 220 ctermbg = 8
+  autocmd ColorScheme * highlight SpellLocal cterm = bold ctermfg = 208 ctermbg = 8
+  autocmd ColorScheme * highlight Visual ctermfg = black ctermbg = 208
+  autocmd ColorScheme * highlight DiffAdd ctermfg = black ctermbg = 39
+  autocmd ColorScheme * highlight DiffChange ctermfg = black ctermbg = 245
+  autocmd ColorScheme * highlight DiffDelete ctermfg = black ctermbg = 245
+augroup end
+
+-- pear tree
+g:pear_tree_pairs = {
+  '(': {'closer': ')'},
+  '[': {'closer': ']'},
+  '{': {'closer': '}'},
+  "'": {'closer': "'"},
+  '"': {'closer': '"'},
+  '<': {'closer': '>'},
+  '<!-': {'closer': '- -->'},
+  '<!D': {'closer': 'OCTYPE html>'},
+  '<ht': {'closer': 'ml></html>'},
+  '<he': {'closer': 'ad></head>'},
+  '<header': {'closer': '></header>'},
+  '<ti': {'closer': 'tle></title>'},
+  '<sc': {'closer': 'ript></script>'},
+  '<st': {'closer': 'yle></style>'},
+  '<bo': {'closer': 'dy></body>'},
+  '<ta': {'closer': 'ble></table>'},
+  '<tr': {'closer': '></tr>'},
+  '<td': {'closer': '></td>'},
+  '<di': {'closer': 'v></div>'},
+  '<ul': {'closer': '></ul>'},
+  '<ol': {'closer': '></ol>'},
+  '<li': {'closer': '><a></a></li>'},
+  '<na': {'closer': 'v></nav>'},
+  '<pa': {'closer': 'th></path>'},
+  '<bu': {'closer': 'tton></button>'},
+  '<sv': {'closer': 'g></svg>'},
+  '<a': {'closer': '></a>'},
+  '<ma': {'closer': 'in></main>'},
+  '<h1': {'closer': '></h1>'},
+  '<h2': {'closer': '></h2>'},
+  '<h3': {'closer': '></h3>'},
+  '<se': {'closer': 'ction></section>'},
+  '<p': {'closer': '></p>'}
+}
+
+-- ale
+set omnifunc=syntaxcomplete"Complete
+g:ale_lint_on_enter = 0
+g:ale_completion_enabled = 1
+g:rustfmt_autosave = 1
+-- g:ale_linters_explicit = 1
+-- set omnifunc=ale"completion"OmniFunc
+
+g:ale_linters = {
+  'bash': ['shellcheck'],
+  'rust': ['cargo', 'rustfmt'],
+  'python': ['pylint'],
+  'java': ['uncrustify'],
+  'javascript': ['eslint']
+}
+
+g:ale_fixers = {
+  'bash': ['shellcheck'],
+  'rust': ['rustfmt'],
+  'python': ['autopep8'],
+  'java': ['uncrustify'],
+  'javascript': ['eslint']
+}
+
+-- ycm
+
+
+-- vim template
+-- edit templates in ~/.vim/plugged/vim-templates/templates
+-- WARNING JetpackUpdate could cause loss of template configs store on git or
+-- seprate txt file
+
+-- defaults
+
+-- main defaults
+--vim.blank.nocp
+colorscheme phoenix
+syntax on
+filetype on
+filetype plugin on
+filetype indent on
+vim.blank.clipboard=unnamed
+vim.blank.number
+vim.blank.tabstop=2
+vim.blank.shiftwidth=2
+vim.bo.expandtab = true
+vim.blank.backspace=2
+vim.blank.autoindent
+vim.blank.encoding=UTF-8
+vim.blank.lz
+vim.blank.tf
+vim.blank.smc=80
+vim.blank.tw=45
+vim.blank.nowrap
+vim.blank.fo-=t
+vim.blank.fo-=c
+-- vim.blank.wrap linebreak nolist
+-- vim.blank.whichwrap+=<,>,h,l
+-- vim.blank.cc=78
+vim.blank.cul
+vim.blank.hidden
+vim.blank.scrolloff=5
+vim.blank.foldopen-=block
+vim.blank.foldopen-=hor
+vim.blank.incsearch
+vim.blank.hlsearch
+vim.blank.nrformats=bin,alpha,octal,hex
+-- spelling
+vim.blank.spell spelllang=en_us
+vim.blank.spellfile=en.utf-8.add
+vim.blank.complete+=kspell
+vim.blank.secure
+-- wildmenu
+vim.blank.wildmenu
+vim.blank.wildmode=list:longest
+#wildoptions='pum'
+vim.blank.wildignore=*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx"
+-- Lex Netrw
+g:netrw_winsize = 20
+--each tab | separate prj folder
+--minimizes buffer list | two per tab
+
+--remappings current [0]
+--remappinig for spell and suyntax error jumping same as / command's jumping n
+
+--noremap n ]s
+
+--remapping for para jump curly braces and horizontal word jump e and b
+
+--noremap hjkl | hold 3 jumps | (h -> b) & (l -> e) & (j -> }) & (k -> {)
+
+--macros
+
+--invoke single line via @letter
+
+--to clear use :let @letter = ''
+
+--multi line: shift v command
+--result: :'<,'>normal @letter
+
+--Outline
+--@letter:      comands
+--macro result: result
+
+--@a:
+--macro result:
+
+--functions
+
+-- terminal cursor shape overide
+--if $TERM_PROGRAM =~ "iTerm"
+--    &t_EI = "\<Esc>]50;CursorShape = 0\x7" # Block in normal mode
+--    &t_SI = "\<Esc>]50;CursorShape = 2\x7" # Underscore in insert mode
+--    autocmd VimLeave * &t_me = "\<Esc>]50;CursorShape = 2\x7"
+--endif
+
+-- save folds
+-- conflict | :diffoff! wont work
+-- workaround | manual reset :mkview :loadview
+--augroup remember_folds
+--    autocmd!
+--    autocmd BufWinLeave *.* mkview
+--    autocmd BufWinEnter *.* silent! loadview
+--augroup END
+
+-- statusline git
+
+
+-- statusline
+vim.blank.ls=2
+vim.blank.stl+=%#CursorLineFold#
+vim.blank.stl+=\%f
+vim.blank.stl+=\%y
+vim.blank.stl+=\%m
+vim.blank.stl+=\%r
+vim.blank.stl+=%#StatusLine#
+vim.blank.stl+=\ %{&fileencoding?&fileencoding:&encoding}
+vim.blank.stl+=\[%{&fileformat}\]
+vim.blank.stl+=%=
+vim.blank.stl+=\char:
+vim.blank.stl+=\%b
+vim.blank.stl+=\ pos:
+vim.blank.stl+=\%l:
+vim.blank.stl+=\%c
+vim.blank.stl+=\ Buf:
+vim.blank.stl+=\%n
+#+end_src
+
+* Doom Emacs config
 
 #+begin_src txt :tangle ~/.config/doom/config.el
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
@@ -525,136 +1172,74 @@ go             via homebrew also a dependency
 (setq lsp-sonarlint-typescript-enabled t)
 #+end_src
 
-# #+begin_src txt :tangle custom.el init.el packages.el
-#
-# #+end_src
+#+begin_src txt :tangle ~/.config/doom/packages.el
+;; -*- no-byte-compile: t; -*-
+;;; $DOOMDIR/packages.el
 
-* Fish Shell
+;; To install a package with Doom you must declare them here and run 'doom sync'
+;; on the command line, then restart Emacs for the changes to take effect -- or
+;; use 'M-x doom/reload'.
 
-#+begin_src txt :tangle ~/.config/fish/config.fish
-# Put system-wide fish configuration entries here
-# or in .fish files in conf.d/
-# Files in conf.d can be overridden by the user
-# by files with the same name in $XDG_CONFIG_HOME/fish/conf.d
 
-# This file is run by all fish instances.
-# To include configuration only for login shells, use
-# if status is-login
-#    ...
-# end
-# To include configuration only for interactive shells, use
-# if status is-interactive
-#   ...
-# end
+;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
+;(package! some-package)
 
-# Paths
-# fish_add_path /usr/local/sbin
+;; To install a package directly from a remote git repo, you must specify a
+;; `:recipe'. You'll find documentation on what `:recipe' accepts here:
+;; https://github.com/raxod502/straight.el#the-recipe-format
+;(package! another-package
+;  :recipe (:host github :repo "username/repo"))
 
-# $PATH added to /.config/fish and .profile?
-# resolve fragmented paths
+;; If the package you are trying to install does not contain a PACKAGENAME.el
+;; file, or is located in a subdirectory of the repo, you'll need to specify
+;; `:files' in the `:recipe':
+;(package! this-package
+;  :recipe (:host github :repo "username/repo"
+;           :files ("some-file.el" "src/lisp/*.el")))
 
-# nvim to neovide.app ?
-# fish_add_path /usr/local/bin/brew shellenv
+;; If you'd like to disable a package included with Doom, you can do so here
+;; with the `:disable' property:
+;(package! builtin-package :disable t)
 
-# disable fish greeting
-set fish_greeting
+;; You can override the recipe of a built in package without having to specify
+;; all the properties for `:recipe'. These will inherit the rest of its recipe
+;; from Doom or MELPA/ELPA/Emacsmirror:
+;(package! builtin-package :recipe (:nonrecursive t))
+;(package! builtin-package-2 :recipe (:repo "myfork/package"))
 
-# starship prompt
-starship init fish | source
+;; Specify a `:branch' to install a package from a particular branch or tag.
+;; This is required for some packages whose default branch isn't 'master' (which
+;; our package manager can't deal with; see raxod502/straight.el#279)
+;(package! builtin-package :recipe (:branch "develop"))
 
-# negate fish vi cursor
-function fish_vi_cursor
-  ;
-end
+;; Use `:pin' to specify a particular commit to install.
+;(package! builtin-package :pin "1a2b3c4d5e")
 
-# neofetch
-if status is-interactive
-  # move script to bin | ps outputs interpreter running?
-  # ~/.config/CLI\ Support/sh\ scripts/./info.sh
 
-  neofetch --colors --colors 9 2 3 39 15 15 --backend iterm2 --source ~/Downloads/vim2.png --size 20%
-  date +"-- %a %m-%d-%Y %I:%M%p --"
-  printf '\n'
-  ps
-end
+;; Doom's packages are pinned to a specific commit and updated from release to
+;; release. The `unpin!' macro allows you to unpin single packages...
+;(unpin! pinned-package)
+;; ...or multiple packages
+;(unpin! pinned-package another-pinned-package)
+;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
+;(unpin! t)
 
-# aliases
+(package! evil-terminal-cursor-changer)
+(package! gnu-apl-mode)
+(package! cobol-mode)
+(package! spaceline)
+(package! afternoon-theme)
+(package! klere-theme)
+(package! molokai-theme)
+(package! stripe-buffer)
+(package! beacon)
+(package! lsp-sonarlint)
+;;(package! )
 
-function aliases
-  column -t -s '|' ~/.config/CLI\ Support/aliase\ \&\ script\ support/fish_aliases.txt | tr '*' ' '
-end
-
-# concat commands with mktemp auto rm after termination?
-# function network-info
-#   ((ifconfig | rg "inet" | rg -v 127.0.0.1) && networksetup -listallhardwareports) | less
-# end
-
-function neo
-  neofetch --colors --colors 9 2 3 39 15 15 --backend iterm2 --source ~/Downloads/vim2.png --size 20%
-end
-
-function ls-env
-  env | column -t -s '='
-end
-
-function brew-pkgs-nodepens
-  column -t -s '|' ~/.config/CLI\ Support/aliase\ \&\ script\ support/brew-pkgs.txt | tr '*' ' '
-end
-
-function brew-active-pkgs-nodepens
-  echo -e '\e[4mPackages no Depens\e[0m' ; brew leaves | column ; echo '' ; echo -e '\e[4mCasks\e[0m' ; brew list --cask
-end
-
-function tips
-  less ~/.config/CLI\ Support/aliase\ \&\ script\ support/tips.txt
-end
-
-function pip3-ls-pkgs
-  pip3 list --not-required
-end
-
-# add input?
-# yarn list --pattern "$argv" --depth=1
-function yarn-nodepens
-  yarn list --depth=0
-end
-
-function weather
-  curl wttr.in/$argv
-end
-
-function open-exit
-  open -a "$argv" && exit
-end
-
-function filemgr
-  cd $(xplr --print-pwd-as-result)
-end
-
-function apl-run-script
-  apl --noSV --noColor --noCIN -q -f $argv
-end
-
-function verilog-compile
-  iverilog -o $argv
-end
-
-function verilog-run
-  vvp $argv
-end
-
-function doom
-  ~/.emacs.d/bin/doom $argv
-end
-
-# function kotlin-run-script
-#   kotlinc $argv -include-runtime -d $argv && java -jar $argv
-# end
-
-# git aliases
-function git-ls
-  git diff --staged --name-only
-end
+;;(package! example :recipe
+;;  (:host github
+;;   :repo "url"
+;;   :files ("file-name.el" "url raw?"))
 #+end_src
 
 * mpv
@@ -1533,301 +2118,6 @@ background_color=
 # Default: 'off'
 # Values: 'on', 'off'
 stdout="off"
-#+end_src
-
-* sc-im
-
-#+begin_src txt :tangle ~/.config/sc-im/scimrc
-# config for sc-im
-#
-# Maintainer: Kyle Gortych
-# Date:       04-29-2022
-
-# color theme
-
-# theme 1
-
-# Papercolor dark theme
-# REDEFINE_COLOR "WHITE" 208 208 208
-# REDEFINE_COLOR "BLACK" 28 28 28
-# REDEFINE_COLOR "RED" 255 149 128
-# REDEFINE_COLOR "GREEN" 175 215 0
-# REDEFINE_COLOR "YELLOW" 255 175 95
-# REDEFINE_COLOR "BLUE" 95 175 215
-# REDEFINE_COLOR "CYAN" 0 175 175
-# REDEFINE_COLOR "MAGENTA" 255 95 175
-DEFINE_COLOR "comment" 0 135 135
-DEFINE_COLOR "altbackground" 88 88 88
-DEFINE_COLOR "infofg" 215 175 95
-DEFINE_COLOR "errorbg" 175 0 0
-
-color "type=DEFAULT fg=WHITE bg=BLACK bold=0 italic=0"
-color "type=NORMAL fg=WHITE bg=BLACK bold=0 italic=0"
-color "type=WELCOME fg=CYAN bg=BLACK bold=0"
-color "type=MODE fg=infofg bg=BLACK bold=0"
-color "type=GRID_EVEN fg=WHITE bg=BLACK"
-color "type=GRID_ODD fg=WHITE bg=BLACK"
-color "type=CELL_ID fg=WHITE bg=BLACK bold=0"
-color "type=CELL_FORMAT fg=comment bg=BLACK bold=0"
-color "type=CELL_CONTENT fg=WHITE bg=BLACK bold=0"
-color "type=INFO_MSG fg=infofg bg=BLACK bold=0"
-color "type=ERROR_MSG fg=WHITE bg=errorbg bold=0"
-color "type=INPUT fg=BLUE bg=BLACK"
-color "type=CELL_ERROR fg=WHITE bg=errorbg bold=0"
-color "type=HEADINGS fg=comment bg=BLACK bold=0"
-color "type=HEADINGS_ODD fg=comment bg=BLACK bold=0"
-color "type=CELL_SELECTION fg=WHITE bg=altbackground bold=1"
-color "type=CELL_SELECTION_SC fg=WHITE bg=altbackground bold=1"
-color "type=NUMB fg=YELLOW bg=BLACK bold=0"
-color "type=CELL_NEGATIVE fg=MAGENTA bg=BLACK bold=0"
-color "type=EXPRESSION fg=GREEN bg=BLACK bold=0"
-# To not italicize strings, replace italic=1 with italic=0 on following line
-color "type=STRG fg=BLUE bg=BLACK bold=0 italic=1"
-color "type=DATEF fg=YELLOW bg=BLACK"
-color "type=HELP_HIGHLIGHT fg=BLACK bg=WHITE"
-
-# theme 2
-#+end_src
-
-* vim
-
-#+begin_src txt :tangle ~/.vim/vimrc
-vim9script
-#////////////////////////////////////////////////////////////////////
-#         _
-#  _   __(_)___ ___  __________
-# | | / / / __ `__ \/ ___/ ___/
-# | |/ / / / / / / / /  / /__
-# |___/_/_/ /_/ /_/_/   \___/
-#
-# Maintainer: Kyle Gortych
-# github:     https://github.com/KyleGortych
-# Linkedin:   https://www.linkedin.com/in/kyle-gortych-163449240
-#
-# DESC:               config for vim via homebrew via iTerm2.
-# WARNING:            Run this script at your own risk.
-# License:            Declared in repo
-# DEPENDENCIES:       vim 9+
-# Date last modified: 07-03-2022
-#////////////////////////////////////////////////////////////
-
-# Plugins
-plug#begin()
-Plug 'widatama/vim-phoenix'
-Plug 'fcpg/vim-fahrenheit'
-# Plug 'dylanaraps/wal.vim'
-Plug 'sjl/vitality.vim'
-Plug 'dense-analysis/ale'
-Plug 'valloric/youcompleteme'
-Plug 'tmsvg/pear-tree'
-Plug 'romainl/vim-cool'
-Plug 'tibabit/vim-templates'
-Plug 'tounaishouta/coq.vim'
-plug#end()
-
-# overide color scheme
-augroup overidetheme
-  autocmd!
-  autocmd ColorScheme * highlight NonText ctermfg = 208 ctermbg = NONE
-  autocmd ColorScheme * highlight Folded ctermfg = black ctermbg = 245
-  autocmd ColorScheme * highlight Search ctermfg = black ctermbg = 208
-  autocmd ColorScheme * highlight ModeMsg ctermfg = 208 ctermbg = NONE
-  autocmd ColorScheme * highlight MoreMsg ctermfg = 208 ctermbg = NONE
-  autocmd ColorScheme * highlight WarningMsg ctermfg = NONE ctermbg = 208
-  autocmd ColorScheme * highlight Todo ctermfg = 208 ctermbg = NONE
-  autocmd ColorScheme * highlight SpellCap cterm = bold ctermfg = black ctermbg = 208
-  autocmd ColorScheme * highlight SpellBad cterm = bold ctermfg = 9 ctermbg = 8
-  autocmd ColorScheme * highlight SpellRare cterm = bold ctermfg = 220 ctermbg = 8
-  autocmd ColorScheme * highlight SpellLocal cterm = bold ctermfg = 208 ctermbg = 8
-  autocmd ColorScheme * highlight Visual ctermfg = black ctermbg = 208
-  autocmd ColorScheme * highlight DiffAdd ctermfg = black ctermbg = 39
-  autocmd ColorScheme * highlight DiffChange ctermfg = black ctermbg = 245
-  autocmd ColorScheme * highlight DiffDelete ctermfg = black ctermbg = 245
-augroup end
-
-# pear tree
-g:pear_tree_pairs = {
-  '(': {'closer': ')'},
-  '[': {'closer': ']'},
-  '{': {'closer': '}'},
-  "'": {'closer': "'"},
-  '"': {'closer': '"'},
-  '<': {'closer': '>'},
-  '<!-': {'closer': '- -->'},
-  '<!D': {'closer': 'OCTYPE html>'},
-  '<ht': {'closer': 'ml></html>'},
-  '<he': {'closer': 'ad></head>'},
-  '<header': {'closer': '></header>'},
-  '<ti': {'closer': 'tle></title>'},
-  '<sc': {'closer': 'ript></script>'},
-  '<st': {'closer': 'yle></style>'},
-  '<bo': {'closer': 'dy></body>'},
-  '<ta': {'closer': 'ble></table>'},
-  '<tr': {'closer': '></tr>'},
-  '<td': {'closer': '></td>'},
-  '<di': {'closer': 'v></div>'},
-  '<ul': {'closer': '></ul>'},
-  '<ol': {'closer': '></ol>'},
-  '<li': {'closer': '><a></a></li>'},
-  '<na': {'closer': 'v></nav>'},
-  '<pa': {'closer': 'th></path>'},
-  '<bu': {'closer': 'tton></button>'},
-  '<sv': {'closer': 'g></svg>'},
-  '<a': {'closer': '></a>'},
-  '<ma': {'closer': 'in></main>'},
-  '<h1': {'closer': '></h1>'},
-  '<h2': {'closer': '></h2>'},
-  '<h3': {'closer': '></h3>'},
-  '<se': {'closer': 'ction></section>'},
-  '<p': {'closer': '></p>'}
-}
-
-# ale
-set omnifunc=syntaxcomplete"Complete
-g:ale_lint_on_enter = 0
-g:ale_completion_enabled = 1
-g:rustfmt_autosave = 1
-# g:ale_linters_explicit = 1
-# set omnifunc=ale"completion"OmniFunc
-
-g:ale_linters = {
-  'bash': ['shellcheck'],
-  'rust': ['cargo', 'rustfmt'],
-  'python': ['pylint'],
-  'java': ['uncrustify'],
-  'javascript': ['eslint']
-}
-
-g:ale_fixers = {
-  'bash': ['shellcheck'],
-  'rust': ['rustfmt'],
-  'python': ['autopep8'],
-  'java': ['uncrustify'],
-  'javascript': ['eslint']
-}
-
-# ycm
-
-
-# vim template
-# edit templates in ~/.vim/plugged/vim-templates/templates
-# WARNING JetpackUpdate could cause loss of template configs store on git or
-# seprate txt file
-
-# defaults
-
-# main defaults
-#set nocp
-colorscheme phoenix
-syntax on
-filetype on
-filetype plugin on
-filetype indent on
-set clipboard=unnamed
-set number
-set tabstop=2
-set shiftwidth=2
-set expandtab
-set backspace=2
-set autoindent
-set encoding=UTF-8
-set lz
-set tf
-set smc=80
-set tw=45
-set nowrap
-set fo-=t
-set fo-=c
-#set wrap linebreak nolist
-#set whichwrap+=<,>,h,l
-#set cc=78
-set cul
-set hidden
-set scrolloff=5
-set foldopen-=block
-set foldopen-=hor
-set incsearch
-set hlsearch
-set nrformats=bin,alpha,octal,hex
-# spelling
-set spell spelllang=en_us
-set spellfile=en.utf-8.add
-set complete+=kspell
-set secure
-# wildmenu
-set wildmenu
-set wildmode=list:longest
-#wildoptions='pum'
-set wildignore=*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx"
-# Lex Netrw
-g:netrw_winsize = 20
-# each tab | separate prj folder
-# minimizes buffer list | two per tab
-
-# remappings current [0]
-# remappinig for spell and suyntax error jumping same as / command's jumping n
-
-# noremap n ]s
-
-# remapping for para jump curly braces and horizontal word jump e and b
-
-# noremap hjkl | hold 3 jumps | (h -> b) & (l -> e) & (j -> }) & (k -> {)
-
-# macros
-
-# invoke single line via @letter
-
-# to clear use :let @letter = ''
-
-# multi line: shift v command
-# result: :'<,'>normal @letter
-
-# Outline
-# @letter:      comands
-# macro result: result
-
-# @a:
-# macro result:
-
-# functions
-
-# terminal cursor shape overide
-#if $TERM_PROGRAM =~ "iTerm"
-#    &t_EI = "\<Esc>]50;CursorShape = 0\x7" # Block in normal mode
-#    &t_SI = "\<Esc>]50;CursorShape = 2\x7" # Underscore in insert mode
-#    autocmd VimLeave * &t_me = "\<Esc>]50;CursorShape = 2\x7"
-#endif
-
-# save folds
-# conflict | :diffoff! wont work
-# workaround | manual reset :mkview :loadview
-#augroup remember_folds
-#    autocmd!
-#    autocmd BufWinLeave *.* mkview
-#    autocmd BufWinEnter *.* silent! loadview
-#augroup END
-
-# statusline git
-
-
-# statusline
-set ls=2
-set stl+=%#CursorLineFold#
-set stl+=\%f
-set stl+=\%y
-set stl+=\%m
-set stl+=\%r
-set stl+=%#StatusLine#
-set stl+=\ %{&fileencoding?&fileencoding:&encoding}
-set stl+=\[%{&fileformat}\]
-set stl+=%=
-set stl+=\char:
-set stl+=\%b
-set stl+=\ pos:
-set stl+=\%l:
-set stl+=\%c
-set stl+=\ Buf:
-set stl+=\%n
 #+end_src
 
 * xplr
@@ -4446,31 +4736,5 @@ package.path = home
 require"icons".setup()
 #+end_src
 
-* starship.toml
-
-#+begin_src txt :tangle ~/.config/starship.toml
-# note: colores can be diffrent for your shell color scheme
-# use of true colors is not discused for starship prompt documentation
-# as best practice terminal emulator should have all colors the same
-# each config file has color settings to avoid conflics
-
-# needed for nnn cd in current dir on quit
-command_timeout = 1000
-
-[character]
-success_symbol = "[❯❯](bold #ff8700)"
-error_symbol   = "[✘](red)"
-vicmd_symbol   = "[❮❮](bold #ff8700)"
-
-[directory]
-style = "#00afff"
-
-[cmd_duration]
-style = "#ff8700"
-#+end_src
-
 * blank
-
-# #+begin_src txt :tangle ./path-to-config
-#
-# #+end_src
+<s
