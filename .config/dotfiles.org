@@ -1,4 +1,6 @@
 #+title: Dotfiles
+#+STARTUP: showeverything
+
 #+begin_comment
         __      __  _____ __
    ____/ /___  / /_/ __(_) /__  _____
@@ -14,7 +16,7 @@
  WARNING:            Run this script at your own risk.
  License:            Declared in repo
  DEPENDENCIES:       emacs-mac ±, Doom ±
- Date last modified: 07-04-2022
+ Date last modified: 07-25-2022
 #+end_comment
 
 * Dotfiles
@@ -28,57 +30,61 @@ Commands
 
 * Shell Alias Support
 
-#+begin_src txt :tangle ~/.config/CLI Support/aliase & script support/fish_aliases.txt
+#+begin_src txt :tangle ~/.config/CLI\ Support/aliase\ \&\ script\ support/fish_aliases.txt
 fish aliases
 -------------
-neo|ls-env|brew-pkgs-nodepens|brew-active-pkgs-nodepens|pip3-ls-pkgs
-apl-run-script|yarn-nodepens|weather|open-exit|filemgr
-verilog-compile|verilog-run|doom|tips|git-ls
+ls-env|brew-pkgs-nodepens|brew-active-pkgs-nodepens|open-exit
+filemgr|doom|tips|git-ls
+*
+Language package managers
+--------------------------
+pip3-ls-pkgs|apl-run-script|yarn-nodepens|verilog-compile
+verilog-run
+*
+Curl aliases
+-------------
+check-curl|weather|check-news|check-stockmarket
 #+end_src
 
-#+begin_src txt :tangle ~/.config/CLI Support/aliase & script support/brew-pkgs.txt
+#+begin_src txt :tangle ~/.config/CLI\ Support/aliase\ \&\ script\ support/brew-pkgs.txt
 Packages no Depens
 -------------------
-arduino-cli|espeak|kubernetes-cli|nghttp2|starship
-avrdude|evince|libelf|node|tidy-html5
-bash|exa|libftdi0|openjdk@11|tmux
-bat|fd|libhid|openjdk@8|uchardet
-bfg|figlet|libmagic|osx-cpu-temp|uncrustify
-btop|fish|libnotify|parallel|vapoursynth
-cabal-install|ghq|libspiro|perl|w3m
-calcurse|git|libssh2|qt@5|watchman
-checkbashisms|gnu-apl|libuninameslist|emacs-mac|watson
-cmake|gnu-cobol|lolcat|ripgrep|xplr
-cmake-docs|gnu-sed|markdown|ruby|yarn
-cmus|go|meson|rustup-init|youtube-dl
-coq|httpstat|mono|sc-im
-coreutils|icarus-verilog|mujs|sd
-desktop-file-utils|intltool|neofetch|shellcheck
-entr|kotlin|neovim|sphinx-doc
+arduino-cli|geoip|luajit-openresty|sd
+avrdude|ghq|markdown|shellcheck
+bash|git|meson|sphinx-doc
+bat|gnu-apl|mono|starship
+bfg|gnu-cobol|mujs|tidy-html5
+btop|gnu-sed|neofetch|tmux
+cabal-install|go|neovim|uchardet
+calcurse|httpstat|nghttp2|uncrustify
+checkbashisms|icarus-verilog|node|universal-ctags
+cmake|intltool|openjdk@11|vapoursynth
+cmake-docs|kotlin|openjdk@8|w3m
+cmus|kubernetes-cli|osx-cpu-temp|wasm3
+coq|libelf|parallel|watchman
+desktop-file-utils|libftdi0|perl|watson
+entr|libhid|qt@5|xdg-ninja
+espeak|libmagic|emacs-mac|xplr
+evince|libnotify|ripgrep|yarn
+exa|libspiro|ruby|youtube-dl
+fd|libssh2|rust-analyzer
+figlet|libuninameslist|rustup-init
+fish|lolcat|sc-im
 *
 Casks
 ------
-adoptopenjdk8|cool-retro-term|keycastr|libreoffice|obs|vieb
-android-sdk|fontforge|kicad|mactex-no-gui|openshot-video-editor
-balenaetcher|freecad|kitty|mpv|timemachineeditor
+adoptopenjdk8|fontforge|kitty|obs
+android-sdk|freecad|libreoffice|openshot-video-editor
+balenaetcher|keycastr|mactex-no-gui|timemachineeditor
+cool-retro-term|kicad|mpv|vieb
 #+end_src
 
-#+begin_src txt :tangle ~/.config/CLI Support/aliase & script support/neo.txt
-OS:| macOS 12.4 21F79 x86_64
-Host:| MacBookPro17,1
-Kernel:| 21.5.0
-Packages:| 270 (brew)
-Shell:| fish 3.4.1
-DE:| Aqua
-WM:| Quartz Compositor
-Terminal:| iTerm2
-CPU:| Apple M1
-GPU:| Apple M1
-Memory:| 2288MiB / 16384MiB
-
-#+end_src
+copy past from brew leaves
 
-#+begin_src txt :tangle ~/.config/CLI Support/aliase & script support/tips.txt
+regex such that delete empty spaces and replace with one delimeter
+:n1,n2 s/\s\+/|/g
+
+#+begin_src txt :tangle ~/.config/CLI\ Support/aliase\ \&\ script\ support/tips.txt
 Main concepts for most programming languages
 
 Importing modules
@@ -266,7 +272,7 @@ Vim work flow
 9.) Visual block | ctrl v | to comment | ctrl v move cursor then shift i esc
 
 for files with long lines -- Command --
-:NoMatchParen | set nocul | set lz
+:NoMatchParen | set nocul | set lz | set smc=80
 
 zt at current cursor row moves view to top
 
@@ -359,7 +365,7 @@ haskell        ?
 java           ?
 html           linter: tidy-html5 via homebrew
 css            linter: csslint via npm make prjk or global?
-javascript     interp: node via homebrew eslint and csslint via npm init then npx eslint --init?
+javascript     bun via curl and homebrew yarn eslint and csslint
 kotlin         ?
 python current anaconda in home? pip3 via pip? linter: pylint via pip and pip3 lists same packages
 python note:   add to brew python, pip, pip3 and anaconda
@@ -433,6 +439,10 @@ end
 #   ((ifconfig | rg "inet" | rg -v 127.0.0.1) && networksetup -listallhardwareports) | less
 # end
 
+function check-curl
+  curl $argv | less
+end
+
 function ls-env
   env | column -t -s '='
 end
@@ -449,10 +459,6 @@ function tips
   less ~/.config/CLI\ Support/aliase\ \&\ script\ support/tips.txt
 end
 
-function neo
-  neofetch --colors --colors 9 2 3 39 15 15 --backend iterm2 --source ~/Downloads/vim2.png --size 20%
-end
-
 function pip3-ls-pkgs
   pip3 list --not-required
 end
@@ -465,6 +471,14 @@ end
 
 function weather
   curl wttr.in/$argv
+end
+
+function check-stockmarket
+  curl terminal-stocks.shashi.dev/$argv
+end
+
+function check-news
+  curl getnews.tech/$argv || curl getnews.tech
 end
 
 function open-exit
@@ -499,6 +513,10 @@ end
 function git-ls
   git diff --staged --name-only
 end
+
+# Bun
+set -Ux BUN_INSTALL "/Users/kylegortych/.bun"
+set -px --path PATH "/Users/kylegortych/.bun/bin"
 #+end_src
 
 * starship prompt
@@ -522,252 +540,20 @@ style = "#00afff"
 
 [cmd_duration]
 style = "#ff8700"
-#+end_src
 
-* vim
-notes: Finish refactoring to vim9 script
+[jobs]
+symbol = "✨"
 
-#+begin_src txt :tangle ~/.vim/vimrc
-vim9script
-#////////////////////////////////////////////////////////////////////
-#         _
-#  _   __(_)___ ___  __________
-# | | / / / __ `__ \/ ___/ ___/
-# | |/ / / / / / / / /  / /__
-# |___/_/_/ /_/ /_/_/   \___/
-#
-# Maintainer: Kyle Gortych
-# github:     https://github.com/KyleGortych
-# Linkedin:   https://www.linkedin.com/in/kyle-gortych-163449240
-#
-# DESC:               config for vim via homebrew via iTerm2.
-# WARNING:            Run this script at your own risk.
-# License:            Declared in repo
-# DEPENDENCIES:       vim 9+
-# Date last modified: 07-03-2022
-#////////////////////////////////////////////////////////////
+# Languages
 
-# Plugins
-plug#begin()
-Plug 'widatama/vim-phoenix'
-Plug 'fcpg/vim-fahrenheit'
-# Plug 'dylanaraps/wal.vim'
-Plug 'sjl/vitality.vim'
-Plug 'dense-analysis/ale'
-Plug 'valloric/youcompleteme'
-Plug 'tmsvg/pear-tree'
-Plug 'romainl/vim-cool'
-Plug 'tibabit/vim-templates'
-Plug 'tounaishouta/coq.vim'
-plug#end()
-
-# overide color scheme
-augroup overidetheme
-  autocmd!
-  autocmd ColorScheme * highlight NonText ctermfg = 208 ctermbg = NONE
-  autocmd ColorScheme * highlight Folded ctermfg = black ctermbg = 245
-  autocmd ColorScheme * highlight Search ctermfg = black ctermbg = 208
-  autocmd ColorScheme * highlight ModeMsg ctermfg = 208 ctermbg = NONE
-  autocmd ColorScheme * highlight MoreMsg ctermfg = 208 ctermbg = NONE
-  autocmd ColorScheme * highlight WarningMsg ctermfg = NONE ctermbg = 208
-  autocmd ColorScheme * highlight Todo ctermfg = 208 ctermbg = NONE
-  autocmd ColorScheme * highlight SpellCap cterm = bold ctermfg = black ctermbg = 208
-  autocmd ColorScheme * highlight SpellBad cterm = bold ctermfg = 9 ctermbg = 8
-  autocmd ColorScheme * highlight SpellRare cterm = bold ctermfg = 220 ctermbg = 8
-  autocmd ColorScheme * highlight SpellLocal cterm = bold ctermfg = 208 ctermbg = 8
-  autocmd ColorScheme * highlight Visual ctermfg = black ctermbg = 208
-  autocmd ColorScheme * highlight DiffAdd ctermfg = black ctermbg = 39
-  autocmd ColorScheme * highlight DiffChange ctermfg = black ctermbg = 245
-  autocmd ColorScheme * highlight DiffDelete ctermfg = black ctermbg = 245
-augroup end
-
-# pear tree
-g:pear_tree_pairs = {
-  '(': {'closer': ')'},
-  '[': {'closer': ']'},
-  '{': {'closer': '}'},
-  "'": {'closer': "'"},
-  '"': {'closer': '"'},
-  '<': {'closer': '>'},
-  '<!-': {'closer': '- -->'},
-  '<!D': {'closer': 'OCTYPE html>'},
-  '<ht': {'closer': 'ml></html>'},
-  '<he': {'closer': 'ad></head>'},
-  '<header': {'closer': '></header>'},
-  '<ti': {'closer': 'tle></title>'},
-  '<sc': {'closer': 'ript></script>'},
-  '<st': {'closer': 'yle></style>'},
-  '<bo': {'closer': 'dy></body>'},
-  '<ta': {'closer': 'ble></table>'},
-  '<tr': {'closer': '></tr>'},
-  '<td': {'closer': '></td>'},
-  '<di': {'closer': 'v></div>'},
-  '<ul': {'closer': '></ul>'},
-  '<ol': {'closer': '></ol>'},
-  '<li': {'closer': '><a></a></li>'},
-  '<na': {'closer': 'v></nav>'},
-  '<pa': {'closer': 'th></path>'},
-  '<bu': {'closer': 'tton></button>'},
-  '<sv': {'closer': 'g></svg>'},
-  '<a': {'closer': '></a>'},
-  '<ma': {'closer': 'in></main>'},
-  '<h1': {'closer': '></h1>'},
-  '<h2': {'closer': '></h2>'},
-  '<h3': {'closer': '></h3>'},
-  '<se': {'closer': 'ction></section>'},
-  '<p': {'closer': '></p>'}
-}
-
-# ale
-set omnifunc=syntaxcomplete"Complete
-g:ale_lint_on_enter = 0
-g:ale_completion_enabled = 1
-g:rustfmt_autosave = 1
-# g:ale_linters_explicit = 1
-# set omnifunc=ale"completion"OmniFunc
-
-g:ale_linters = {
-  'bash': ['shellcheck'],
-  'rust': ['cargo', 'rustfmt'],
-  'python': ['pylint'],
-  'java': ['uncrustify'],
-  'javascript': ['eslint']
-}
-
-g:ale_fixers = {
-  'bash': ['shellcheck'],
-  'rust': ['rustfmt'],
-  'python': ['autopep8'],
-  'java': ['uncrustify'],
-  'javascript': ['eslint']
-}
-
-# ycm
-
-
-# vim template
-# edit templates in ~/.vim/plugged/vim-templates/templates
-# WARNING JetpackUpdate could cause loss of template configs store on git or
-# seprate txt file
-
-# defaults
-
-# main defaults
-#set nocp
-colorscheme phoenix
-syntax on
-filetype on
-filetype plugin on
-filetype indent on
-set clipboard=unnamed
-set number
-set tabstop=2
-set shiftwidth=2
-set expandtab
-set backspace=2
-set autoindent
-set encoding=UTF-8
-set lz
-set tf
-set smc=80
-set tw=45
-set nowrap
-set fo-=t
-set fo-=c
-#set wrap linebreak nolist
-#set whichwrap+=<,>,h,l
-#set cc=78
-set cul
-set hidden
-set scrolloff=5
-set foldopen-=block
-set foldopen-=hor
-set incsearch
-set hlsearch
-set nrformats=bin,alpha,octal,hex
-# spelling
-set spell spelllang=en_us
-set spellfile=en.utf-8.add
-set complete+=kspell
-set secure
-# wildmenu
-set wildmenu
-set wildmode=list:longest
-#wildoptions='pum'
-set wildignore=*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx"
-# Lex Netrw
-g:netrw_winsize = 20
-# each tab | separate prj folder
-# minimizes buffer list | two per tab
-
-# remappings current [0]
-# remappinig for spell and suyntax error jumping same as / command's jumping n
-
-# noremap n ]s
-
-# remapping for para jump curly braces and horizontal word jump e and b
-
-# noremap hjkl | hold 3 jumps | (h -> b) & (l -> e) & (j -> }) & (k -> {)
-
-# macros
-
-# invoke single line via @letter
-
-# to clear use :let @letter = ''
-
-# multi line: shift v command
-# result: :'<,'>normal @letter
-
-# Outline
-# @letter:      comands
-# macro result: result
-
-# @a:
-# macro result:
-
-# functions
-
-# terminal cursor shape overide
-#if $TERM_PROGRAM =~ "iTerm"
-#    &t_EI = "\<Esc>]50;CursorShape = 0\x7" # Block in normal mode
-#    &t_SI = "\<Esc>]50;CursorShape = 2\x7" # Underscore in insert mode
-#    autocmd VimLeave * &t_me = "\<Esc>]50;CursorShape = 2\x7"
-#endif
-
-# save folds
-# conflict | :diffoff! wont work
-# workaround | manual reset :mkview :loadview
-#augroup remember_folds
-#    autocmd!
-#    autocmd BufWinLeave *.* mkview
-#    autocmd BufWinEnter *.* silent! loadview
-#augroup END
-
-# statusline git
-
-
-# statusline
-set ls=2
-set stl+=%#CursorLineFold#
-set stl+=\%f
-set stl+=\%y
-set stl+=\%m
-set stl+=\%r
-set stl+=%#StatusLine#
-set stl+=\ %{&fileencoding?&fileencoding:&encoding}
-set stl+=\[%{&fileformat}\]
-set stl+=%=
-set stl+=\char:
-set stl+=\%b
-set stl+=\ pos:
-set stl+=\%l:
-set stl+=\%c
-set stl+=\ Buf:
-set stl+=\%n
+[rust]
+symbol = "☣️  "
 #+end_src
 
 * nvim
-notes: refactor to lua
+notes:
+stable config init.vim
+refactor to lua
 
 #+begin_src txt :tangle ~/.config/nvim/init.lua
 --[[
@@ -785,160 +571,259 @@ notes: refactor to lua
  WARNING:            Run this script at your own risk.
  License:            Declared in repo
  DEPENDENCIES:       nvim +
- Date last modified: 07-04-2022
+ Date last modified: 07-25-2022
 --]]
 
 -- Plugins
-local Plug = vim.fn['plug#']
-vim.call('plug#begin', '~/.config/nvim/plugged')
-Plug 'widatama/vim-phoenix'
-Plug 'fcpg/vim-fahrenheit'
--- Plug 'dylanaraps/wal.vim'
-Plug 'sjl/vitality.vim'
-Plug 'dense-analysis/ale'
-Plug 'valloric/youcompleteme'
-Plug 'tmsvg/pear-tree'
-Plug 'romainl/vim-cool'
-Plug 'tibabit/vim-templates'
-Plug 'tounaishouta/coq.vim'
-vim.call('plug#end')
+require "paq" {
+  "savq/paq-nvim";
+  -- "dylanaraps/wal.vim";
+  "kyazdani42/nvim-web-devicons";
+  "kyazdani42/nvim-tree.lua";
+  "nvim-lualine/lualine.nvim";
+  "sirver/ultisnips";
+  "honza/vim-snippets";
+  "neoclide/coc.nvim";
+  "williamboman/nvim-lsp-installer";
+  "neovim/nvim-lspconfig";
+  "jreybert/vimagit";
+  "tmsvg/pear-tree";
+  "romainl/vim-cool";
+}
 
--- overide color scheme
-augroup overidetheme
-  autocmd!
-  autocmd ColorScheme * highlight NonText ctermfg = 208 ctermbg = NONE
-  autocmd ColorScheme * highlight Folded ctermfg = black ctermbg = 245
-  autocmd ColorScheme * highlight Search ctermfg = black ctermbg = 208
-  autocmd ColorScheme * highlight ModeMsg ctermfg = 208 ctermbg = NONE
-  autocmd ColorScheme * highlight MoreMsg ctermfg = 208 ctermbg = NONE
-  autocmd ColorScheme * highlight WarningMsg ctermfg = NONE ctermbg = 208
-  autocmd ColorScheme * highlight Todo ctermfg = 208 ctermbg = NONE
-  autocmd ColorScheme * highlight SpellCap cterm = bold ctermfg = black ctermbg = 208
-  autocmd ColorScheme * highlight SpellBad cterm = bold ctermfg = 9 ctermbg = 8
-  autocmd ColorScheme * highlight SpellRare cterm = bold ctermfg = 220 ctermbg = 8
-  autocmd ColorScheme * highlight SpellLocal cterm = bold ctermfg = 208 ctermbg = 8
-  autocmd ColorScheme * highlight Visual ctermfg = black ctermbg = 208
-  autocmd ColorScheme * highlight DiffAdd ctermfg = black ctermbg = 39
-  autocmd ColorScheme * highlight DiffChange ctermfg = black ctermbg = 245
-  autocmd ColorScheme * highlight DiffDelete ctermfg = black ctermbg = 245
-augroup end
+-- webdevicons
+require("nvim-web-devicons").set_icon{
+  vim = {
+    icon = "",
+  }
+}
+
+-- statusline
+-- local custom_theme-name = require'lualine.themes.theme-name'
+-- example custom_theme-name.normal.c.bg = '#1234'
+-- then add to .setup theme = custom_theme-name
+
+vim.opt.laststatus = 3
+require('lualine').setup{
+  options = {
+    section_separators = { left = '', right = '' },
+    component_separators = { left = '', right = '' },
+    theme = 'gruvbox'
+  },
+  tabline = {
+    lualine_a = {'buffers'},
+    lualine_z = {'tabs'},
+  },
+}
+
+-- nvim tree
+require('nvim-tree').setup{
+  open_on_setup = true
+}
 
 -- pear tree
-g:pear_tree_pairs = {
-  '(': {'closer': ')'},
-  '[': {'closer': ']'},
-  '{': {'closer': '}'},
-  "'": {'closer': "'"},
-  '"': {'closer': '"'},
-  '<': {'closer': '>'},
-  '<!-': {'closer': '- -->'},
-  '<!D': {'closer': 'OCTYPE html>'},
-  '<ht': {'closer': 'ml></html>'},
-  '<he': {'closer': 'ad></head>'},
-  '<header': {'closer': '></header>'},
-  '<ti': {'closer': 'tle></title>'},
-  '<sc': {'closer': 'ript></script>'},
-  '<st': {'closer': 'yle></style>'},
-  '<bo': {'closer': 'dy></body>'},
-  '<ta': {'closer': 'ble></table>'},
-  '<tr': {'closer': '></tr>'},
-  '<td': {'closer': '></td>'},
-  '<di': {'closer': 'v></div>'},
-  '<ul': {'closer': '></ul>'},
-  '<ol': {'closer': '></ol>'},
-  '<li': {'closer': '><a></a></li>'},
-  '<na': {'closer': 'v></nav>'},
-  '<pa': {'closer': 'th></path>'},
-  '<bu': {'closer': 'tton></button>'},
-  '<sv': {'closer': 'g></svg>'},
-  '<a': {'closer': '></a>'},
-  '<ma': {'closer': 'in></main>'},
-  '<h1': {'closer': '></h1>'},
-  '<h2': {'closer': '></h2>'},
-  '<h3': {'closer': '></h3>'},
-  '<se': {'closer': 'ction></section>'},
-  '<p': {'closer': '></p>'}
-}
+vim.cmd([[
+let g:['pear_tree_pairs'] = {
+  \ '(': {'closer': ')'},
+  \ '[': {'closer': ']'},
+  \ '{': {'closer': '}'},
+  \ "'": {'closer': "'"},
+  \ '"': {'closer': '"'},
+  \ '<': {'closer': '>'},
+  \ '<!-': {'closer': '- -->'},
+  \ '<!D': {'closer': 'OCTYPE html>'},
+  \ '<ht': {'closer': 'ml></html>'},
+  \ '<he': {'closer': 'ad></head>'},
+  \ '<header': {'closer': '></header>'},
+  \ '<ti': {'closer': 'tle></title>'},
+  \ '<sc': {'closer': 'ript></script>'},
+  \ '<st': {'closer': 'yle></style>'},
+  \ '<bo': {'closer': 'dy></body>'},
+  \ '<ta': {'closer': 'ble></table>'},
+  \ '<tr': {'closer': '></tr>'},
+  \ '<td': {'closer': '></td>'},
+  \ '<di': {'closer': 'v></div>'},
+  \ '<ul': {'closer': '></ul>'},
+  \ '<ol': {'closer': '></ol>'},
+  \ '<li': {'closer': '><a></a></li>'},
+  \ '<na': {'closer': 'v></nav>'},
+  \ '<pa': {'closer': 'th></path>'},
+  \ '<bu': {'closer': 'tton></button>'},
+  \ '<sv': {'closer': 'g></svg>'},
+  \ '<a': {'closer': '></a>'},
+  \ '<ma': {'closer': 'in></main>'},
+  \ '<h1': {'closer': '></h1>'},
+  \ '<h2': {'closer': '></h2>'},
+  \ '<h3': {'closer': '></h3>'},
+  \ '<se': {'closer': 'ction></section>'},
+  \ '<p': {'closer': '></p>'}
+  \ }
+]])
 
--- ale
-set omnifunc=syntaxcomplete"Complete
-g:ale_lint_on_enter = 0
-g:ale_completion_enabled = 1
-g:rustfmt_autosave = 1
--- g:ale_linters_explicit = 1
--- set omnifunc=ale"completion"OmniFunc
+-- Ultisnips
+-- vim.cmd([[
+--   inoremap <silent><expr> <TAB>
+--         \ pumvisible() ? coc#_select_confirm() :
+--         \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+--         \ <SID>check_back_space() ? "\<TAB>" :
+--         \ coc#refresh()
+--
+--   function! s:check_back_space() abort
+--     let col = col('.') - 1
+--     return !col || getline('.')[col - 1]  =~# '\s'
+--   endfunction
+--
+--   let g:coc_snippet_next = '<tab>'
+-- ]])
 
-g:ale_linters = {
-  'bash': ['shellcheck'],
-  'rust': ['cargo', 'rustfmt'],
-  'python': ['pylint'],
-  'java': ['uncrustify'],
-  'javascript': ['eslint']
-}
+-- Lsp
+-- LspInstall
+require("nvim-lsp-installer").setup({
+    automatic_installation = true,
+    ui = {
+        icons = {
+            server_installed = "✓",
+            server_pending = "…",
+            server_uninstalled = "✗"
+        }
+    }
+})
 
-g:ale_fixers = {
-  'bash': ['shellcheck'],
-  'rust': ['rustfmt'],
-  'python': ['autopep8'],
-  'java': ['uncrustify'],
-  'javascript': ['eslint']
-}
+-- nvim lsp
+-- :LspInfo
 
--- ycm
+-- lsp inline txt
+vim.diagnostic.config({
+  virtual_text = false,
+})
 
+vim.o.updatetime = 50
+vim.api.nvim_create_autocmd("CursorHold", {
+  buffer = bufnr,
+  callback = function()
+    local opts = {
+      focusable = false,
+      close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+      border = 'rounded',
+      source = 'always',
+      prefix = ' ',
+      scope = 'cursor',
+    }
+    vim.diagnostic.open_float(nil, opts)
+  end
+})
 
--- vim template
--- edit templates in ~/.vim/plugged/vim-templates/templates
--- WARNING JetpackUpdate could cause loss of template configs store on git or
--- seprate txt file
+--require'lspconfig'.server_name.setup{}
+require'lspconfig'.pyright.setup{}
+require'lspconfig'.jdtls.setup{}
+require'lspconfig'.rust_analyzer.setup{}
+require'lspconfig'.gopls.setup{}
+require'lspconfig'.html.setup{}
+require'lspconfig'.cssls.setup{}
+require'lspconfig'.eslint.setup{}
+require'lspconfig'.awk_ls.setup{}
+require'lspconfig'.bashls.setup{}
+require'lspconfig'.clangd.setup{}
+require'lspconfig'.kotlin_language_server.setup{}
+require'lspconfig'.vimls.setup{}
+require'lspconfig'.sumneko_lua.setup{}
+
+-- coc
+--[[
+Installed:
+  tabnine
+  coc-snippets
+--]]
 
 -- defaults
 
 -- main defaults
---vim.blank.nocp
-colorscheme phoenix
-syntax on
-filetype on
-filetype plugin on
-filetype indent on
-vim.blank.clipboard=unnamed
-vim.blank.number
-vim.blank.tabstop=2
-vim.blank.shiftwidth=2
-vim.bo.expandtab = true
-vim.blank.backspace=2
-vim.blank.autoindent
-vim.blank.encoding=UTF-8
-vim.blank.lz
-vim.blank.tf
-vim.blank.smc=80
-vim.blank.tw=45
-vim.blank.nowrap
-vim.blank.fo-=t
-vim.blank.fo-=c
--- vim.blank.wrap linebreak nolist
--- vim.blank.whichwrap+=<,>,h,l
--- vim.blank.cc=78
-vim.blank.cul
-vim.blank.hidden
-vim.blank.scrolloff=5
-vim.blank.foldopen-=block
-vim.blank.foldopen-=hor
-vim.blank.incsearch
-vim.blank.hlsearch
-vim.blank.nrformats=bin,alpha,octal,hex
--- spelling
-vim.blank.spell spelllang=en_us
-vim.blank.spellfile=en.utf-8.add
-vim.blank.complete+=kspell
-vim.blank.secure
--- wildmenu
-vim.blank.wildmenu
-vim.blank.wildmode=list:longest
-#wildoptions='pum'
-vim.blank.wildignore=*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx"
+vim.cmd([[
+  colorscheme monokai2
+  set background=dark
+  set termguicolors
+  syntax on
+  filetype on
+  filetype plugin on
+  filetype indent on
+  set clipboard+=unnamedplus
+  set number
+  set tabstop=2
+  set shiftwidth=2
+  set expandtab
+  set backspace=2
+  set autoindent
+  set encoding=UTF-8
+  set lz
+  set tf
+  set tw=45
+  set nowrap
+  set fo-=t
+  set fo-=c
+  set cul
+  set hidden
+  set scrolloff=5
+  set foldopen-=block
+  set foldopen-=hor
+  set incsearch
+  set hlsearch
+  set nrformats=bin,alpha,octal,hex
+  set nospell spelllang=en_us
+  set spellfile=en.utf-8.add
+  set complete+=kspell
+  set secure
+  set wildmenu
+  set wildmode=list:longest
+  set wildignore=*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx"
+  "cursor in nvim
+  set guicursor=i:hor20-blinkwait400-blinkoff400-blinkon250
+]])
+
+-- finish refactoring to lua
+--[[
+  vim.cmd('colorscheme monokai2')
+  vim.opt.background = 'dark'
+  vim.opt.termguicolors = true
+  vim.opt.syntax = true
+  vim.opt.filetype = true
+  vim.opt.filetype plugin = true
+  vim.opt.filetype indent = true
+  vim.opt.clipboard + 'unnamedplus'
+  vim.opt.number = true
+  vim.opt.tabstop = 2
+  vim.opt.shiftwidth = 2
+  vim.opt.expandtab = true
+  vim.opt.backspace=2
+  vim.opt.autoindent = true
+  vim.opt.encoding = 'utf-8'
+  vim.opt.lazyredraw = false
+  vim.opt.tf = true
+  vim.opt.tw = 45
+  vim.opt.wrap = false
+  vim.opt.fo-=t
+  vim.opt.fo-=c
+  vim.opt.cursorline = true
+  vim.opt.hidden = true
+  vim.opt.scrolloff = 5
+  vim.opt.foldopen - 'block'
+  vim.opt.foldopen - 'hor'
+  vim.opt.incsearch = true
+  vim.opt.hlsearch = true
+  vim.opt.nrformats = 'bin,alpha,octal,hex'
+  vim.opt.spell = false
+  vim.opt.spelllang = 'en_us'
+  vim.opt.spellfile = 'en.utf-8.add'
+  vim.opt.complete + 'kspell'
+  vim.opt.secure = true
+  vim.opt.wildmenu = true
+  vim.opt.wildmode = {'list', 'longest'}
+  vim.opt.wildignore = '*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx"'
+  --cursor in nvim
+  vim.opt.guicursor = 'i:hor20-blinkwait400-blinkoff400-blinkon250'
+--]]
+
 -- Lex Netrw
-g:netrw_winsize = 20
+vim.g['netrw_winsize'] = 20
 --each tab | separate prj folder
 --minimizes buffer list | two per tab
 
@@ -970,42 +855,52 @@ g:netrw_winsize = 20
 --functions
 
 -- terminal cursor shape overide
---if $TERM_PROGRAM =~ "iTerm"
---    &t_EI = "\<Esc>]50;CursorShape = 0\x7" # Block in normal mode
---    &t_SI = "\<Esc>]50;CursorShape = 2\x7" # Underscore in insert mode
---    autocmd VimLeave * &t_me = "\<Esc>]50;CursorShape = 2\x7"
---endif
+vim.cmd([[
+  augroup RestoreCursorShapeOnExit
+    autocmd!
+    autocmd VimLeave * set guicursor=a:hor20-blinkwait400-blinkoff400-blinkon250
+  augroup END
+]])
+
+--[[ refactore to lua
+local augroup = vim.api.nvim_create_augroup('RestoreCursorShapeOnExit', {clear = true})
+
+vim.api.nvim_create_autocmd('VimLeave', {
+  pattern = 'set',
+  group = augroup,
+  desc = 'Change string highlight',
+  callback = function()
+    vim.api.()
+  end
+})
+--]]
 
 -- save folds
 -- conflict | :diffoff! wont work
 -- workaround | manual reset :mkview :loadview
---augroup remember_folds
---    autocmd!
---    autocmd BufWinLeave *.* mkview
---    autocmd BufWinEnter *.* silent! loadview
---augroup END
+vim.cmd([[
+  augroup remember_folds
+      autocmd!
+      autocmd BufWinLeave *.* mkview
+      autocmd BufWinEnter *.* silent! loadview
+  augroup END
+]])
 
--- statusline git
+--[[ refactore to lua
+local augroup = vim.api.nvim_create_augroup('remember_folds', {clear = true})
 
-
--- statusline
-vim.blank.ls=2
-vim.blank.stl+=%#CursorLineFold#
-vim.blank.stl+=\%f
-vim.blank.stl+=\%y
-vim.blank.stl+=\%m
-vim.blank.stl+=\%r
-vim.blank.stl+=%#StatusLine#
-vim.blank.stl+=\ %{&fileencoding?&fileencoding:&encoding}
-vim.blank.stl+=\[%{&fileformat}\]
-vim.blank.stl+=%=
-vim.blank.stl+=\char:
-vim.blank.stl+=\%b
-vim.blank.stl+=\ pos:
-vim.blank.stl+=\%l:
-vim.blank.stl+=\%c
-vim.blank.stl+=\ Buf:
-vim.blank.stl+=\%n
+vim.api.nvim_create_autocmd('', {
+  pattern = '',
+  group = augroup,
+  desc = 'Change string highlight',
+  callback = function()
+    vim.api.nvim_set_hl(0, 'String', {fg = '#FFEB95'})
+  end
+  callback = function()
+    vim.api.nvim_set_hl(0, 'String', {fg = '#FFEB95'})
+  end
+})
+--]]
 #+end_src
 
 * Doom Emacs config
@@ -1041,8 +936,7 @@ vim.blank.stl+=\%n
 ;;(setq doom-theme 'doom-one)
 ;;(setq doom-theme 'afternoon)
 (setq doom-theme 'klere)
-(add-to-list 'default-frame-alist '(background-mode . dark))
-;;(setq doom-theme ')
+;;(add-to-list 'default-frame-alist '(background-mode . dark))
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -1072,9 +966,12 @@ vim.blank.stl+=\%n
 
 ;; start of my config
 
+;; inline org images
+(setq org-image-actual-width 400)
+
 ;; screen size
 ;;(add-hook 'window-setup-hook #'toggle-frame-maximized)
-(setq initial-frame-alist '((top . 1) (right . 1) (width . 150) (height . 150)))
+(setq initial-frame-alist '((top . 1) (right . 1) (width . 130) (height . 100)))
 
 ;; font
 (setq doom-font (font-spec :family "TerminessTTF Nerd Font Mono" :size 16))
@@ -1228,9 +1125,7 @@ vim.blank.stl+=\%n
 (package! gnu-apl-mode)
 (package! cobol-mode)
 (package! spaceline)
-(package! afternoon-theme)
 (package! klere-theme)
-(package! molokai-theme)
 (package! stripe-buffer)
 (package! beacon)
 (package! lsp-sonarlint)
