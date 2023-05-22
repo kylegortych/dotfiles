@@ -4,6 +4,7 @@ sys config files for various applications
 <details>
 <summary> nvim init.lua </summary>
 ```lua
+
 --[[
      _       _ __    __
     (_)___  (_) /_  / /_  ______ _
@@ -307,5 +308,6 @@ vim.g.netrw_liststyle = 3
 vim.g.netrw_altv = 1
 
 vim.o.statusline = "%#Directory# %m %f %= gqfmt:[%{&fo}] pos:%l:%c"vim.opt.termguicolors = true
+
 ```
 </details>
