@@ -1,7 +1,7 @@
 # dotfiles
 sys config files for various applications
 
-##nvim
+## nvim
 <details>
 <summary>~/.config/nvim/init.lua</summary>
 
