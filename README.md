@@ -1,6 +1,174 @@
 # dotfiles
 Unix based directory struc 
 
+## Shell fish
+<details>
+<summary>~/.config/fish/config.fish</summary>
+
+```fish
+# Put system-wide fish configuration entries here
+# or in .fish files in conf.d/
+# Files in conf.d can be overridden by the user
+# by files with the same name in $XDG_CONFIG_HOME/fish/conf.d
+
+# This file is run by all fish instances.
+# To include configuration only for login shells, use
+# if status is-login
+#    ...
+# end
+# To include configuration only for interactive shells, use
+# if status is-interactive
+#   ...
+# end
+
+# Paths
+# fish_add_path /usr/local/sbin
+
+# $PATH added to /.config/fish and .profile?
+# resolve fragmented paths
+if status is-interactive
+
+  export PATH="$PATH:/nix/store/3gvahiy86syrbf2x4s9924b9lsq9i75z-nix-2.15.0/bin"
+  export PATH="$HOME/.nix-profile/bin:$HOME/.nix-profile/share:$PATH"
+  
+  export PATH="/Users/kylegortych/.nix-profile/bin/ghc-9.2.7:$PATH"
+  
+  #export PATH=$PATH:~/.local/bin
+  
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+  
+  # disable fish greeting
+  set fish_greeting
+  
+  # starship prompt
+  starship init fish | source
+  
+  # negate fish vi cursor
+  function fish_vi_cursor
+    ;
+  end
+  
+  # start of aliases
+  
+  function aliases --description "list all aliases"
+    awk '/function /{print $2}' ~/.config/fish/config.fish | column
+  end
+
+  function os-check-update --description "search for update"
+    softwareupdate -l
+  end
+
+  function nix-ls --description "list nix packages"
+    nix-env -q | column
+  end
+  
+  # pkill verify pid match
+  # function terminate
+  #   ps | rg $argv && pkill $argv
+  # end
+  
+  # concat commands with mktemp auto rm after termination?
+  # function network-info
+  #   ((ifconfig | rg "inet" | rg -v 127.0.0.1) && networksetup -listallhardwareports) | less
+  # end
+  
+  function check-curl --description 'alias'
+    curl $argv | less
+  end
+  
+  function ls-env --description 'alias'
+    env | column -t -s '='
+  end
+  
+  function tips --description 'alias'
+    less ~/.config/fish/Shell_Support/alias_script_support/tips.txt
+  end
+  
+  function gpg-toggle --description 'alias'
+    gpg $argv 2>/dev/null || gpg -c $argv && rm -f $argv
+  end
+  
+  function py-current-pkgs --description 'alias'
+    echo -n "pip                             pip3"\n\n; paste (pip list --not-required | psub) (pip3 list --not-required | psub)
+  end
+  
+  function bun-list-g
+    ls ~/.bun/install/global/node_modules
+  end
+  
+  function npm-list-g
+    npm list -g --depth=0
+  end
+  
+  function py-ls --description 'alias'
+    sed -n "/pip/,/Build Sys/{/Build Sys/!p;}" ~/.config/fish/Shell_Support/alias_script_support/build_sys.txt
+  end
+  
+  function weather --description 'alias'
+    curl wttr.in/$argv
+  end
+  
+  function weather-radar --description 'alias'
+    mpv $argv
+  end
+  
+  function weather-radar-local --description 'alias'
+    mpv https://radar.weather.gov/ridge/lite/NORTHEAST_loop.gif
+  end
+  
+  function check-stockmarket --description 'alias'
+    curl terminal-stocks.shashi.dev/$argv
+  end
+  
+  function check-news --description 'alias'
+    curl getnews.tech/$argv || curl getnews.tech
+  end
+  
+  function open-exit --description 'alias'
+    open -a "$argv" && exit
+  end
+  
+  function apl-run-script --description 'alias'
+    apl --noSV --noColor --noCIN -q -f $argv
+  end
+  
+  function verilog-compile --description 'alias'
+    iverilog -o $argv
+  end
+  
+  function verilog-run --description 'alias'
+    vvp $argv
+  end
+
+  function jdk-ls --description "list jdk versions"
+    /usr/libexec/java_home -V
+  end
+
+  function jdk-delta --description "list jdk versions"
+    /usr/libexec/java_home -v $argv
+  end
+  
+  function doom --description 'alias'
+    ~/.emacs.d/bin/doom $argv
+  end
+  
+  # function kotlin-run-script --description 'alias'
+  #   kotlinc $argv -include-runtime -d $argv && java -jar $argv
+  # end
+  
+  # git aliases
+  function git-reset --description "reset git prj ie reclone"
+    git stash -u && git stash drop
+  end
+  
+  #python envar
+  #set -x PYTHONSTARTUP "/Users/kylegortych/.config/python/conf.py"
+
+end
+```
+
+</details>
+
 ## nvim
 <details>
 <summary>~/.config/nvim/init.lua</summary>
