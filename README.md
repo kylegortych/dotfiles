@@ -2,7 +2,7 @@
 Unix based directory struc 
 
 <details>
-<summary>##fish</summary>
+<summary>fish</summary>
 
 <details>
 <summary>~/.config/fish/config.fish</summary>
@@ -197,7 +197,9 @@ end
 
 </details>
 
-## nvim
+<details>
+<summary>nvim</summary>
+
 <details>
 <summary>~/.config/nvim/init.lua</summary>
 
@@ -475,7 +477,11 @@ vim.o.statusline = "%#Directory# %m %f %= gqfmt:[%{&fo}] pos:%l:%c"vim.opt.termg
 
 </details>
 
-## Doom Emacs
+</details>
+
+<details>
+<summary>Doom Emacs</summary>
+
 <details>
 <summary>~/.config/doom/config.el</summary>
 
@@ -901,4 +907,4 @@ vim.o.statusline = "%#Directory# %m %f %= gqfmt:[%{&fo}] pos:%l:%c"vim.opt.termg
 
 </details>
 
-
+</details>
