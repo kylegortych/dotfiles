@@ -908,3 +908,16 @@ vim.o.statusline = "%#Directory# %m %f %= gqfmt:[%{&fo}] pos:%l:%c"vim.opt.termg
 </details>
 
 </details>
+  
+<details>
+  <summary>nixos</summary>
+  
+  <details>
+    <summary>/etc/nixos/configuration.nix</summary>
+    ```nix
+      #test
+    ```
+  </details>
+  
+</details>
+    
