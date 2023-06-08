@@ -916,7 +916,31 @@ vim.o.statusline = "%#Directory# %m %f %= gqfmt:[%{&fo}] pos:%l:%c"vim.opt.termg
     <summary>/etc/nixos/configuration.nix</summary>
     
     ```nix
-      #test
+    imports =
+    [ # Include the results of the hardware scan.
+      ./hardware-configuration.nix
+      #<home-manager/nixos>
+    ];
+    
+    #home-manager.users.dev = { pkgs, ... }: {
+    # home.stateVersion = "22.11";
+    # home.packages = with pkgs; [ neovim wezterm bitwarden btop starship
+    # thunderbird freecad kicad logisim-evolution blender kdenlive ];
+    #};
+        
+    hardware.system76.enableAll = true;
+
+    programs.fish.enable = true;
+    users.defaultUserShell = pkgs.fish;
+
+    fonts.fonts = with pkgs; [
+      (nerdfonts.override { fonts = [ "Terminus" "ShareTechMono" ]; })
+    ];
+
+    services.clamav = {
+      daemon.enable = true;
+      updater.enable = true;
+    };
     ```
     
   </details>
