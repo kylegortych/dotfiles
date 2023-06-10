@@ -1001,8 +1001,13 @@ vim.o.statusline = "%#Directory# %m %f %= gqfmt:[%{&fo}] pos:%l:%c"vim.opt.termg
     description = "black";
     extraGroups = [  ];
     packages = with pkgs; [
+    ];
+  };
+
+  home-manager.users.dev = { pkgs, ... }: {
+    home.stateVersion = "23.11";
+    home.packages = with pkgs; [
       firefox
-      kate
       thunderbird
       blender
       freecad
@@ -1020,17 +1025,6 @@ vim.o.statusline = "%#Directory# %m %f %= gqfmt:[%{&fo}] pos:%l:%c"vim.opt.termg
       starship
       jetbrains.idea-community
     ];
-  };
-
-  home-manager.users.dev = { pkgs, ... }: {
-    home.stateVersion = "23.11";
-    home.packages = with pkgs; [
-      neovim
-      pkgs.python311.withPackages(ps: with ps; [
-        introcs
-        pytz
-      ])
-    ];
     programs.neovim = {
       enable = true;
       extraLuaConfig = ''
@@ -1041,18 +1035,7 @@ vim.o.statusline = "%#Directory# %m %f %= gqfmt:[%{&fo}] pos:%l:%c"vim.opt.termg
        vim.cmd('set expandtab')
        vim.cmd('set clipboard+=unnamedplus')
       '';
-      #plugins = [
-      #  {
-      #    name="pheonix";
-      #    src = pkgs.fetchFromGitHub{
-      #      owner = "";
-      #      repo = "pheonix.vim";
-      #      rev = "v1.0.0";
-      #      sha256 = "";
-      #    };
-      #  };
-      #];
-    };
+      };
   };
 
   # Allow unfree packages
@@ -1088,12 +1071,12 @@ vim.o.statusline = "%#Directory# %m %f %= gqfmt:[%{&fo}] pos:%l:%c"vim.opt.termg
 
   hardware.system76.enableAll = true;
 
-  programs.fish.enable = true;
-  users.defaultUserShell = pkgs.fish;
+  #programs.fish.enable = true;
+  #users.defaultUserShell = pkgs.fish;
 
-  fonts.fonts = with pkgs; [
-    (nerdfonts.override { fonts = [ "Terminus" "ShareTechMono" ]; })
-  ];
+  #fonts.fonts = with pkgs; [
+  #  (nerdfonts.override { fonts = [ "Terminus" "ShareTechMono" ]; })
+  #];
 
   services.clamav = {
     daemon.enable = true;
