@@ -915,32 +915,192 @@ vim.o.statusline = "%#Directory# %m %f %= gqfmt:[%{&fo}] pos:%l:%c"vim.opt.termg
   <details>
     <summary>/etc/nixos/configuration.nix</summary>
     
-    ```nix
-    imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      #<home-manager/nixos>
-    ];
-    
-    #home-manager.users.dev = { pkgs, ... }: {
-    # home.stateVersion = "22.11";
-    # home.packages = with pkgs; [ neovim wezterm bitwarden btop starship
-    # thunderbird freecad kicad logisim-evolution blender kdenlive ];
-    #};
-        
-    hardware.system76.enableAll = true;
+    ```nixos
+      # Edit this configuration file to define what should be installed on
+      # your system.  Help is available in the configuration.nix(5) man page
+      # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-    programs.fish.enable = true;
-    users.defaultUserShell = pkgs.fish;
+      { config, pkgs, ... }:
 
-    fonts.fonts = with pkgs; [
-      (nerdfonts.override { fonts = [ "Terminus" "ShareTechMono" ]; })
-    ];
+      {
+        imports =
+          [ # Include the results of the hardware scan.
+            ./hardware-configuration.nix
+            <home-manager/nixos>
+          ];
 
-    services.clamav = {
-      daemon.enable = true;
-      updater.enable = true;
-    };
+        # Bootloader.
+        boot.loader.systemd-boot.enable = true;
+        boot.loader.efi.canTouchEfiVariables = true;
+
+        # Setup keyfile
+
+        networking.hostName = ""; # Define your hostname.
+        # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+
+        # Enable networking
+        networking.networkmanager.enable = true;
+
+        # Set your time zone.
+        time.timeZone = "";
+
+        # Select internationalisation properties.
+        i18n.defaultLocale = "";
+
+        i18n.extraLocaleSettings = {
+          LC_ADDRESS = "";
+          LC_IDENTIFICATION = "";
+          LC_MEASUREMENT = "";
+          LC_MONETARY = "";
+          LC_NAME = "";
+          LC_NUMERIC = "";
+          LC_PAPER = "";
+          LC_TELEPHONE = "";
+          LC_TIME = "";
+        };
+
+        # Enable the X11 windowing system.
+        services.xserver.enable = true;
+
+        # Enable the KDE Plasma Desktop Environment.
+        services.xserver.displayManager.sddm.enable = true;
+        services.xserver.desktopManager.plasma5.enable = true;
+
+        # Configure keymap in X11
+        services.xserver = {
+          layout = "";
+          xkbVariant = "";
+        };
+
+        # Enable CUPS to print documents.
+        services.printing.enable = true;
+
+        # Enable sound with pipewire.
+        sound.enable = true;
+        hardware.pulseaudio.enable = false;
+        security.rtkit.enable = true;
+        services.pipewire = {
+          enable = true;
+          alsa.enable = true;
+          alsa.support32Bit = true;
+          pulse.enable = true;
+          # If you want to use JACK applications, uncomment this
+          #jack.enable = true;
+
+          # use the example session manager (no others are packaged yet so this is enabled by default,
+          # no need to redefine it in your config for now)
+          #media-session.enable = true;
+        };
+
+        # Enable touchpad support (enabled default in most desktopManager).
+        # services.xserver.libinput.enable = true;
+
+        # Define a user account. Don't forget to set a password with ‘passwd’.
+        users.users.blank = {
+          isNormalUser = true;
+          description = "black";
+          extraGroups = [  ];
+          packages = with pkgs; [
+            firefox
+            kate
+            thunderbird
+            blender
+            freecad
+            kicad
+            logisim-evolution
+            bitwarden
+            zoom-us
+            kdenlive
+            wezterm
+            libreoffice
+            calcurse
+            btop
+            ripgrep
+            figlet
+            starship
+            jetbrains.idea-community
+          ];
+        };
+
+        home-manager.users.dev = { pkgs, ... }: {
+          home.stateVersion = "23.11";
+          home.packages = with pkgs; [
+            neovim
+            pkgs.python311.withPackages(ps: with ps; [
+              introcs
+              pytz
+            ])
+          ];
+          programs.neovim = {
+            enable = true;
+            extraLuaConfig = ''
+             vim.cmd('set number')
+             vim.cmd('syntax on')
+             vim.cmd('set tabstop=2')
+             vim.cmd('set shiftwidth=2')
+             vim.cmd('set expandtab')
+             vim.cmd('set clipboard+=unnamedplus')
+            '';
+            #plugins = [
+            #  {
+            #    name="pheonix";
+            #    src = pkgs.fetchFromGitHub{
+            #      owner = "";
+            #      repo = "pheonix.vim";
+            #      rev = "v1.0.0";
+            #      sha256 = "";
+            #    };
+            #  };
+            #];
+          };
+        };
+
+        # Allow unfree packages
+        nixpkgs.config.allowUnfree = true;
+
+        # List packages installed in system profile. To search, run:
+        # $ nix search wget
+        environment.systemPackages = with pkgs; [
+        #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+        #  wget
+        ];
+
+        # Some programs need SUID wrappers, can be configured further or are
+        # started in user sessions.
+        # programs.mtr.enable = true;
+        # programs.gnupg.agent = {
+        #   enable = true;
+        #   enableSSHSupport = true;
+        # };
+
+        # List services that you want to enable:
+
+        # Enable the OpenSSH daemon.
+        # services.openssh.enable = true;
+
+        # This value determines the NixOS release from which the default
+        # settings for stateful data, like file locations and database versions
+        # on your system were taken. It‘s perfectly fine and recommended to leave
+        # this value at the release version of the first install of this system.
+        # Before changing this value read the documentation for this option
+        # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
+        system.stateVersion = "23.05"; # Did you read the comment?
+
+        hardware.system76.enableAll = true;
+
+        programs.fish.enable = true;
+        users.defaultUserShell = pkgs.fish;
+
+        fonts.fonts = with pkgs; [
+          (nerdfonts.override { fonts = [ "Terminus" "ShareTechMono" ]; })
+        ];
+
+        services.clamav = {
+          daemon.enable = true;
+          updater.enable = true;
+        };
+
+      }
     ```
     
   </details>
