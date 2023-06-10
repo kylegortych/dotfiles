@@ -1004,7 +1004,7 @@ vim.o.statusline = "%#Directory# %m %f %= gqfmt:[%{&fo}] pos:%l:%c"vim.opt.termg
     ];
   };
 
-  home-manager.users.dev = { pkgs, ... }: {
+  home-manager.users.blank = { pkgs, ... }: {
     home.stateVersion = "23.11";
     home.packages = with pkgs; [
       firefox
