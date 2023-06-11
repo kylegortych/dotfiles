@@ -971,6 +971,7 @@ note both paths are /etc/nixos/configuration.nix
     isNormalUser = true;
     description = "";
     extraGroups = [ "networkmanager" "wheel" ];
+    shell = pkgs.fish;
     packages = with pkgs; [
       #gui
       firefox
@@ -1002,8 +1003,12 @@ note both paths are /etc/nixos/configuration.nix
     ];
   };
 
-  programs.fish.enable = true;
-  users.defaultUserShell = pkgs.fish;
+  programs.fish = {
+    enable = true;
+    interactiveShellInit = ''
+      fish_vi_key_bindings
+    '';
+  };
   
   fonts.fonts = with pkgs; [
     (nerdfonts.override { fonts = [ "ShareTechMono" ]; })
