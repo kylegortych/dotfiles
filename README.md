@@ -1025,6 +1025,18 @@ vim.o.statusline = "%#Directory# %m %f %= gqfmt:[%{&fo}] pos:%l:%c"vim.opt.termg
       starship
       jetbrains.idea-community
     ];
+        
+    programs.fish = {
+       enable = true;
+       interactiveShellInit = ''
+         set fish_greeting
+      '';
+     };
+
+    fonts.fonts = with pkgs; [
+      (nerdfonts.override { fonts = [ "Terminus" "ShareTechMono" ]; })
+    ];
+        
     programs.neovim = {
       enable = true;
       extraLuaConfig = ''
