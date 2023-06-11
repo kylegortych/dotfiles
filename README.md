@@ -995,6 +995,7 @@ note both paths are /etc/nixos/configuration.nix
       ripgrep
       figlet
       neofetch
+      starship
 
       #lang
       python311
@@ -1006,7 +1007,9 @@ note both paths are /etc/nixos/configuration.nix
   programs.fish = {
     enable = true;
     interactiveShellInit = ''
+      set fish_greeting
       fish_vi_key_bindings
+      starship init fish | source
     '';
   };
   
