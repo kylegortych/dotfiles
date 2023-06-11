@@ -911,6 +911,8 @@ vim.o.statusline = "%#Directory# %m %f %= gqfmt:[%{&fo}] pos:%l:%c"vim.opt.termg
   
 <details>
 <summary>nixos</summary>
+
+note module home-manager 
   
 <details>
 <summary>/etc/nixos/configuration.nix</summary>
