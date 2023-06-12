@@ -966,6 +966,8 @@ note both paths are /etc/nixos/configuration.nix
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
+  # environment.shells = with pkgs; [ fish ];
+  
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.usr_name = {
     isNormalUser = true;
@@ -1129,7 +1131,9 @@ note both paths are /etc/nixos/configuration.nix
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
-
+  
+  # environment.shells = with pkgs; [ fish ];
+        
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.blank = {
     isNormalUser = true;
@@ -1171,6 +1175,22 @@ note both paths are /etc/nixos/configuration.nix
     fonts.fonts = with pkgs; [
       (nerdfonts.override { fonts = [ "Terminus" "ShareTechMono" ]; })
     ];
+      
+    programs.wezterm = {
+      enable = true;
+      extraConfig = ''
+        local wezterm = require("wezterm")
+        return {
+          font = wezterm.font 'ShureTechMono Nerd Font',
+          font_size = 16.0,
+          defualt_cursor_style = 'BlinkingBlock',
+          color_scheme = 'Monokai Remastered',
+          colors = {
+            background = '#191919',
+          }
+        }
+      '';
+  };
         
     programs.neovim = {
       enable = true;
