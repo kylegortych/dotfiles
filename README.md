@@ -913,7 +913,7 @@ vim.o.statusline = "%#Directory# %m %f %= gqfmt:[%{&fo}] pos:%l:%c"vim.opt.termg
 <summary>nixos</summary>
 
 <details>
-<summary>Current config</summary>
+<summary>/etc/nixos/configuration.nix</summary>
     
 ```nix
 # Edit this configuration file to define what should be installed on
@@ -1013,7 +1013,7 @@ vim.o.statusline = "%#Directory# %m %f %= gqfmt:[%{&fo}] pos:%l:%c"vim.opt.termg
   # environment.shells = with pkgs; [ fish ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.kg = {
+  users.users.blank = {
     isNormalUser = true;
     description = "Kyle Gortych";
     extraGroups = [ "networkmanager" "wheel" ];
@@ -1023,7 +1023,6 @@ vim.o.statusline = "%#Directory# %m %f %= gqfmt:[%{&fo}] pos:%l:%c"vim.opt.termg
       firefox
       thunderbird
       libreoffice
-      wezterm
       bitwarden
       zoom-us
       kdenlive
@@ -1052,7 +1051,7 @@ vim.o.statusline = "%#Directory# %m %f %= gqfmt:[%{&fo}] pos:%l:%c"vim.opt.termg
     ];
   };
 
-  home-manager.users.kg = { pkgs, ... }: {
+  home-manager.users.blank = { pkgs, ... }: {
     home.stateVersion = "23.11";
     programs.neovim = {
       enable = true;
@@ -1061,26 +1060,27 @@ vim.o.statusline = "%#Directory# %m %f %= gqfmt:[%{&fo}] pos:%l:%c"vim.opt.termg
         vim.opt.number = true
       '';
     };
+    programs.wezterm = {
+      enable = true;
+      extraConfig = ''
+        local wezterm = require("wezterm")
+        return {
+          font = wezterm.font 'ShureTechMono Nerd Font',
+          font_size = 16.0,
+          default_cursor_style = 'BlinkingBlock',
+          color_scheme = 'Monokai Remastered',
+          colors = {
+            background = '#191919',
+          }
+        }
+      '';
+    };
     home.packages = with pkgs; [
       w3m
     ];
   };
 
-  #programs.wezterm = {
-  #  enable = true;
-  #  extraConfig = ''
-  #    local wezterm = require("wezterm")
-  #    return {
-  #      font = wezterm.font 'ShureTechMono Nerd Font',
-  #      font_size = 16.0,
-  #      defualt_cursor_style = 'BlinkingBlock',
-  #      color_scheme = 'Monokai Remastered',
-  #      colors = {
-  #        background = '#191919',
-  #      }
-  #    }
-  #  '';
-  #};
+  
 
   programs.fish = {
     enable = true;
