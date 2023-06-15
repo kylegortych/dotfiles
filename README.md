@@ -5,56 +5,6 @@ Unix based directory struc
 <summary>fish</summary>
 
 <details>
-<summary>~/.config/fish/config.fish</summary>
-
-```fish
-# Put system-wide fish configuration entries here
-# or in .fish files in conf.d/
-# Files in conf.d can be overridden by the user
-# by files with the same name in $XDG_CONFIG_HOME/fish/conf.d
-
-# This file is run by all fish instances.
-# To include configuration only for login shells, use
-# if status is-login
-#    ...
-# end
-# To include configuration only for interactive shells, use
-# if status is-interactive
-#   ...
-# end
-
-# Paths
-# fish_add_path /usr/local/sbin
-
-# $PATH added to /.config/fish and .profile?
-# resolve fragmented paths
-if status is-interactive
-
-  export PATH="$PATH:/nix/store/3gvahiy86syrbf2x4s9924b9lsq9i75z-nix-2.15.0/bin"
-  export PATH="$HOME/.nix-profile/bin:$HOME/.nix-profile/share:$PATH"
-  
-  export PATH="/Users/kylegortych/.nix-profile/bin/ghc-9.2.7:$PATH"
-  
-  #export PATH=$PATH:~/.local/bin
-  
-  eval "$(/opt/homebrew/bin/brew shellenv)"
-  
-  # disable fish greeting
-  set fish_greeting
-  
-  # starship prompt
-  starship init fish | source
-  
-  # negate fish vi cursor
-  function fish_vi_cursor
-    ;
-  end
-end
-```
-
-</details>
-
-<details>
 <summary>~/.config/fish/completions/temp.fish</summary>
 
 ```fish
