@@ -1002,7 +1002,7 @@ vim.o.statusline = "%#Directory# %m %f %= gqfmt:[%{&fo}] pos:%l:%c"vim.opt.termg
   };
 
   home-manager.users.blank = { pkgs, ... }: {
-    home.stateVersion = "23.11";
+    home.stateVersion = "23.05";
     programs.neovim = {
       enable = true;
       extraLuaConfig = ''
