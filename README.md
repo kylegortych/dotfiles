@@ -64,7 +64,7 @@ end
 
 function gpg-toggle
   gpg $argv 2>/dev/null &&
-  set decrypted_file (string sub - 1 -4 $argv) &&
+  set decrypted_file (echo $argv | sed 's/\.gpg$//') &&
   chmod 600 $decrypted_file ||
   gpg -c --no-symkey-cache $argv && rm -f $argv
 end
