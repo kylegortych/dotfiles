@@ -62,8 +62,11 @@ function tips --description 'alias'
   less ~/.config/fish/Shell_Support/alias_script_support/tips.txt
 end
 
-function gpg-toggle --description 'alias'
-  gpg $argv 2>/dev/null || gpg -c $argv && rm -f $argv
+function gpg-toggle
+  gpg $argv 2>/dev/null &&
+  set decrypted_file (string sub - 1 -4 $argv) &&
+  chmod 600 $decrypted_file ||
+  gpg -c --no-symkey-cache $argv && rm -f $argv
 end
 
 function py-current-pkgs --description 'alias'
