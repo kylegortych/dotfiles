@@ -886,20 +886,23 @@ vim.o.statusline = "%#Directory# %m %f %= gqfmt:[%{&fo}] pos:%l:%c"vim.opt.termg
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.loader.timeout = 2;
+  boot.loader.timeout = 20;
+
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   systemd.services.NetworkManager-wait-online.enable = false;
   systemd.services.systemd-udev-settle.enable = false;
   systemd.services.network-setup.enable = false;
 
+  # vir reduce redundant writes
   #fileSystems."/nix".options = [ "noatime" ];
 
   # Setup keyfile
   boot.initrd.secrets = {
-    "/crypto_keyfile.bin" = null;
+    
   };
 
-  networking.hostName = ""; # Define your hostname.
+  networking.hostName = "blank"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -910,7 +913,7 @@ vim.o.statusline = "%#Directory# %m %f %= gqfmt:[%{&fo}] pos:%l:%c"vim.opt.termg
   networking.networkmanager.enable = true;
 
   # Set your time zone.
-  time.timeZone = "";
+  time.timeZone = "America/New_York";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
@@ -928,16 +931,13 @@ vim.o.statusline = "%#Directory# %m %f %= gqfmt:[%{&fo}] pos:%l:%c"vim.opt.termg
   };
 
   # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
-  # Enable the KDE Plasma Desktop Environment.
-  services.xserver.displayManager.sddm.enable = true;
-  services.xserver.desktopManager.plasma5.enable = true;
-
-  # Configure keymap in X11
   services.xserver = {
+    enable = true;
     layout = "us";
     xkbVariant = "";
+    displayManager.sddm.enable = true;
+    desktopManager.plasma5.enable = true;
+    displayManager.defaultSession = "plasma";
   };
 
   # Enable CUPS to print documents.
@@ -963,56 +963,57 @@ vim.o.statusline = "%#Directory# %m %f %= gqfmt:[%{&fo}] pos:%l:%c"vim.opt.termg
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
-  # environment.shells = with pkgs; [ fish ];
-
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.blank = {
+  users.users.kg = {
     isNormalUser = true;
     description = "Kyle Gortych";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
     shell = pkgs.fish;
     packages = with pkgs; [
       #gui
       firefox
       thunderbird
       libreoffice
+      obs-studio
       bitwarden
-      zoom-us
       kdenlive
-      blender
+      mpv
       freecad
       kicad
       logisim-evolution
       virtualbox
-      timeshift
+      postman
       jetbrains.idea-community
-      emacs
-
-      #cli
-      calcurse
-      btop
-      ripgrep
-      figlet
-      neofetch
-      starship
-      wl-clipboard
-
-      #lang
-      python311
-      python311Packages.datetime
-      python311Packages.ptpython
+      blender-hip
+      zoom-us
+      emacs29-gtk3
     ];
   };
 
-  home-manager.users.blank = { pkgs, ... }: {
-    home.stateVersion = "23.05";
+  home-manager.users.kg = { pkgs, ... }: {
+    home.stateVersion = "23.11";
+
     programs.neovim = {
       enable = true;
+      plugins = with pkgs.vimPlugins; [
+        pear-tree {
+          plugin = pear-tree;
+          #config = "";
+              }
+      ];
       extraLuaConfig = ''
-        vim.cmd [[colorscheme habamax]]
-        vim.opt.number = true
+      vim.cmd [[colorscheme habamax]]
+      vim.cmd [[set clipboard+=unnamedplus]]
+      vim.cmd [[let g:netrw_winsize = 30]]
+      vim.opt.number = true
+      vim.opt.cursorline = true
+      vim.opt.tabstop = 2
+      vim.opt.shiftwidth = 2
+      vim.opt.expandtab = true
+      vim.opt.softtabstop = 2
       '';
     };
+
     programs.wezterm = {
       enable = true;
       extraConfig = ''
@@ -1028,12 +1029,84 @@ vim.o.statusline = "%#Directory# %m %f %= gqfmt:[%{&fo}] pos:%l:%c"vim.opt.termg
         }
       '';
     };
+
+    programs.starship = {
+      enable = true;
+      settings = {
+        character = {
+        success_symbol = "[❯❯](bold 208) ";
+        error_symbol = "[ ❯❯](bold red) ";
+        vimcmd_symbol = "[❮❮](bold 208) ";
+        };
+        cmd_duration = {
+          format = "took [$duration](bold 208)";
+        };
+      };
+    };
+
+    programs.git = {
+      enable = true;
+      #credential.helper=blank
+      userName = "kylegortych";
+      userEmail = "kyle.gortych@gmail.com";
+    };
+
     home.packages = with pkgs; [
-      w3m
+      # cli
+      wl-clipboard
+      calcurse
+      btop
+      ripgrep
+      figlet
+      ffmpeg_6
+      neofetch
+      parallel
+      file
+      xdg-ninja
+      screenkey
+      lynis
+
+      #lang
+      verilog
+      go
+      rustup
+      gnu-cobol
+
+      #java
+      openjdk16-bootstrap
+      gradle
+
+      #python
+      python311
+      python311Packages.datetime
+      python311Packages.ptpython
+
+      #C & C++
+      gcc
+      cmake
+      ghc
+
+      #kenzie
+      awscli2
+      aws-sam-cli
+
+      #inteliji idea dependency
+      graphviz
+      plantuml
+
+      #latex
+      texlive.combined.scheme-full
     ];
   };
 
-  
+  environment.sessionVariables = {
+    EDITOR = "nvim";
+    #/nix/store/xm2aqa0xaqrwbdn4srv1wphrafz477hn-adoptopenjdk-hotspot-bin-16.0.2
+    #/nix/store/yjs2dwzsgh1phib6gllib870c5i5d0yw-adoptopenjdk-hotspot-bin-16.0.2/
+    #JAVA_HOME = "/nix/store/ni5hlvr37wx46972mxl8fszvamkym5xs-home-manager-path/bin/java";
+  };
+
+  #programs.kdeconnect.enable = true;
 
   programs.fish = {
     enable = true;
@@ -1041,10 +1114,14 @@ vim.o.statusline = "%#Directory# %m %f %= gqfmt:[%{&fo}] pos:%l:%c"vim.opt.termg
       set fish_greeting
       fish_vi_key_bindings
       starship init fish | source
+
+      set -x NVIM_LOG_FILE /home/kg/.config/nvim/log/.nvimlog
+
+      fish_add_path /home/kg/.config/emacs/bin
     '';
   };
 
-  fonts.fonts = with pkgs; [
+  fonts.packages = with pkgs; [
     (nerdfonts.override { fonts = [ "ShareTechMono" ]; })
   ];
 
@@ -1053,15 +1130,25 @@ vim.o.statusline = "%#Directory# %m %f %= gqfmt:[%{&fo}] pos:%l:%c"vim.opt.termg
     # updater.enable = true;
   };
 
+  programs.gnupg.agent = {
+    enable = true;
+    pinentryFlavor = "gtk2";
+  };
+
+  virtualisation.docker.rootless = {
+    enable = true;
+    setSocketVariable = true;
+  };
+
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #  wget
-  ];
+
+  #environment.systemPackages = with pkgs; [
+
+  #];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -1091,6 +1178,7 @@ vim.o.statusline = "%#Directory# %m %f %= gqfmt:[%{&fo}] pos:%l:%c"vim.opt.termg
   system.stateVersion = "23.05"; # Did you read the comment?
 
   hardware.system76.enableAll = true;
+  hardware.bluetooth.enable = true;
 
 }
 ```
