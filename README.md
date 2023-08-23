@@ -2,7 +2,7 @@
 Unix based directory struc 
 
 <details>
-<summary>nvim</summary>
+<summary>old nvim config</summary>
 
 <details>
 <summary>~/.config/nvim/init.lua</summary>
