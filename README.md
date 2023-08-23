@@ -2,155 +2,6 @@
 Unix based directory struc 
 
 <details>
-<summary>fish</summary>
-
-<details>
-<summary>~/.config/fish/completions/temp.fish</summary>
-
-```fish
-#temp
-```
-
-</details>
-
-<details>
-<summary>~/.config/fish/completions/nix.fish</summary>
-
-```fish
-complete -c nix -x -a 'build log path-info registry why-depends daemon derivation hash key nar print-dev-env realisation show-config store doctor upgrade-nix'
-```
-
-</details>
-
-<details>
-<summary>~/.config/fish/conf.d/aliases.fish</summary>
-
-```fish
-# start of aliases
-
-function fish-aliases --description "list all aliases"
-  awk '/function /{print $2}' ~/.config/fish/conf.d/aliases.fish | column
-end
-
-function os-check-update --description "search for update"
-  softwareupdate -l
-end
-
-function nix-ls --description "list nix packages"
-  nix-env -q | column
-end
-
-# pkill verify pid match
-# function terminate
-#   ps | rg $argv && pkill $argv
-# end
-
-# concat commands with mktemp auto rm after termination?
-# function network-info
-#   ((ifconfig | rg "inet" | rg -v 127.0.0.1) && networksetup -listallhardwareports) | less
-# end
-
-function check-curl --description 'alias'
-  curl $argv | less
-end
-
-function ls-env --description 'alias'
-  env | column -t -s '='
-end
-
-function tips --description 'alias'
-  less ~/.config/fish/Shell_Support/alias_script_support/tips.txt
-end
-
-function gpg-toggle
-  gpg $argv 2>/dev/null &&
-  set decrypted_file (echo $argv | sed 's/\.gpg$//') &&
-  chmod 600 $decrypted_file ||
-  gpg -c --no-symkey-cache $argv && rm -f $argv
-end
-
-function py-current-pkgs --description 'alias'
-  echo -n "pip                             pip3"\n\n; paste (pip list --not-required | psub) (pip3 list --not-required | psub)
-end
-
-function bun-list-g
-  ls ~/.bun/install/global/node_modules
-end
-
-function npm-list-g
-  npm list -g --depth=0
-end
-
-function py-ls --description 'alias'
-  sed -n "/pip/,/Build Sys/{/Build Sys/!p;}" ~/.config/fish/Shell_Support/alias_script_support/build_sys.txt
-end
-
-function weather --description 'alias'
-  curl wttr.in/$argv
-end
-
-function weather-radar --description 'alias'
-  mpv $argv
-end
-
-function weather-radar-local --description 'alias'
-  mpv https://radar.weather.gov/ridge/lite/NORTHEAST_loop.gif
-end
-
-function check-stockmarket --description 'alias'
-  curl terminal-stocks.shashi.dev/$argv
-end
-
-function check-news --description 'alias'
-  curl getnews.tech/$argv || curl getnews.tech
-end
-
-function open-exit --description 'alias'
-  open -a "$argv" && exit
-end
-
-function apl-run-script --description 'alias'
-  apl --noSV --noColor --noCIN -q -f $argv
-end
-
-function verilog-compile --description 'alias'
-  iverilog -o $argv
-end
-
-function verilog-run --description 'alias'
-  vvp $argv
-end
-
-function jdk-ls --description "list jdk versions"
-  /usr/libexec/java_home -V
-end
-
-function jdk-delta --description "list jdk versions"
-  /usr/libexec/java_home -v $argv
-end
-
-function doom --description 'alias'
-  ~/.emacs.d/bin/doom $argv
-end
-
-# function kotlin-run-script --description 'alias'
-#   kotlinc $argv -include-runtime -d $argv && java -jar $argv
-# end
-
-# git aliases
-function git-reset --description "reset git prj ie reclone"
-  git stash -u && git stash drop
-end
-
-#python envar
-#set -x PYTHONSTARTUP "/Users/kylegortych/.config/python/conf.py"
-```
-
-</details>
-
-</details>
-
-<details>
 <summary>nvim</summary>
 
 <details>
@@ -431,436 +282,6 @@ vim.o.statusline = "%#Directory# %m %f %= gqfmt:[%{&fo}] pos:%l:%c"vim.opt.termg
 </details>
 
 </details>
-
-<details>
-<summary>Doom Emacs</summary>
-
-<details>
-<summary>~/.config/doom/config.el</summary>
-
-```elisp
-;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
-
-;; Place your private configuration here! Remember, you do not need to run 'doom
-;; sync' after modifying this file!
-
-
-;; Some functionality uses this to identify you, e.g. GPG configuration, email
-;; clients, file templates and snippets.
-(setq user-full-name "John Doe"
-      user-mail-address "john@doe.com")
-
-;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
-;; are the three important ones:
-;;
-;; + `doom-font'
-;; + `doom-variable-pitch-font'
-;; + `doom-big-font' -- used for `doom-big-font-mode'; use this for
-;;   presentations or streaming.
-;;
-;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
-;; font string. You generally only need these two:
-;; (setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
-;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
-
-;; There are two ways to load a theme. Both assume the theme is installed and
-;; available. You can either set `doom-theme' or manually load a theme with the
-;; `load-theme' function. This is the default:
-;;(setq doom-theme 'doom-one)
-;;(setq doom-theme 'afternoon)
-(setq doom-theme 'klere)
-;;(setq doom-theme 'darkokai)
-;;(add-to-list 'default-frame-alist '(background-mode . dark))
-
-;; If you use `org' and don't want your org files in the default location below,
-;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/org/")
-
-;; This determines the style of line numbers in effect. If set to `nil', line
-;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
-
-
-;; Here are some additional functions/macros that could help you configure Doom:
-;;
-;; - `load!' for loading external *.el files relative to this one
-;; - `use-package!' for configuring packages
-;; - `after!' for running code after a package has loaded
-;; - `add-load-path!' for adding directories to the `load-path', relative to
-;;   this file. Emacs searches the `load-path' when you load packages with
-;;   `require' or `use-package'.
-;; - `map!' for binding new keys
-;;
-;; To get information about any of these functions/macros, move the cursor over
-;; the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
-;; This will open documentation for it, including demos of how they are used.
-;;
-;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
-;; they are implemented.
-
-;; start of my config
-
-;; initial defualt inline org images
-;; (setq org-image-actual-width '100)
-(setq org-image-actual-width nil)
-
-;; screen size
-;;(add-hook 'window-setup-hook #'toggle-frame-maximized)
-(setq initial-frame-alist '((top . 1) (right . 1) (width . 130) (height . 100)))
-
-;; font
-(setq doom-font (font-spec :family "TerminessTTF Nerd Font Mono" :size 16))
-
-;; dashboard
-;;(setq fancy-splash-image "/Users/kylegortych/Downloads/doom-emacs-bw-light.svg")
-
-(defun skull ()
-  (let* ((banner '("   .o oOOOOOOOo                                            OOOo    "
-                   "   Ob.OOOOOOOo  OOOo.      oOOo.                      .adOOOOOOO   "
-                   "   OboO000000000000.OOo. .oOOOOOo.    OOOo.oOOOOOo..0000000000OO   "
-                   "   OOP.oOOOOOOOOOOO iPOOOOOOOOOOOo.   `iOOOOOOOOOP,OOOOOOOOOOOB'   "
-                   "   `O'OOOO'     `OOOOo'OOOOOOOOOOO` .adOOOOOOOOO'oOOO'    `OOOOo   "
-                   "   .OOOO'            `OOOOOOOOOOOOOOOOOOOOOOOOOO'            `OO   "
-                   "   OOOOO                 'iOOOOOOOOOOOOOOOOi`                oOO   "
-                   "  oOOOOOba.                .adOOOOOOOOOOba               .adOOOOo. "
-                   " oOOOOOOOOOOOOOba.    .adOOOOOOOOOO@^OOOOOOOba.     .adOOOOOOOOOOOO"
-                   "OOOOOOOOOOOOOOOOO.OOOOOOOOOOOOOO'`  ''OOOOOOOOOOOOO.OOOOOOOOOOOOOO "
-                   "'OOOO'       'YOoOOOOMOIONODOO'`  .   ''OOROAOPOEOOOoOY'     'OOO' "
-                   "   Y           'OOOOOOOOOOOOOO: .oOOo. :OOOOOOOOOOO?'         :`   "
-                   "   :            .oO%OOOOOOOOOOo.OOOOOO.oOOOOOOOOOOOO?         .    "
-                   "   .            oOOPi%OOOOOOOOoOOOOOOO?oOOOOO?OOOOiOOo             "
-                   "                '%o  OOOO'%OOOO%'%OOOOO'OOOOOO'OOO':               "
-                   "                     `$i  `OOOO' `O'Y ' `OOOO'  o             .    "
-                   "   .                  .     OP'          : o     .                 "
-                   "                             :                                     "
-                   "                             .                                     "
-                   "                                                                   "))
-         (longest-line (apply #'max (mapcar #'length banner))))
-    (put-text-property
-     (point)
-     (dolist (line banner (point))
-       (insert (+doom-dashboard--center
-                +doom-dashboard--width
-                (concat line (make-string (max 0 (- longest-line (length line))) 68)))
-               "\n"))
-     'face 'doom-dashboard-banner)))
-
-(setq +doom-dashboard-ascii-banner-fn #'skull)
-
-(remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-loaded)
-(remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-footer)
-
-(add-hook! '+doom-dashboard-functions :append
-  (insert "\n" (+doom-dashboard--center +doom-dashboard--width "config by Kyle Gortych")))
-;; apply icons to dired?
-
-
-;; disable quit comfirmation
-(setq confirm-kill-emacs nil)
-
-;; cursor shape
-(unless (display-graphic-p)
-        (require 'evil-terminal-cursor-changer)
-        (evil-terminal-cursor-changer-activate) ; or (etcc-on)
-        )
-
-(setq evil-insert-state-cursor '(hbar "white")
-      evil-normal-state-cursor '(box "white")
-      evil-motion-state-cursor '(box "white")
-      evil-visual-state-cursor '(box "white")
-      evil-emacs-state-cursor '(box "white"))
-
-;; note: org export html | dosn't include superstar | css file to change behavior
-
-;; orgmode bullets
-(setq org-superstar-headline-bullets-list '("➀" "➁" "➂" "➃" "➄"))
-
-;; orgmode list symbol
-(setq org-superstar-item-bullet-alist '((?+ . ?») (?- . ?») (?➤ . ?»)))
-
-;; stripe-buffer
-;; (add-hook 'dired-mode-hook 'turn-on-stripe-buffer-mode)
-;; (add-hook 'dired-mode-hook 'stripe-listify-buffer)
-;; (add-hook 'org-mode-hook 'turn-on-stripe-table-mode)
-```
-
-</details>
-
-<details>
-<summary>~/.config/doom/packages.el</summary>
-
-```elisp
-;; -*- no-byte-compile: t; -*-
-;;; $DOOMDIR/packages.el
-
-;; To install a package with Doom you must declare them here and run 'doom sync'
-;; on the command line, then restart Emacs for the changes to take effect -- or
-;; use 'M-x doom/reload'.
-
-
-;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
-;(package! some-package)
-
-;; To install a package directly from a remote git repo, you must specify a
-;; `:recipe'. You'll find documentation on what `:recipe' accepts here:
-;; https://github.com/raxod502/straight.el#the-recipe-format
-;(package! another-package
-;  :recipe (:host github :repo "username/repo"))
-
-;; If the package you are trying to install does not contain a PACKAGENAME.el
-;; file, or is located in a subdirectory of the repo, you'll need to specify
-;; `:files' in the `:recipe':
-;(package! this-package
-;  :recipe (:host github :repo "username/repo"
-;           :files ("some-file.el" "src/lisp/*.el")))
-
-;; If you'd like to disable a package included with Doom, you can do so here
-;; with the `:disable' property:
-;(package! builtin-package :disable t)
-
-;; You can override the recipe of a built in package without having to specify
-;; all the properties for `:recipe'. These will inherit the rest of its recipe
-;; from Doom or MELPA/ELPA/Emacsmirror:
-;(package! builtin-package :recipe (:nonrecursive t))
-;(package! builtin-package-2 :recipe (:repo "myfork/package"))
-
-;; Specify a `:branch' to install a package from a particular branch or tag.
-;; This is required for some packages whose default branch isn't 'master' (which
-;; our package manager can't deal with; see raxod502/straight.el#279)
-;(package! builtin-package :recipe (:branch "develop"))
-
-;; Use `:pin' to specify a particular commit to install.
-;(package! builtin-package :pin "1a2b3c4d5e")
-
-
-;; Doom's packages are pinned to a specific commit and updated from release to
-;; release. The `unpin!' macro allows you to unpin single packages...
-;(unpin! pinned-package)
-;; ...or multiple packages
-;(unpin! pinned-package another-pinned-package)
-;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
-;(unpin! t)
-
-(package! evil-terminal-cursor-changer)
-(package! klere-theme)
-(package! darkokai-theme)
-;; (package! stripe-buffer)
-;;(package! )
-
-;;(package! example :recipe
-;;  (:host github
-;;   :repo "url"
-;;   :files ("file-name.el" "url raw?"))
-```
-
-</details>
-
-<details>
-<summary>~/.config/doom/init.el</summary>
-
-```elisp
-;;; init.el -*- lexical-binding: t; -*-
-
-;; This file controls what Doom modules are enabled and what order they load
-;; in. Remember to run 'doom sync' after modifying it!
-
-;; NOTE Press 'SPC h d h' (or 'C-h d h' for non-vim users) to access Doom's
-;;      documentation. There you'll find a link to Doom's Module Index where all
-;;      of our modules are listed, including what flags they support.
-
-;; NOTE Move your cursor over a module's name (or its flags) and press 'K' (or
-;;      'C-c c k' for non-vim users) to view its documentation. This works on
-;;      flags as well (those symbols that start with a plus).
-;;
-;;      Alternatively, press 'gd' (or 'C-c c d') on a module to browse its
-;;      directory (for easy access to its source code).
-
-(doom! :input
-       ;;bidi              ; (tfel ot) thgir etirw uoy gnipleh
-       ;;chinese
-       ;;japanese
-       ;;layout            ; auie,ctsrnm is the superior home row
-
-       :completion
-       company           ; the ultimate code completion backend
-       ;;helm              ; the *other* search engine for love and life
-       ;;ido               ; the other *other* search engine...
-       ;;ivy               ; a search engine for love and life
-       ;;vertico           ; the search engine of the future
-
-       :ui
-       ;;deft              ; notational velocity for Emacs
-       ;;doom              ; what makes DOOM look the way it does
-       doom-dashboard    ; a nifty splash screen for Emacs
-       ;;doom-quit         ; DOOM quit-message prompts when you quit Emacs
-       ;;(emoji +unicode)  ; 🙂
-       hl-todo           ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
-       ;;hydra
-       ;;indent-guides     ; highlighted indent columns
-       ;;ligatures         ; ligatures and symbols to make your code pretty again
-       ;;minimap           ; show a map of the code on the side
-       modeline          ; snazzy, Atom-inspired modeline, plus API
-       ;;nav-flash         ; blink cursor line after big motions
-       ;;neotree           ; a project drawer, like NERDTree for vim
-       ophints           ; highlight the region an operation acts on
-       (popup +defaults)   ; tame sudden yet inevitable temporary windows
-       ;;tabs              ; a tab bar for Emacs
-       ;;treemacs          ; a project drawer, like neotree but cooler
-       ;;unicode           ; extended unicode support for various languages
-       vc-gutter         ; vcs diff in the fringe
-       vi-tilde-fringe   ; fringe tildes to mark beyond EOB
-       ;;window-select     ; visually switch windows
-       workspaces        ; tab emulation, persistence & separate workspaces
-       ;;zen               ; distraction-free coding or writing
-
-       :editor
-       (evil +everywhere); come to the dark side, we have cookies
-       file-templates    ; auto-snippets for empty files
-       fold              ; (nigh) universal code folding
-       ;;(format +onsave)  ; automated prettiness
-       ;;god               ; run Emacs commands without modifier keys
-       ;;lispy             ; vim for lisp, for people who don't like vim
-       ;;multiple-cursors  ; editing in many places at once
-       ;;objed             ; text object editing for the innocent
-       ;;parinfer          ; turn lisp into python, sort of
-       ;;rotate-text       ; cycle region at point between text candidates
-       snippets          ; my elves. They type so I don't have to
-       ;;word-wrap         ; soft wrapping with language-aware indent
-
-       :emacs
-       ;;dired           ; making dired pretty [functional]
-       (dired +icons)    ; dired with all-the-icons pkg
-       electric          ; smarter, keyword-based electric-indent
-       ;;ibuffer         ; interactive buffer management
-       undo              ; persistent, smarter undo for your inevitable mistakes
-       vc                ; version-control and Emacs, sitting in a tree
-
-       :term
-       ;;eshell            ; the elisp shell that works everywhere
-       ;;shell             ; simple shell REPL for Emacs
-       ;;term              ; basic terminal emulator for Emacs
-       vterm             ; the best terminal emulation in Emacs
-
-       :checkers
-       syntax              ; tasing you for every semicolon you forget
-       (spell +flyspell) ; tasing you for misspelling mispelling
-       grammar           ; tasing grammar mistake every you make
-
-       :tools
-       ;;ansible
-       biblio            ; Writes a PhD for you (citation needed)
-       debugger          ; FIXME stepping through code, to help you add bugs
-       ;;direnv
-       ;;docker
-       ;;editorconfig      ; let someone else argue about tabs vs spaces
-       ;;ein               ; tame Jupyter notebooks with emacs
-       (eval +overlay)     ; run code, run (also, repls)
-       ;;gist              ; interacting with github gists
-       lookup              ; navigate your code and its documentation
-       lsp               ; M-x vscode
-       magit             ; a git porcelain for Emacs
-       ;;make              ; run make tasks from Emacs
-       ;;pass              ; password manager for nerds
-       pdf               ; pdf enhancements
-       ;;prodigy           ; FIXME managing external services & code builders
-       ;;rgb               ; creating color strings
-       ;;taskrunner        ; taskrunner for all your projects
-       ;;terraform         ; infrastructure as code
-       ;;tmux              ; an API for interacting with tmux
-       ;;tree-sitter       ; syntax and parsing, sitting in a tree...
-       ;;upload            ; map local to remote projects via ssh/ftp
-
-       :os
-       (:if IS-MAC macos)  ; improve compatibility with macOS
-       ;;tty               ; improve the terminal Emacs experience
-
-       :lang
-       agda              ; types of types of types of types...
-       ;;beancount         ; mind the GAAP
-       (cc +lsp)         ; C > C++ == 1
-       ;;clojure           ; java with a lisp
-       ;;common-lisp       ; if you've seen one lisp, you've seen them all
-       coq               ; proofs-as-programs
-       ;;crystal           ; ruby at the speed of c
-       csharp            ; unity, .NET, and mono shenanigans
-       ;;data              ; config/data formats
-       ;;(dart +flutter)   ; paint ui and not much else
-       ;;dhall
-       ;;elixir            ; erlang done right
-       ;;elm               ; care for a cup of TEA?
-       emacs-lisp        ; drown in parentheses
-       ;;erlang            ; an elegant language for a more civilized age
-       ;;ess               ; emacs speaks statistics
-       ;;factor
-       ;;faust             ; dsp, but you get to keep your soul
-       ;;fortran           ; in FORTRAN, GOD is REAL (unless declared INTEGER)
-       ;;fsharp            ; ML stands for Microsoft's Language
-       ;;fstar             ; (dependent) types and (monadic) effects and Z3
-       ;;gdscript          ; the language you waited for
-       (go +lsp)         ; the hipster dialect
-       ;;(graphql +lsp)    ; Give queries a REST
-       (haskell +lsp)    ; a language that's lazier than I am
-       ;;hy                ; readability of scheme w/ speed of python
-       ;;idris             ; a language you can depend on
-       json              ; At least it ain't XML
-       ;;(java +lsp)       ; the poster child for carpal tunnel syndrome
-       java
-       javascript        ; all(hope(abandon(ye(who(enter(here))))))
-       ;;julia             ; a better, faster MATLAB
-       kotlin            ; a better, slicker Java(Script)
-       latex             ; writing papers in Emacs has never been so fun
-       ;;lean              ; for folks with too much to prove
-       ;;ledger            ; be audit you can be
-       lua               ; one-based indices? one-based indices
-       markdown          ; writing docs for people to ignore
-       ;;nim               ; python + lisp at the speed of c
-       ;;nix               ; I hereby declare "nix geht mehr!"
-       ;;ocaml             ; an objective camel
-       ;;org               ; organize your plain life in plain text
-       (org +pretty)       ; org with superstar bullets pkg
-       php               ; perl's insecure younger brother
-       ;;plantuml          ; diagrams for confusing people more
-       ;;purescript        ; javascript, but functional
-       python            ; beautiful is better than ugly
-       ;;qt                ; the 'cutest' gui framework ever
-       ;;racket            ; a DSL for DSLs
-       ;;raku              ; the artist formerly known as perl6
-       ;;rest              ; Emacs as a REST client
-       ;;rst               ; ReST in peace
-       ;;(ruby +rails)     ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
-       rust              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
-       ;;scala             ; java, but good
-       ;;(scheme +guile)   ; a fully conniving family of lisps
-       sh                ; she sells {ba,z,fi}sh shells on the C xor
-       ;;sml
-       ;;solidity          ; do you need a blockchain? No.
-       ;;swift             ; who asked for emoji variables?
-       ;;terra             ; Earth and Moon in alignment for performance.
-       web               ; the tubes
-       yaml              ; JSON, but readable
-       ;;zig               ; C, but simpler
-
-       :email
-       ;;(mu4e +org +gmail)
-       ;;notmuch
-       ;;(wanderlust +gmail)
-
-       :app
-       calendar
-       ;;emms
-       ;;everywhere        ; *leave* Emacs!? You must be joking
-       ;;irc               ; how neckbeards socialize
-       ;;(rss +org)        ; emacs as an RSS reader
-       ;;twitter           ; twitter client https://twitter.com/vnought
-
-       :config
-       ;;literate
-       (default +bindings +smartparens))
-```
-
-</details>
-
-</details>
   
 <details>
 <summary>nixos</summary>
@@ -882,27 +303,28 @@ vim.o.statusline = "%#Directory# %m %f %= gqfmt:[%{&fo}] pos:%l:%c"vim.opt.termg
       <home-manager/nixos>
     ];
 
+  #nix settings
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-
   boot.loader.timeout = 20;
-
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   systemd.services.NetworkManager-wait-online.enable = false;
   systemd.services.systemd-udev-settle.enable = false;
   systemd.services.network-setup.enable = false;
 
-  # vir reduce redundant writes
-  #fileSystems."/nix".options = [ "noatime" ];
+  # virt reduce redundant writes
+  #fileSystems."/nix/store".options = [ "noatime" ];
 
   # Setup keyfile
   boot.initrd.secrets = {
-    
+    "" = null;
   };
 
-  networking.hostName = "blank"; # Define your hostname.
+  networking.hostName = ""; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -913,32 +335,37 @@ vim.o.statusline = "%#Directory# %m %f %= gqfmt:[%{&fo}] pos:%l:%c"vim.opt.termg
   networking.networkmanager.enable = true;
 
   # Set your time zone.
-  time.timeZone = "America/New_York";
+  time.timeZone = "";
 
   # Select internationalisation properties.
-  i18n.defaultLocale = "en_US.UTF-8";
+  i18n.defaultLocale = "";
 
   i18n.extraLocaleSettings = {
-    LC_ADDRESS = "en_US.UTF-8";
-    LC_IDENTIFICATION = "en_US.UTF-8";
-    LC_MEASUREMENT = "en_US.UTF-8";
-    LC_MONETARY = "en_US.UTF-8";
-    LC_NAME = "en_US.UTF-8";
-    LC_NUMERIC = "en_US.UTF-8";
-    LC_PAPER = "en_US.UTF-8";
-    LC_TELEPHONE = "en_US.UTF-8";
-    LC_TIME = "en_US.UTF-8";
+    LC_ADDRESS = "";
+    LC_IDENTIFICATION = "";
+    LC_MEASUREMENT = "";
+    LC_MONETARY = "";
+    LC_NAME = "";
+    LC_NUMERIC = "";
+    LC_PAPER = "";
+    LC_TELEPHONE = "";
+    LC_TIME = "";
   };
 
   # Enable the X11 windowing system.
-  services.xserver = {
+  services.xserver.enable = true;
+  services.xserver.layout = "us";
+  services.xserver.xkbVariant = "";
+  services.xserver.displayManager.sddm.enable = true;
+  services.xserver.desktopManager.plasma5.enable = true;
+  services.xserver.displayManager.defaultSession = "plasma";
+
+/*
+  programs.hyprland = {
     enable = true;
-    layout = "us";
-    xkbVariant = "";
-    displayManager.sddm.enable = true;
-    desktopManager.plasma5.enable = true;
-    displayManager.defaultSession = "plasma";
+    xwayland.enable = true;
   };
+*/
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -964,10 +391,10 @@ vim.o.statusline = "%#Directory# %m %f %= gqfmt:[%{&fo}] pos:%l:%c"vim.opt.termg
   # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.kg = {
+  users.users.username = {
     isNormalUser = true;
-    description = "Kyle Gortych";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    description = "";
+    extraGroups = [ ""];
     shell = pkgs.fish;
     packages = with pkgs; [
       #gui
@@ -981,27 +408,581 @@ vim.o.statusline = "%#Directory# %m %f %= gqfmt:[%{&fo}] pos:%l:%c"vim.opt.termg
       freecad
       kicad
       logisim-evolution
-      virtualbox
       postman
       jetbrains.idea-community
       blender-hip
       zoom-us
       emacs29-gtk3
+
+      #kde specific
+      libsForQt5.kwin-tiling
+      libsForQt5.sddm-kcm
+
+      #hyprland specific
+      /* bemenu
+      hyprpaper
+      waybar */
     ];
   };
 
-  home-manager.users.kg = { pkgs, ... }: {
+  home-manager.users.username = { pkgs, ... }: {
     home.stateVersion = "23.11";
 
-    programs.neovim = {
-      enable = true;
-      plugins = with pkgs.vimPlugins; [
-        pear-tree {
-          plugin = pear-tree;
-          #config = "";
-              }
-      ];
-      extraLuaConfig = ''
+    home.file = {
+      "/home/username/.config/fish/conf.d/aliases.fish".text = ''
+        function backup
+          $argv[1] rsync -rgloptuvz --delete --files-from=/home/kg/.config/rsync/conf.txt / $argv[2]
+        end
+        
+        function ls-permissions
+          find $argv -maxdepth 1 -printf "%m %u %f\n" | column
+        end
+        
+        function virus-scan
+          $argv[1] clamdscan --fdpass -m -i --move=/home/kg/quarantine $argv[2]
+        end
+        
+        function sys-upgrade
+          $argv nix-channel --update
+          $argv nixos-rebuild switch --upgrade
+        end
+        
+        function nix-ls
+          nix-env --list-generations
+          #sed
+        end
+        
+        function nix-clean
+          $argv nix-env --delete-generations +2
+          $argv nix-store --optimise -v -j auto
+          $argv nix-store --gc
+        end
+        
+        function git-merge-req
+          git push -o merge_request.create -o merge_request.target=$argv[1] origin $argv[2]
+        end
+        
+        function gpg-toggle
+          set decrypted_file (echo $argv | sed 's/\.gpg$//')
+          set encrypted_file (echo $argv | sed '/\.gpg$/! s/$/.gpg/')
+          gpg $argv 2>/dev/null && chmod 600 $decrypted_file  ||
+          gpg -c --no-symkey-cache $argv && rm -f $argv &&
+          chmod 600 $encrypted_file 2>/dev/null
+        end
+      '';
+
+      "/home/username/.config/fish/config.fish".text = ''
+        if status is-interactive
+          set fish_greeting
+          fish_vi_key_bindings
+          starship init fish | source
+
+          set -x NVIM_LOG_FILE /home/kg/.config/nvim/log/.nvimlog
+  
+          fish_add_path /home/kg/.config/emacs/bin
+
+          set -x AWS_CONFIG_FILE $HOME/.config/aws/config
+          set -x AWS_SHARED_CREDENTIALS_FILE $HOME/.config/aws/credentials
+
+          #git
+          set -x GITHUB_USERNAME kylegortych
+          #set -x GITHUB_TOKEN
+
+          #Kenzie AWS
+          set -x UNIT_TWO_REPO_NAME ata-unit-two-project-kylegortych
+          set -x UNIT_TWO_PROJECT_NAME unitproject2
+          set -x UNIT_TWO_PIPELINE_STACK $UNIT_TWO_PROJECT_NAME-$GITHUB_USERNAME
+          set -x UNIT_TWO_ARTIFACT_BUCKET $UNIT_TWO_PROJECT_NAME-$GITHUB_USERNAME-artifacts
+          set -x UNIT_TWO_DEPLOY_STACK $UNIT_TWO_PROJECT_NAME-$GITHUB_USERNAME-application
+          set -x UNIT_TWO_APP_STORAGE_BUCKET $UNIT_TWO_PROJECT_NAME-$GITHUB_USERNAME-datastore
+
+          #/nix/store/xm2aqa0xaqrwbdn4srv1wphrafz477hn-adoptopenjdk-hotspot-bin-16.0.2
+          #/nix/store/yjs2dwzsgh1phib6gllib870c5i5d0yw-adoptopenjdk-hotspot-bin-16.0.2/
+          #JAVA_HOME = "/nix/store/ni5hlvr37wx46972mxl8fszvamkym5xs-home-manager-path/bin/java";
+        end
+      '';
+
+      "/home/username/.config/fish/completions/nix.fish".text = ''
+        #test
+      '';
+
+      "/home/username/.config/doom/config.el".text = ''
+        ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
+        
+        ;; Place your private configuration here! Remember, you do not need to run 'doom
+        ;; sync' after modifying this file!
+        
+        
+        ;; Some functionality uses this to identify you, e.g. GPG configuration, email
+        ;; clients, file templates and snippets. It is optional.
+        (setq user-full-name "John Doe"
+              user-mail-address "john@doe.com")
+        
+        ;; Doom exposes five (optional) variables for controlling fonts in Doom:
+        ;;
+        ;; - `doom-font' -- the primary font to use
+        ;; - `doom-variable-pitch-font' -- a non-monospace font (where applicable)
+        ;; - `doom-big-font' -- used for `doom-big-font-mode'; use this for
+        ;;   presentations or streaming.
+        ;; - `doom-unicode-font' -- for unicode glyphs
+        ;; - `doom-serif-font' -- for the `fixed-pitch-serif' face
+        ;;
+        ;; See 'C-h v doom-font' for documentation and more examples of what they
+        ;; accept. For example:
+        ;;
+        ;;(setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
+        ;;      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
+        ;;
+        ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
+        ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
+        ;; refresh your font settings. If Emacs still can't find your font, it likely
+        ;; wasn't installed correctly. Font issues are rarely Doom issues!
+        
+        ;; There are two ways to load a theme. Both assume the theme is installed and
+        ;; available. You can either set `doom-theme' or manually load a theme with the
+        ;; `load-theme' function. This is the default:
+        ;;(setq doom-theme 'doom-one)
+        (setq doom-theme 'klere)
+        
+        ;; This determines the style of line numbers in effect. If set to `nil', line
+        ;; numbers are disabled. For relative line numbers, set this to `relative'.
+        (setq display-line-numbers-type t)
+        
+        ;; If you use `org' and don't want your org files in the default location below,
+        ;; change `org-directory'. It must be set before org loads!
+        (setq org-directory "~/org/")
+        
+        
+        ;; Whenever you reconfigure a package, make sure to wrap your config in an
+        ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
+        ;;
+        ;;   (after! PACKAGE
+        ;;     (setq x y))
+        ;;
+        ;; The exceptions to this rule:
+        ;;
+        ;;   - Setting file/directory variables (like `org-directory')
+        ;;   - Setting variables which explicitly tell you to set them before their
+        ;;     package is loaded (see 'C-h v VARIABLE' to look up their documentation).
+        ;;   - Setting doom variables (which start with 'doom-' or '+').
+        ;;
+        ;; Here are some additional functions/macros that will help you configure Doom.
+        ;;
+        ;; - `load!' for loading external *.el files relative to this one
+        ;; - `use-package!' for configuring packages
+        ;; - `after!' for running code after a package has loaded
+        ;; - `add-load-path!' for adding directories to the `load-path', relative to
+        ;;   this file. Emacs searches the `load-path' when you load packages with
+        ;;   `require' or `use-package'.
+        ;; - `map!' for binding new keys
+        ;;
+        ;; To get information about any of these functions/macros, move the cursor over
+        ;; the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
+        ;; This will open documentation for it, including demos of how they are used.
+        ;; Alternatively, use `C-h o' to look up a symbol (functions, variables, faces,
+        ;; etc).
+        ;;
+        ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
+        ;; they are implemented.
+        
+        (setq initial-frame-alist '((top . 1) (right . 1) (width . 150) (height . 50)))
+        
+        ;; font
+        (setq doom-font (font-spec :family "ShureTechMono Nerd Font Mono" :size 26))
+        
+        ;; dashboard
+        ;;(setq fancy-splash-image "/Users/kylegortych/Downloads/doom-emacs-bw-light.svg")
+        
+        (defun skull ()
+          (let* ((banner '("   .o oOOOOOOOo                                            OOOo    "
+                           "   Ob.OOOOOOOo  OOOo.      oOOo.                      .adOOOOOOO   "
+                           "   OboO000000000000.OOo. .oOOOOOo.    OOOo.oOOOOOo..0000000000OO   "
+                           "   OOP.oOOOOOOOOOOO iPOOOOOOOOOOOo.   `iOOOOOOOOOP,OOOOOOOOOOOB'   "
+                           "   `O'OOOO'     `OOOOo'OOOOOOOOOOO` .adOOOOOOOOO'oOOO'    `OOOOo   "
+                           "   .OOOO'            `OOOOOOOOOOOOOOOOOOOOOOOOOO'            `OO   "
+                           "   OOOOO                 'iOOOOOOOOOOOOOOOOi`                oOO   "
+                           "  oOOOOOba.                .adOOOOOOOOOOba               .adOOOOo. "
+                           " oOOOOOOOOOOOOOba.    .adOOOOOOOOOO@^OOOOOOOba.     .adOOOOOOOOOOOO"
+                           "OOOOOOOOOOOOOOOOO.OOOOOOOOOOOOOO'`  ``OOOOOOOOOOOOO.OOOOOOOOOOOOOO "
+                           "`OOOO`       `YOoOOOOMOIONODOO``  .   ``OOROAOPOEOOOoOY`     `OOO` "
+                           "   Y           'OOOOOOOOOOOOOO: .oOOo. :OOOOOOOOOOO?'         :`   "
+                           "   :            .oO%OOOOOOOOOOo.OOOOOO.oOOOOOOOOOOOO?         .    "
+                           "   .            oOOPi%OOOOOOOOoOOOOOOO?oOOOOO?OOOOiOOo             "
+                           "                '%o  OOOO'%OOOO%'%OOOOO'OOOOOO'OOO':               "
+                           "                     `$i  `OOOO' `O'Y ' `OOOO'  o             .    "
+                           "   .                  .     OP'          : o     .                 "
+                           "                             :                                     "
+                           "                             .                                     "
+                           "                                                                   "))
+                 (longest-line (apply #'max (mapcar #'length banner))))
+            (put-text-property
+             (point)
+             (dolist (line banner (point))
+               (insert (+doom-dashboard--center
+                        +doom-dashboard--width
+                        (concat line (make-string (max 0 (- longest-line (length line))) 68)))
+                       "\n"))
+             'face 'doom-dashboard-banner)))
+        
+        (setq +doom-dashboard-ascii-banner-fn #'skull)
+        
+        (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-loaded)
+        (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-footer)
+        
+        (add-hook! '+doom-dashboard-functions :append
+          (insert "\n" (+doom-dashboard--center +doom-dashboard--width "config by Kyle Gortych")))
+        
+        (setq confirm-kill-emacs nil)
+        
+        ;; (setq dired-listing-switches "-a")
+        
+        ;; opacity
+        (set-frame-parameter nil 'alpha-background 95)
+        (add-to-list 'default-frame-alist '(alpha-background . 95))
+      '';
+
+      "/home/username/.config/doom/init.el".text = ''
+        ;;; init.el -*- lexical-binding: t; -*-
+        
+        ;; This file controls what Doom modules are enabled and what order they load
+        ;; in. Remember to run 'doom sync' after modifying it!
+        
+        ;; NOTE Press 'SPC h d h' (or 'C-h d h' for non-vim users) to access Doom's
+        ;;      documentation. There you'll find a link to Doom's Module Index where all
+        ;;      of our modules are listed, including what flags they support.
+        
+        ;; NOTE Move your cursor over a module's name (or its flags) and press 'K' (or
+        ;;      'C-c c k' for non-vim users) to view its documentation. This works on
+        ;;      flags as well (those symbols that start with a plus).
+        ;;
+        ;;      Alternatively, press 'gd' (or 'C-c c d') on a module to browse its
+        ;;      directory (for easy access to its source code).
+        
+        (doom! :input
+               ;;bidi              ; (tfel ot) thgir etirw uoy gnipleh
+               ;;chinese
+               ;;japanese
+               ;;layout            ; auie,ctsrnm is the superior home row
+        
+               :completion
+               company           ; the ultimate code completion backend
+               ;;helm              ; the *other* search engine for love and life
+               ;;ido               ; the other *other* search engine...
+               ;;ivy               ; a search engine for love and life
+               vertico           ; the search engine of the future
+        
+               :ui
+               ;;deft              ; notational velocity for Emacs
+               doom              ; what makes DOOM look the way it does
+               doom-dashboard    ; a nifty splash screen for Emacs
+               ;;doom-quit         ; DOOM quit-message prompts when you quit Emacs
+               ;;(emoji +unicode)  ; 🙂
+               hl-todo           ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
+               ;;hydra
+               ;;indent-guides     ; highlighted indent columns
+               ;;ligatures         ; ligatures and symbols to make your code pretty again
+               ;;minimap           ; show a map of the code on the side
+               modeline          ; snazzy, Atom-inspired modeline, plus API
+               ;;nav-flash         ; blink cursor line after big motions
+               neotree           ; a project drawer, like NERDTree for vim
+               ophints           ; highlight the region an operation acts on
+               (popup +defaults)   ; tame sudden yet inevitable temporary windows
+               ;;tabs              ; a tab bar for Emacs
+               ;;treemacs          ; a project drawer, like neotree but cooler
+               ;;unicode           ; extended unicode support for various languages
+               (vc-gutter +pretty) ; vcs diff in the fringe
+               vi-tilde-fringe   ; fringe tildes to mark beyond EOB
+               ;;window-select     ; visually switch windows
+               workspaces        ; tab emulation, persistence & separate workspaces
+               ;;zen               ; distraction-free coding or writing
+        
+               :editor
+               (evil +everywhere); come to the dark side, we have cookies
+               file-templates    ; auto-snippets for empty files
+               fold              ; (nigh) universal code folding
+               ;;(format +onsave)  ; automated prettiness
+               ;;god               ; run Emacs commands without modifier keys
+               ;;lispy             ; vim for lisp, for people who don't like vim
+               ;;multiple-cursors  ; editing in many places at once
+               ;;objed             ; text object editing for the innocent
+               ;;parinfer          ; turn lisp into python, sort of
+               ;;rotate-text       ; cycle region at point between text candidates
+               snippets          ; my elves. They type so I don't have to
+               ;;word-wrap         ; soft wrapping with language-aware indent
+        
+               :emacs
+               dired             ; making dired pretty [functional]
+               electric          ; smarter, keyword-based electric-indent
+               ;;ibuffer         ; interactive buffer management
+               undo              ; persistent, smarter undo for your inevitable mistakes
+               vc                ; version-control and Emacs, sitting in a tree
+        
+               :term
+               ;;eshell            ; the elisp shell that works everywhere
+               ;;shell             ; simple shell REPL for Emacs
+               ;;term              ; basic terminal emulator for Emacs
+               vterm             ; the best terminal emulation in Emacs
+        
+               :checkers
+               syntax              ; tasing you for every semicolon you forget
+               (spell +flyspell) ; tasing you for misspelling mispelling
+               grammar           ; tasing grammar mistake every you make
+        
+               :tools
+               ;;ansible
+               ;;biblio            ; Writes a PhD for you (citation needed)
+               ;;debugger          ; FIXME stepping through code, to help you add bugs
+               ;;direnv
+               ;;docker
+               ;;editorconfig      ; let someone else argue about tabs vs spaces
+               ;;ein               ; tame Jupyter notebooks with emacs
+               (eval +overlay)     ; run code, run (also, repls)
+               ;;gist              ; interacting with github gists
+               lookup              ; navigate your code and its documentation
+               lsp               ; M-x vscode
+               magit             ; a git porcelain for Emacs
+               ;;make              ; run make tasks from Emacs
+               ;;pass              ; password manager for nerds
+               ;;pdf               ; pdf enhancements
+               ;;prodigy           ; FIXME managing external services & code builders
+               ;;rgb               ; creating color strings
+               ;;taskrunner        ; taskrunner for all your projects
+               ;;terraform         ; infrastructure as code
+               ;;tmux              ; an API for interacting with tmux
+               ;;tree-sitter       ; syntax and parsing, sitting in a tree...
+               ;;upload            ; map local to remote projects via ssh/ftp
+        
+               :os
+               (:if IS-MAC macos)  ; improve compatibility with macOS
+               ;;tty               ; improve the terminal Emacs experience
+        
+               :lang
+               ;;agda              ; types of types of types of types...
+               ;;beancount         ; mind the GAAP
+               ;;(cc +lsp)         ; C > C++ == 1
+               ;;clojure           ; java with a lisp
+               ;;common-lisp       ; if you've seen one lisp, you've seen them all
+               ;;coq               ; proofs-as-programs
+               ;;crystal           ; ruby at the speed of c
+               ;;csharp            ; unity, .NET, and mono shenanigans
+               ;;data              ; config/data formats
+               ;;(dart +flutter)   ; paint ui and not much else
+               ;;dhall
+               ;;elixir            ; erlang done right
+               ;;elm               ; care for a cup of TEA?
+               emacs-lisp        ; drown in parentheses
+               ;;erlang            ; an elegant language for a more civilized age
+               ;;ess               ; emacs speaks statistics
+               ;;factor
+               ;;faust             ; dsp, but you get to keep your soul
+               ;;fortran           ; in FORTRAN, GOD is REAL (unless declared INTEGER)
+               ;;fsharp            ; ML stands for Microsoft's Language
+               ;;fstar             ; (dependent) types and (monadic) effects and Z3
+               ;;gdscript          ; the language you waited for
+               (go +lsp)         ; the hipster dialect
+               ;;(graphql +lsp)    ; Give queries a REST
+               (haskell +lsp)    ; a language that's lazier than I am
+               ;;hy                ; readability of scheme w/ speed of python
+               ;;idris             ; a language you can depend on
+               json              ; At least it ain't XML
+               (java +lsp)       ; the poster child for carpal tunnel syndrome
+               javascript        ; all(hope(abandon(ye(who(enter(here))))))
+               ;;julia             ; a better, faster MATLAB
+               ;;kotlin            ; a better, slicker Java(Script)
+               latex             ; writing papers in Emacs has never been so fun
+               ;;lean              ; for folks with too much to prove
+               ;;ledger            ; be audit you can be
+               lua               ; one-based indices? one-based indices
+               markdown          ; writing docs for people to ignore
+               ;;nim               ; python + lisp at the speed of c
+               nix               ; I hereby declare "nix geht mehr!"
+               ;;ocaml             ; an objective camel
+               org               ; organize your plain life in plain text
+               php               ; perl's insecure younger brother
+               plantuml          ; diagrams for confusing people more
+               ;;purescript        ; javascript, but functional
+               python            ; beautiful is better than ugly
+               ;;qt                ; the 'cutest' gui framework ever
+               ;;racket            ; a DSL for DSLs
+               ;;raku              ; the artist formerly known as perl6
+               ;;rest              ; Emacs as a REST client
+               ;;rst               ; ReST in peace
+               ;;(ruby +rails)     ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
+               (rust +lsp)       ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
+               ;;scala             ; java, but good
+               ;;(scheme +guile)   ; a fully conniving family of lisps
+               sh                ; she sells {ba,z,fi}sh shells on the C xor
+               ;;sml
+               ;;solidity          ; do you need a blockchain? No.
+               ;;swift             ; who asked for emoji variables?
+               ;;terra             ; Earth and Moon in alignment for performance.
+               ;;web               ; the tubes
+               yaml              ; JSON, but readable
+               ;;zig               ; C, but simpler
+        
+               :email
+               ;;(mu4e +org +gmail)
+               ;;notmuch
+               ;;(wanderlust +gmail)
+        
+               :app
+               ;;calendar
+               ;;emms
+               ;;everywhere        ; *leave* Emacs!? You must be joking
+               ;;irc               ; how neckbeards socialize
+               ;;(rss +org)        ; emacs as an RSS reader
+               ;;twitter           ; twitter client https://twitter.com/vnought
+        
+               :config
+               ;;literate
+               (default +bindings +smartparens))
+      '';
+
+      "/home/username/.config/doom/packages.el".text = ''
+        ;; -*- no-byte-compile: t; -*-
+        ;;; $DOOMDIR/packages.el
+        
+        ;; To install a package with Doom you must declare them here and run 'doom sync'
+        ;; on the command line, then restart Emacs for the changes to take effect -- or
+        ;; use 'M-x doom/reload'.
+        
+        
+        ;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
+        ;(package! some-package)
+        
+        ;; To install a package directly from a remote git repo, you must specify a
+        ;; `:recipe'. You'll find documentation on what `:recipe' accepts here:
+        ;; https://github.com/radian-software/straight.el#the-recipe-format
+        ;(package! another-package
+        ;  :recipe (:host github :repo "username/repo"))
+        
+        ;; If the package you are trying to install does not contain a PACKAGENAME.el
+        ;; file, or is located in a subdirectory of the repo, you'll need to specify
+        ;; `:files' in the `:recipe':
+        ;(package! this-package
+        ;  :recipe (:host github :repo "username/repo"
+        ;           :files ("some-file.el" "src/lisp/*.el")))
+        
+        ;; If you'd like to disable a package included with Doom, you can do so here
+        ;; with the `:disable' property:
+        ;(package! builtin-package :disable t)
+        
+        ;; You can override the recipe of a built in package without having to specify
+        ;; all the properties for `:recipe'. These will inherit the rest of its recipe
+        ;; from Doom or MELPA/ELPA/Emacsmirror:
+        ;(package! builtin-package :recipe (:nonrecursive t))
+        ;(package! builtin-package-2 :recipe (:repo "myfork/package"))
+        
+        ;; Specify a `:branch' to install a package from a particular branch or tag.
+        ;; This is required for some packages whose default branch isn't 'master' (which
+        ;; our package manager can't deal with; see radian-software/straight.el#279)
+        ;(package! builtin-package :recipe (:branch "develop"))
+        
+        ;; Use `:pin' to specify a particular commit to install.
+        ;(package! builtin-package :pin "1a2b3c4d5e")
+        
+        
+        ;; Doom's packages are pinned to a specific commit and updated from release to
+        ;; release. The `unpin!' macro allows you to unpin single packages...
+        ;(unpin! pinned-package)
+        ;; ...or multiple packages
+        ;(unpin! pinned-package another-pinned-package)
+        ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
+        ;(unpin! t)
+        
+        (package! klere-theme)
+      '';
+  };
+
+  programs.neovim = {
+    enable = true;
+    plugins = with pkgs.vimPlugins; [
+      #nvim-lspconfig {
+      #  plugin = nvim-lspconfig;
+      #  #config = "";
+      #}
+      #nvim-cmp {
+      #  plugin = nvim-cmp;
+      #  #config = "";
+      #}
+      pear-tree { 
+        plugin = pear-tree; 
+        #config = ""; 
+      }
+      vim-cool { 
+        plugin = vim-cool; 
+        #config = ""; 
+      }
+    ];
+    extraLuaConfig = ''
+      --[[
+
+      local cmp = require('cmp')
+      local lsp = require('cmp_nvim_lsp')
+
+      cmp.setup({
+        sources = {
+          { name = 'nvim_lsp' },
+          -- Add other completion sources as needed
+        },
+        mapping = {
+          ['<Tab>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+          ['<S-Tab>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
+          ['<CR>'] = cmp.mapping.confirm({ select = true }),
+        },
+        snippet = {
+          expand = function(args)
+            vim.fn["vsnip#anonymous"](args.body)
+          end,
+        },
+        documentation = {
+          border = 'rounded',
+        },
+        formatting = {
+          format = lsp.formatting(),
+        },
+      })
+
+      -- Configure language servers using lspconfig
+      local lspconfig = require('lspconfig')
+
+      lspconfig.lua.setup({
+        cmd = { 'lua-ls' },
+        settings = {
+          Lua = {
+            runtime = {
+              version = 'LuaJIT',
+              path = vim.split(package.path, ';'),
+            },
+            diagnostics = {
+              globals = { 'vim' },
+            },
+            workspace = {
+              library = {
+                [vim.fn.expand('$VIMRUNTIME/lua')] = true,
+                [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
+              },
+            },
+          },
+        },
+      })
+
+	    --]]
+
+      vim.cmd([[
+        augroup SaveFolds
+          autocmd!
+          autocmd BufWinLeave * mkview
+        augroup END
+      ]])
+
+      vim.cmd([[
+        augroup LoadFolds
+          autocmd!
+          autocmd BufWinEnter * silent! loadview
+        augroup END
+      ]])
+
       vim.cmd [[colorscheme habamax]]
       vim.cmd [[set clipboard+=unnamedplus]]
       vim.cmd [[let g:netrw_winsize = 30]]
@@ -1011,49 +992,51 @@ vim.o.statusline = "%#Directory# %m %f %= gqfmt:[%{&fo}] pos:%l:%c"vim.opt.termg
       vim.opt.shiftwidth = 2
       vim.opt.expandtab = true
       vim.opt.softtabstop = 2
-      '';
-    };
+    '';
+  };
 
-    programs.wezterm = {
-      enable = true;
-      extraConfig = ''
-        local wezterm = require("wezterm")
-        return {
-          font = wezterm.font 'ShureTechMono Nerd Font',
-          font_size = 16.0,
-          default_cursor_style = 'BlinkingBlock',
-          color_scheme = 'Monokai Remastered',
-          colors = {
-            background = '#191919',
-          }
+  programs.wezterm = {
+    enable = true;
+    extraConfig = ''
+      local wezterm = require("wezterm")
+      return {
+        font = wezterm.font 'ShureTechMono Nerd Font',
+        font_size = 16.0,
+        default_cursor_style = 'BlinkingBlock',
+        color_scheme = 'Monokai Remastered',
+        window_background_opacity = 0.9,
+        colors = {
+          background = '#191919',
         }
-      '';
-    };
-
-    programs.starship = {
-      enable = true;
-      settings = {
-        character = {
-        success_symbol = "[❯❯](bold 208) ";
-        error_symbol = "[ ❯❯](bold red) ";
-        vimcmd_symbol = "[❮❮](bold 208) ";
-        };
-        cmd_duration = {
-          format = "took [$duration](bold 208)";
-        };
+      }
+    '';
+  };
+  
+  programs.starship = {
+    enable = true;
+    settings = {
+    	character = {
+    	success_symbol = "[❯❯](bold 208) ";
+    	error_symbol = "[ ❯❯](bold red) ";
+    	vimcmd_symbol = "[❮❮](bold 208) ";
+    	};
+      cmd_duration = {
+        format = "took [$duration](bold 208)";
       };
     };
+  };
 
-    programs.git = {
-      enable = true;
-      #credential.helper=blank
-      userName = "kylegortych";
-      userEmail = "kyle.gortych@gmail.com";
-    };
+  programs.git = {
+    enable = true;
+    #credential.helper=blank
+    userName = "";
+    userEmail = "";
+  };
 
     home.packages = with pkgs; [
       # cli
       wl-clipboard
+      xclip
       calcurse
       btop
       ripgrep
@@ -1101,24 +1084,12 @@ vim.o.statusline = "%#Directory# %m %f %= gqfmt:[%{&fo}] pos:%l:%c"vim.opt.termg
 
   environment.sessionVariables = {
     EDITOR = "nvim";
-    #/nix/store/xm2aqa0xaqrwbdn4srv1wphrafz477hn-adoptopenjdk-hotspot-bin-16.0.2
-    #/nix/store/yjs2dwzsgh1phib6gllib870c5i5d0yw-adoptopenjdk-hotspot-bin-16.0.2/
-    #JAVA_HOME = "/nix/store/ni5hlvr37wx46972mxl8fszvamkym5xs-home-manager-path/bin/java";
   };
 
   #programs.kdeconnect.enable = true;
 
   programs.fish = {
     enable = true;
-    interactiveShellInit = ''
-      set fish_greeting
-      fish_vi_key_bindings
-      starship init fish | source
-
-      set -x NVIM_LOG_FILE /home/kg/.config/nvim/log/.nvimlog
-
-      fish_add_path /home/kg/.config/emacs/bin
-    '';
   };
 
   fonts.packages = with pkgs; [
@@ -1135,9 +1106,14 @@ vim.o.statusline = "%#Directory# %m %f %= gqfmt:[%{&fo}] pos:%l:%c"vim.opt.termg
     pinentryFlavor = "gtk2";
   };
 
-  virtualisation.docker.rootless = {
-    enable = true;
-    setSocketVariable = true;
+  virtualisation = {
+    docker.rootless = {
+      enable = true;
+      setSocketVariable = true;
+    };
+    #virtualbox.host = {
+    #  enable = true;
+    #};
   };
 
   # Allow unfree packages
@@ -1177,9 +1153,8 @@ vim.o.statusline = "%#Directory# %m %f %= gqfmt:[%{&fo}] pos:%l:%c"vim.opt.termg
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.05"; # Did you read the comment?
 
-  hardware.system76.enableAll = true;
+  hardware.#.enableAll = true;
   hardware.bluetooth.enable = true;
-
 }
 ```
     
