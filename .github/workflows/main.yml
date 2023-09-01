@@ -12,8 +12,8 @@ jobs:
       - name: Install Nix
         uses: cachix/install-nix-action@v20
         with:
-          nix_path: nixpkgs=channel:nixos-unstable
+          nix_path: nixpkgs=channel:nixos-unstable-small
       - name: Install Nix Unstable
-        run: nix-env -iA nixos.nixUnstable
+        run: nix-env -iA nixos.nixUnstable -I nixpkgs=channel:nixos-unstable-small
       - name: Build configuration
-        run: nixos-rebuild switch -I nixpkgs=channel:nixos-unstable -I home-manager=channel:home-manager-unstable
+        run: nixos-rebuild switch -I nixpkgs=channel:nixos-unstable-small -I home-manager=channel:home-manager-unstable
