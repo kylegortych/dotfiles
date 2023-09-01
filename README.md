@@ -301,9 +301,13 @@ vim.o.statusline = "%#Directory# %m %f %= gqfmt:[%{&fo}] pos:%l:%c"vim.opt.termg
 </div>
 <br>
 
+<div align="center">
+
 ### Nix Commands
 
-* `./` - nix build
+* ```nix nix-instantiate --eval configuration.nix ```
 <br>
 
 <a href="your-gmail-link?">:mailbox:</a> How to reach the maintainer
+
+</div>
