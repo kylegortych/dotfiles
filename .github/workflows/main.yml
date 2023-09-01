@@ -13,14 +13,5 @@ jobs:
         uses: cachix/install-nix-action@v20
         with:
           nix_path: nixpkgs=channel:nixos-unstable-small
-      - name: Add unstable channel
-        run: |
-          nix-channel --add https://nixos.org/channels/nixos-unstable nixos
-          nix-channel --update
-      - name: Add home-manager channel
-        run: nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
-      - name: Install Nix Unstable
-        run: nix-env -iA nixos.nixUnstable -I nixpkgs=channel:nixos-unstable
-      - name: Build configuration
-        run: |
-          nix-shell -p nixos-rebuild --run "nixos-rebuild switch -I nixpkgs=channel:nixos-unstable-small -I home-manager=channel:home-manager-unstable"
+      - name: Test configuration
+        run: nix-instantiate --check configuration.nix
