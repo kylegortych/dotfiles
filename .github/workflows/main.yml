@@ -8,6 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Test configuration.nix
-      - run: |
-        nix-build '<nixpkgs/nixos-unstable>' -A config.system.build.toplevel -I nixos-config=./test.nix
+      - uses: cachix/install-nix-action@v20
+        with:
+          nix_path: nixpkgs=channel:nixos-unstable
+      - run: nix build
