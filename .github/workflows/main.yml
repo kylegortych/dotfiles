@@ -8,10 +8,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout config
-      - uses: actions/checkout@v3
+        uses: actions/checkout@v3
       - name: Install Nix
-      - uses: cachix/install-nix-action@v20
+        uses: cachix/install-nix-action@v20
         with:
           nix_path: nixpkgs=channel:nixos-unstable
       - name: Build configuration
-      - run: nixos-rebuild switch -I nixpkgs=channel:nixos-unstable -I home-manager=channel:home-manager-unstable
+        run: nixos-rebuild switch -I nixpkgs=channel:nixos-unstable -I home-manager=channel:home-manager-unstable
