@@ -22,4 +22,5 @@ jobs:
       - name: Install Nix Unstable
         run: nix-env -iA nixos.nixUnstable -I nixpkgs=channel:nixos-unstable
       - name: Build configuration
-        run: nixos-rebuild switch -I nixpkgs=channel:nixos-unstable-small -I home-manager=channel:home-manager-unstable
+        run: |
+          nix-shell -p nixos-rebuild --run "nixos-rebuild switch -I nixpkgs=channel:nixos-unstable-small -I home-manager=channel:home-manager-unstable"
