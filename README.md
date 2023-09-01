@@ -3,8 +3,11 @@
 ![main](https://github.com/kylegortych/dotfiles/actions/workflows/main.yml/badge.svg) <!-- ![original](https://github.com/kylegortych/dotfiles/actions/workflows/original.yml/badge.svg?branch=original) -->
 
 </div>
-# dotfiles
-Unix based directory struc 
+
+# My Dotfiles
+Based on NixOS file system
+
+<br>
 
 <details>
 <summary>old nvim config</summary>
