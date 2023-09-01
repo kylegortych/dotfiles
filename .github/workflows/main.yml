@@ -4,11 +4,14 @@ on:
     branches:
       - main
 jobs:
-  tests:
+  build:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout config
       - uses: actions/checkout@v3
+      - name: Install Nix
       - uses: cachix/install-nix-action@v20
         with:
           nix_path: nixpkgs=channel:nixos-unstable
-      - run: nix build
+      - name: Build configuration
+      - run: nixos-rebuild switch -I nixpkgs=channel:nixos-unstable -I home-manager=channel:home-manager-unstable
