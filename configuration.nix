@@ -1,4 +1,9 @@
+# Edit this configuration file to define what should be installed on
+# your system.  Help is available in the configuration.nix(5) man page
+# and in the NixOS manual (accessible by running ‘nixos-help’).
+
 { config, pkgs, ... }:
+
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -9,7 +14,7 @@
   #nix settings
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  #hardware.system76.enableAll = true;
+  hardware.system76.enableAll = true;
   hardware.bluetooth.enable = true;
 
   # Enable CUPS to print documents.
@@ -33,7 +38,6 @@
   };
 
   # Set your time zone.
-  #time.timeZone = "";
   services.automatic-timezoned.enable = true;
 
   # Select internationalisation properties.
@@ -113,11 +117,11 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.username = {
     isNormalUser = true;
-    description = "name";
+    description = "descript";
     extraGroups = [ "networkmanager" "wheel" "docker" "vboxusers"];
     shell = pkgs.fish;
     packages = with pkgs; [ 
-      aws-sam-cli 
+      #package
     ];
   };
 
@@ -135,9 +139,6 @@
           set -x NVIM_LOG_FILE /home/kg/.config/nvim/log/.nvimlog
         
           fish_add_path /home/kg/.config/emacs/bin
-        
-          set -x JAVA_HOME /nix/store/<hash>-adoptopenjdk-hotspot-bin-16.0.2
-          set -x PATH $JAVA_HOME/bin $PATH
         end
       '';
 
@@ -164,11 +165,13 @@
           #sed
         end
         
-        function nix-clean
-          $argv nix-env --delete-generations +2
-          $argv nix-store --optimise -v -j auto
-          $argv nix-store --gc
-        end
+        #function nix-clean
+        #  $argv nix-store --optimise -v -j auto &&
+        #  $argv nix-collect-garbage -d &&
+        #  $argv nixos-rebuild switch &&
+        #  $argv nix-store --optimise -v -j auto &&
+        #  $argv nix-collect-garbage -d
+        #end
         
         function git-merge-req
           git push -o merge_request.create -o merge_request.target=$argv[1] origin $argv[2]
@@ -347,24 +350,24 @@
                 (add-to-list 'default-frame-alist '(alpha-background . 95))
 
                 ;; markdown preview
-                (setq markdown-command "pandoc")
+                ;;(setq markdown-command "pandoc")
 
-                (require 'markdown-mode)
-                (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+                ;;(require 'markdown-mode)
+                ;;(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 
-                (add-to-list 'load-path "/nix/store/<hash>-emacs-xwidgets-reuse-20200817.147/share/emacs/site-lisp/elpa/xwidgets-reuse-20200817.147/xwidgets-reuse")
-                (require 'xwidgets-reuse)
-                
-                (setq xwidgets-reuse-session t)
-                
-                (defun my-xwidget-webkit-browse-url (url &rest args)
-                  "Open URL in xwidget-webkit."
-                  (interactive (browse-url-interactive-arg "URL: "))
-                  (let ((xwidget-webkit-enable-plugins t))
-                    (xwidgets-reuse-create-session)
-                    (xwidgets-reuse-load-url url)))
-                
-                (setq browse-url-browser-function #'my-xwidget-webkit-browse-url)
+                ;;(add-to-list 'load-path "/nix/store/b7pfmq0sbmdp98r2yp7wcprmfnq2dlmx-emacs-xwidgets-reuse-20200817.147/share/emacs/site-lisp/elpa/xwidgets-reuse-20200817.147/xwidgets-reuse")
+                ;;(require 'xwidgets-reuse)
+                ;;
+                ;;(setq xwidgets-reuse-session t)
+                ;;
+                ;;(defun my-xwidget-webkit-browse-url (url &rest args)
+                ;;  "Open URL in xwidget-webkit."
+                ;;  (interactive (browse-url-interactive-arg "URL: "))
+                ;;  (let ((xwidget-webkit-enable-plugins t))
+                ;;    (xwidgets-reuse-create-session)
+                ;;    (xwidgets-reuse-load-url url)))
+                ;;
+                ;;(setq browse-url-browser-function #'my-xwidget-webkit-browse-url)
       '';
 
       ".config/doom/init.el".text = ''
@@ -623,78 +626,48 @@
     programs.neovim = {
       enable = true;
       plugins = with pkgs.vimPlugins; [
-        #nvim-lspconfig {
-        #  plugin = nvim-lspconfig;
+        nvim-lspconfig {
+          plugin = nvim-lspconfig;
+          type = "lua";
+          config = "
+            require'lspconfig'.pyright.setup{}
+            --  settings = {
+            --    python = {
+            --    }
+            --  }
+            --}
+            require'lspconfig'.lua_ls.setup{}
+            -- require'lspconfig'.jdtls.setup{}
+            require'lspconfig'.rnix.setup{}
+          ";
+        }
+        #vim-monokai-phoenix {
+        #  plugin = vim-monokai-phoenix;
+        #  type = "lua"
         #  #config = "";
         #}
         #nvim-cmp {
         #  plugin = nvim-cmp;
+        #  type = "lua"
         #  #config = "";
         #}
+        nvim-dap {
+          plugin = nvim-dap;
+          #type = "lua"
+          #config = ""; 
+        }
         pear-tree { 
           plugin = pear-tree; 
+          #type = "lua"
           #config = ""; 
         }
         vim-cool { 
           plugin = vim-cool; 
+          #type = "lua"
           #config = ""; 
         }
       ];
       extraLuaConfig = ''
-        --[[
-
-        local cmp = require('cmp')
-        local lsp = require('cmp_nvim_lsp')
-
-        cmp.setup({
-          sources = {
-            { name = 'nvim_lsp' },
-            -- Add other completion sources as needed
-          },
-          mapping = {
-            ['<Tab>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
-            ['<S-Tab>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
-            ['<CR>'] = cmp.mapping.confirm({ select = true }),
-          },
-          snippet = {
-            expand = function(args)
-              vim.fn["vsnip#anonymous"](args.body)
-            end,
-          },
-          documentation = {
-            border = 'rounded',
-          },
-          formatting = {
-            format = lsp.formatting(),
-          },
-        })
-
-        -- Configure language servers using lspconfig
-        local lspconfig = require('lspconfig')
-
-        lspconfig.lua.setup({
-          cmd = { 'lua-ls' },
-          settings = {
-            Lua = {
-              runtime = {
-                version = 'LuaJIT',
-                path = vim.split(package.path, ';'),
-              },
-              diagnostics = {
-                globals = { 'vim' },
-              },
-              workspace = {
-                library = {
-                  [vim.fn.expand('$VIMRUNTIME/lua')] = true,
-                  [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
-                },
-              },
-            },
-          },
-        })
-
-	      --]]
-
         -- vim.cmd([[
         --   augroup SaveFolds
         --     autocmd!
@@ -709,10 +682,23 @@
         --   augroup END
         -- ]])
 
+        vim.diagnostic.config({
+          virtual_text = false,
+          signs = true,
+          update_in_insert = true,
+          underline = true,
+          severity_sort = false,
+          float = true,
+        })
+        
+        vim.o.updatetime = 250
+        vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
+
         vim.cmd [[colorscheme habamax]]
         vim.cmd [[set clipboard+=unnamedplus]]
-        vim.cmd [[let g:netrw_winsize = 25]]
-        vim.cmd [[let g:netrw_liststyle = 3]]
+        vim.g.netrw_winsize = 25
+        vim.g.netrw_liststyle = 3
+        -- vim.g.python3_host_prog = "/nix/store/s9q27klvl4h22hzjbc4p71pf282a7c8s-home-manager-path/bin/python3.11"
         vim.opt.number = true
         vim.opt.cursorline = true
         vim.opt.tabstop = 2
@@ -725,14 +711,15 @@
     programs.git = {
       enable = true;
       #credential.helper=blank
-      #userName = "";
-      #userEmail = "";
+      userName = "username";
+      userEmail = "user.name@gmail.com";
     };
 
     home.packages = with pkgs; [
       #gui
       firefox
       thunderbird
+      gimp
       libreoffice
       obs-studio
       bitwarden
@@ -784,18 +771,43 @@
       gradle
 
       #python
-      python311
-      python311Packages.datetime
-      python311Packages.ptpython
+      (python311.withPackages(ps: with ps; [
+        python311Packages.pytz
+        python311Packages.datetime
+        python311Packages.dateutils
+        python311Packages.ptpython
+      ]))
+
+      #lua
+      lua-language-server
+
+      #nix
+      rnix-lsp
+
+      #nodejs
+      nodejs
+      nodePackages.pyright
+      #(nodejs.withPackages(ps: with ps; [
+      #  nodePackages.pyright
+      #]))
 
       #C & C++
-      gcc
+      clang_16
       cmake
+
+      #temp | kde polonium build
+      # look for libsForQt5.polonium
+      # delete ~/.local/share/kwin/scripts/polonium
+      # delete cloned repo build
+      gnumake
+      zip
+
+      #Haskell
       ghc
 
       #kenzie
       awscli2
-      #aws-sam-cli
+      aws-sam-cli
 
       #inteliji idea dependency
       graphviz
