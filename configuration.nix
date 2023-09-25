@@ -121,7 +121,7 @@
     extraGroups = [ "networkmanager" "wheel" "docker" "vboxusers"];
     shell = pkgs.fish;
     packages = with pkgs; [ 
-      #package
+      #package 
     ];
   };
 
@@ -168,9 +168,7 @@
         #function nix-clean
         #  $argv nix-store --optimise -v -j auto &&
         #  $argv nix-collect-garbage -d &&
-        #  $argv nixos-rebuild switch &&
-        #  $argv nix-store --optimise -v -j auto &&
-        #  $argv nix-collect-garbage -d
+        #  $argv nixos-rebuild switch
         #end
         
         function git-merge-req
@@ -631,11 +629,6 @@
           type = "lua";
           config = "
             require'lspconfig'.pyright.setup{}
-            --  settings = {
-            --    python = {
-            --    }
-            --  }
-            --}
             require'lspconfig'.lua_ls.setup{}
             -- require'lspconfig'.jdtls.setup{}
             require'lspconfig'.rnix.setup{}
@@ -698,7 +691,6 @@
         vim.cmd [[set clipboard+=unnamedplus]]
         vim.g.netrw_winsize = 25
         vim.g.netrw_liststyle = 3
-        -- vim.g.python3_host_prog = "/nix/store/s9q27klvl4h22hzjbc4p71pf282a7c8s-home-manager-path/bin/python3.11"
         vim.opt.number = true
         vim.opt.cursorline = true
         vim.opt.tabstop = 2
@@ -711,8 +703,8 @@
     programs.git = {
       enable = true;
       #credential.helper=blank
-      userName = "username";
-      userEmail = "user.name@gmail.com";
+      userName = "";
+      userEmail = "";
     };
 
     home.packages = with pkgs; [
@@ -776,6 +768,19 @@
         python311Packages.datetime
         python311Packages.dateutils
         python311Packages.ptpython
+        (buildPythonPackage rec {
+          pname = "introcs";
+          version = "1.3.1";
+          src = fetchPypi {
+            inherit pname version;
+            sha256 = "";
+          };
+          doCheck = false;
+          propagatedBuildInputs = [
+            python311Packages.numpy
+            python311Packages.pillow
+          ];
+        })
       ]))
 
       #lua
