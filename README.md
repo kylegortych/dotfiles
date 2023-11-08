@@ -295,9 +295,9 @@ vim.o.statusline = "%#Directory# %m %f %= gqfmt:[%{&fo}] pos:%l:%c"vim.opt.termg
  
 ### :hammer_and_wrench: Tools :
 
-| Version Control | Build System | Languages |
-| --------------- | ------------ | --------- |
-| <img src="https://img.shields.io/badge/Git-white?style=plastic&logo=git&logoColor=red" title="Git" alt="Git" height="30"/> | <img src="https://img.shields.io/badge/nix-white?style=plastic&logo=nixos" title="nix" alt="nix" height="30"/> | <img src="https://custom-icon-badges.demolab.com/badge/nix-white.svg?&sytle=plastic&logo=nixos" title="nix" alt="nix" height="30"/> |
+| Build System | Languages |
+| ------------ | --------- |
+| <img src="https://img.shields.io/badge/nix-white?style=plastic&logo=nixos" title="nix" alt="nix" height="30"/> | <img src="https://custom-icon-badges.demolab.com/badge/nix-white.svg?&sytle=plastic&logo=nixos" title="nix" alt="nix" height="30"/> |
 </div>
 <br>
 
