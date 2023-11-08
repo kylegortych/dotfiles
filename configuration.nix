@@ -17,6 +17,47 @@
   hardware.system76.enableAll = true;
   hardware.bluetooth.enable = true;
 
+  # Bootloader.
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.timeout = 20;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+
+  systemd.services.NetworkManager-wait-online.enable = false;
+  systemd.services.systemd-udev-settle.enable = false;
+  systemd.services.network-setup.enable = false;
+
+  # Enable the X11 windowing system.
+  services.xserver.enable = true;
+  services.xserver.layout = "us";
+  services.xserver.xkbVariant = "";
+
+  #services.xserver.displayManager.gdm.enable = true;
+  #services.xserver.desktopManager.gnome.enable = true;
+
+  services.xserver.displayManager.sddm.enable = true;
+  services.xserver.desktopManager.plasma5.enable = true;
+  services.xserver.displayManager.defaultSession = "plasma";
+
+  # Enable touchpad support (enabled default in most desktopManager).
+  # services.xserver.libinput.enable = true;
+
+  networking.hostName = "nixos"; # Define your hostname.
+  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+
+  # Configure network proxy if necessary
+  # networking.proxy.default = "http://user:password@proxy:port/";
+  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+
+  # Enable networking
+  networking.networkmanager.enable = true;
+
+  # Open ports in the firewall.
+  # networking.firewall.allowedTCPPorts = [ ... ];
+  # networking.firewall.allowedUDPPorts = [ ... ];
+  # Or disable the firewall altogether.
+  # networking.firewall.enable = false;
+
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
@@ -55,43 +96,6 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.timeout = 20;
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-
-  systemd.services.NetworkManager-wait-online.enable = false;
-  systemd.services.systemd-udev-settle.enable = false;
-  systemd.services.network-setup.enable = false;
-
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-  services.xserver.layout = "us";
-  services.xserver.xkbVariant = "";
-  services.xserver.displayManager.sddm.enable = true;
-  services.xserver.desktopManager.plasma5.enable = true;
-  services.xserver.displayManager.defaultSession = "plasma";
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
-
-  networking.hostName = "nixos"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-  # Enable networking
-  networking.networkmanager.enable = true;
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
-
   environment.sessionVariables = {
     EDITOR = "nvim";
   };
@@ -109,19 +113,19 @@
       enable = true;
       setSocketVariable = true;
     };
-    #virtualbox.host = {
-    #  enable = true;
-    #};
+    virtualbox.host = {
+      enable = true;
+    };
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.username = {
     isNormalUser = true;
-    description = "descript";
-    extraGroups = [ "networkmanager" "wheel" "docker" "vboxusers"];
+    description = "username";
+    extraGroups = [ "networkmanager" "wheel" "vboxusers"];
     shell = pkgs.fish;
     packages = with pkgs; [ 
-      #package 
+      # package_name
     ];
   };
 
@@ -136,15 +140,15 @@
           fish_vi_key_bindings
           starship init fish | source
         
-          set -x NVIM_LOG_FILE /home/kg/.config/nvim/log/.nvimlog
+          set -x NVIM_LOG_FILE /home/username/.config/nvim/log/.nvimlog
         
-          fish_add_path /home/kg/.config/emacs/bin
+          fish_add_path /home/username/.config/emacs/bin
         end
       '';
 
       ".config/fish/conf.d/aliases.fish".text = ''
         function backup
-          $argv[1] rsync -rgloptuvz --delete --files-from=/home/kg/.config/rsync/conf.txt / $argv[2]
+          $argv[1] rsync -rgloptuvz --delete --files-from=/home/username/.config/rsync/conf.txt / $argv[2]
         end
         
         function ls-permissions
@@ -152,7 +156,7 @@
         end
         
         function virus-scan
-          $argv[1] clamdscan --fdpass -m -i --move=/home/kg/quarantine $argv[2]
+          $argv[1] clamdscan --fdpass -m -i --move=/home/username/quarantine $argv[2]
         end
         
         function sys-upgrade
@@ -193,10 +197,17 @@
         success_symbol = "[❯❯](bold 208) "
         error_symbol = "[ ❯❯](bold red) "
         vimcmd_symbol = "[❮❮](bold 208) "
+
+        [jobs]
+        symbol = "[](bold white) "
+        number_threshold = 1
         
         [cmd_duration]
         #min_time = 500
         format = "took [$duration](bold 208)"
+
+        [aws]
+        symbol = "[󰤉](bold yellow) "
       '';
 
       ".config/wezterm/wezterm.lua".text = ''
@@ -298,7 +309,7 @@
                 (setq doom-font (font-spec :family "ShureTechMono Nerd Font Mono" :size 26))
                 
                 ;; dashboard
-                ;;(setq fancy-splash-image "/Users/kylegortych/Downloads/doom-emacs-bw-light.svg")
+                ;;(setq fancy-splash-image "/Users/username/Downloads/doom-emacs-bw-light.svg")
                 
                 (defun skull ()
                   (let* ((banner '("   .o oOOOOOOOo                                            OOOo    "
@@ -634,11 +645,11 @@
             require'lspconfig'.rnix.setup{}
           ";
         }
-        #vim-monokai-phoenix {
-        #  plugin = vim-monokai-phoenix;
-        #  type = "lua"
-        #  #config = "";
-        #}
+        vim-monokai {
+          plugin = vim-monokai;
+          #type = "lua"
+          #config = " ";
+        }
         #nvim-cmp {
         #  plugin = nvim-cmp;
         #  type = "lua"
@@ -687,7 +698,7 @@
         vim.o.updatetime = 250
         vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
 
-        vim.cmd [[colorscheme habamax]]
+        vim.cmd [[colorscheme monokai]]
         vim.cmd [[set clipboard+=unnamedplus]]
         vim.g.netrw_winsize = 25
         vim.g.netrw_liststyle = 3
@@ -703,8 +714,8 @@
     programs.git = {
       enable = true;
       #credential.helper=blank
-      userName = "";
-      userEmail = "";
+      userName = "username";
+      userEmail = "username@mail.com";
     };
 
     home.packages = with pkgs; [
@@ -720,11 +731,12 @@
       freecad
       kicad
       logisim-evolution
-      postman
+      insomnia
       jetbrains.idea-community
       blender-hip
       zoom-us
       wezterm
+      isoimagewriter
 
       #emacs
       emacs29-gtk3
@@ -732,8 +744,8 @@
       pandoc
 
       #kde specific
-      libsForQt5.kwin-tiling
-      libsForQt5.sddm-kcm
+      #libsForQt5.kwin-tiling
+      #libsForQt5.sddm-kcm
 
       # cli
       fish
@@ -759,28 +771,27 @@
       gnu-cobol
 
       #java
-      openjdk16-bootstrap
       gradle
 
       #python
       (python311.withPackages(ps: with ps; [
-        python311Packages.pytz
-        python311Packages.datetime
-        python311Packages.dateutils
-        python311Packages.ptpython
-        (buildPythonPackage rec {
-          pname = "introcs";
-          version = "1.3.1";
-          src = fetchPypi {
-            inherit pname version;
-            sha256 = "";
-          };
-          doCheck = false;
-          propagatedBuildInputs = [
-            python311Packages.numpy
-            python311Packages.pillow
-          ];
-        })
+           python311Packages.pytz
+           python311Packages.datetime
+           python311Packages.dateutils
+           python311Packages.ptpython
+           (buildPythonPackage rec {
+             pname = "introcs";
+             version = "1.3.1";
+             src = fetchPypi {
+               inherit pname version;
+               sha256 = "";
+             };
+             doCheck = false;
+             propagatedBuildInputs = [
+               python311Packages.numpy
+               python311Packages.pillow
+             ];
+           })
       ]))
 
       #lua
@@ -790,11 +801,18 @@
       rnix-lsp
 
       #nodejs
-      nodejs
+      nodejs_20
       nodePackages.pyright
-      #(nodejs.withPackages(ps: with ps; [
-      #  nodePackages.pyright
-      #]))
+      #(buildNpmPackage rec {
+      #  pname = "dynamodb-admin";
+      #  version = "4.6.1";
+      #  src = fetchFromGitHub {
+      #    owner = "aaronshaf";
+      #    repo = "dynamodb-admin";
+      #    rev = "v4.6.1";
+      #    sha256 = "";
+      #  };
+      #})
 
       #C & C++
       clang_16
@@ -808,7 +826,7 @@
       zip
 
       #Haskell
-      ghc
+      #ghc
 
       #kenzie
       awscli2
@@ -825,6 +843,11 @@
 
   #programs.kdeconnect.enable = true;
 
+  programs.java = {
+    enable = true;
+    package = pkgs.openjdk16-bootstrap;
+  };
+
   programs.fish = {
     enable = true;
   };
@@ -835,7 +858,15 @@
 
   services.clamav = {
     daemon.enable = true;
-    # updater.enable = true;
+    updater.enable = true;
+    #daemon.settings = {
+    #  OnAccessPrevention = true;
+    #  OnAccessExtraScanning = true;
+    #  OnAccessMountPath = "/home/username/Downloads";
+    #  OnAccessExcludeUname = "clamav";
+    #  VirusEvent = "mv %f /home/username/quarantine";
+    #  User = "clamav";
+    #};
   };
 
   programs.gnupg.agent = {
