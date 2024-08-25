@@ -5,16 +5,17 @@ on:
       - main
     paths:
       - 'configuration.nix'
+      - 'dotfiles/**'
       
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout config
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Install Nix
-        uses: cachix/install-nix-action@v20
+        uses: cachix/install-nix-action@v27
         with:
           nix_path: nixpkgs=channel:nixos-unstable-small
       - name: Test configuration
-        run: nix-instantiate --eval configuration.nix
+        run: nix-instantiate --eval configuration.nix dotfiles/*
