@@ -480,13 +480,7 @@ jobs:
 
       - name: Evaluate Nix configurations
         run: |
-          nix-instantiate --eval configuration.nix
-          nix-instantiate --eval dotfiles/wezterm.nix
-          nix-instantiate --eval dotfiles/doom.nix
-          nix-instantiate --eval dotfiles/starship.nix
-          nix-instantiate --eval dotfiles/fish.nix
-          nix-instantiate --eval dotfiles/yazi.nix
-          nix-instantiate --eval dotfiles/neovim.nix
+          nix-instantiate --eval configuration.nix dotfiles/*.nix
 
           # - name: Extract and lint Lua code (Wezterm)
           #   run: |
@@ -515,7 +509,6 @@ jobs:
           #   run: |
           #     nix eval --raw -f yazi.nix 'config.home-manager.users.blank.home.file.".config/yazi/yazi.toml".text' > extracted_yazi.toml
           #     jsonlint -q extracted_yazi.toml
-
 ```
 
 </details>
