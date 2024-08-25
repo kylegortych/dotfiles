@@ -222,7 +222,7 @@
              version = "1.3.1";
              src = fetchPypi {
                inherit pname version;
-               sha256 = "4e64c27143acdda118417c04aa13bc3c5eeb1ab8ae9679db8056d00009427bf6";
+               sha256 = "";
              };
              doCheck = false;
              propagatedBuildInputs = [
@@ -248,7 +248,7 @@
       #    owner = "aaronshaf";
       #    repo = "dynamodb-admin";
       #    rev = "v4.6.1";
-      #    sha256 = "0bf25dxkdlrkihs5fn0bvrz93wibvw0m0mm4gybipiyck2c1fdxy";
+      #    sha256 = "";
       #  };
       #})
 
