@@ -8,6 +8,63 @@
 Based on NixOS file system
 
 <br>
+    
+<div align="center">
+     
+### :hammer_and_wrench: Tools :
+
+<table>
+  <thead>
+    <tr>
+      <th>Package Config</th>
+      <th>Language</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>nix</td>
+      <td>
+        <img src="https://img.shields.io/badge/nix-white?style=plastic&logo=nixos" 
+             title="nix" 
+             alt="nix" 
+             height="30"/>
+      </td>
+    </tr>
+    <tr>
+      <td>wezterm</td>
+      <td>
+        <img src="https://img.shields.io/badge/Lua-white?style=plastic&logo=lua&logoColor=blue" 
+             title="lua" 
+             alt="lua" 
+             height="30"/>
+      </td>
+    </tr>
+    <tr>
+      <td>starship</td>
+      <td>
+        <img src="https://img.shields.io/badge/Toml-white?style=plastic&logo=toml&logoColor=black" 
+             title="toml" 
+             alt="toml" 
+             height="30"/>
+      </td>
+    </tr>
+    <tr>
+      <td>doom emacs</td>
+      <td>
+        <img src="https://img.shields.io/badge/Emacs%20Lisp-white?style=plastic&logo=gnu-emacs" 
+             title="Emacs Lisp" 
+             alt="Emacs Lisp" 
+             height="30"/>
+      </td>
+    </tr>
+  </tbody>
+</table>
+    
+</div>
+
+<br>
+
+### system config
 
 <details>
 <summary>configuration.nix</summary>
@@ -388,90 +445,78 @@ Based on NixOS file system
 ```
 
 </details>
-    
-<div align="center">
-     
-### :hammer_and_wrench: Tools :
-    
-<!--
-| Package Config | Language |
-| -------------- | -------- |
-| nix | <img src="https://img.shields.io/badge/nix-white?style=plastic&logo=nixos" 
-             title="nix" 
-             alt="nix" 
-             height="30"/> |
-| wezterm | <img src="https://img.shields.io/badge/Lua-white?style=plastic&logo=lua&logoColor=blue" 
-                title="lua" 
-                alt="lua" 
-                height="30"/> |
-| starship | <img src="https://img.shields.io/badge/Toml-white?style=plastic&logo=toml&logoColor=black" 
-                title="toml" 
-                alt="toml" 
-                height="30"/> |
-| doom emacs | <img src="https://img.shields.io/badge/Emacs%20Lisp-white?style=plastic&logo=gnu-emacs" 
-                    title="Emacs Lisp" 
-                    alt="Emacs Lisp" 
-                    height="30"/> |
--->
 
-<table>
-  <thead>
-    <tr>
-      <th>Package Config</th>
-      <th>Language</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>nix</td>
-      <td>
-        <img src="https://img.shields.io/badge/nix-white?style=plastic&logo=nixos" 
-             title="nix" 
-             alt="nix" 
-             height="30"/>
-      </td>
-    </tr>
-    <tr>
-      <td>wezterm</td>
-      <td>
-        <img src="https://img.shields.io/badge/Lua-white?style=plastic&logo=lua&logoColor=blue" 
-             title="lua" 
-             alt="lua" 
-             height="30"/>
-      </td>
-    </tr>
-    <tr>
-      <td>starship</td>
-      <td>
-        <img src="https://img.shields.io/badge/Toml-white?style=plastic&logo=toml&logoColor=black" 
-             title="toml" 
-             alt="toml" 
-             height="30"/>
-      </td>
-    </tr>
-    <tr>
-      <td>doom emacs</td>
-      <td>
-        <img src="https://img.shields.io/badge/Emacs%20Lisp-white?style=plastic&logo=gnu-emacs" 
-             title="Emacs Lisp" 
-             alt="Emacs Lisp" 
-             height="30"/>
-      </td>
-    </tr>
-  </tbody>
-</table>
-    
-</div>
+### Git Actions
 
-<br>
+<details>
+<summary>main.yml</summary>
 
-<div align="center">
+```yml
+name: Nix Config Lint
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '*.nix'
+      - 'dotfiles/**'
 
-### Nix Commands
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cachix/install-nix-action@v27
+        with:
+          nix_path: nixpkgs=channel:nixos-unstable-small
+      
+      - name: Install linters
+        run: |
+          nix-env -iA nixpkgs.luacheck
+          nix-env -iA nixpkgs.emacs
+          nix-env -iA nixpkgs.nodePackages.jsonlint
+          nix-env -iA nixpkgs.fish
+          nix-env -iA nixpkgs.shellcheck
 
-```nix 
-nix-instantiate --eval configuration.nix dotfiles/*
+      - name: Evaluate Nix configurations
+        run: |
+          nix-instantiate --eval wezterm.nix
+          nix-instantiate --eval doom.nix
+          nix-instantiate --eval starship.nix
+          nix-instantiate --eval fish.nix
+          nix-instantiate --eval yazi.nix
+
+      - name: Extract and lint Lua code (Wezterm)
+        run: |
+          nix eval --raw -f wezterm.nix 'config.home-manager.users.blank.home.file.".config/wezterm/wezterm.lua".text' > extracted_wezterm.lua
+          luacheck extracted_wezterm.lua
+
+      - name: Extract and lint Emacs Lisp code (Doom)
+        run: |
+          nix eval --raw -f doom.nix 'config.home-manager.users.blank.home.file.".config/doom/config.el".text' > extracted_doom_config.el
+          nix eval --raw -f doom.nix 'config.home-manager.users.blank.home.file.".config/doom/init.el".text' > extracted_doom_init.el
+          emacs --batch -f batch-byte-compile extracted_doom_config.el extracted_doom_init.el
+
+      - name: Extract and lint TOML (Starship)
+        run: |
+          nix eval --raw -f starship.nix 'config.home-manager.users.blank.home.file.".config/starship.toml".text' > extracted_starship.toml
+          jsonlint -q extracted_starship.toml
+
+      - name: Extract and lint Fish scripts
+        run: |
+          nix eval --raw -f fish.nix 'config.home-manager.users.blank.home.file.".config/fish/config.fish".text' > extracted_fish_config.fish
+          nix eval --raw -f fish.nix 'config.home-manager.users.blank.home.file.".config/fish/conf.d/aliases.fish".text' > extracted_fish_aliases.fish
+          fish -n extracted_fish_config.fish
+          fish -n extracted_fish_aliases.fish
+
+      - name: Extract and lint TOML (Yazi)
+        run: |
+          nix eval --raw -f yazi.nix 'config.home-manager.users.blank.home.file.".config/yazi/yazi.toml".text' > extracted_yazi.toml
+          jsonlint -q extracted_yazi.toml
 ```
+
+</details>
+
 <br>
 
 <a href="your-gmail-link?">:mailbox:</a> How to reach the maintainer
