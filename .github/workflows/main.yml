@@ -53,32 +53,8 @@ jobs:
                       extract_content(os.path.join(root, file))
           EOF
 
-      - name: Debug - List extracted files
-        run: |
-          ls -R extracted_files
-
-      - name: Print contents of extracted files
-        run: |
-          echo "Contents of extracted files:"
-          find extracted_files -type f | while read file; do
-            echo "=== Contents of $file ==="
-            cat "$file"
-            echo ""
-          done
-
       - name: Run Super-Linter
         uses: github/super-linter@v5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BRANCH: main
-          VALIDATE_LUA: true
-          VALIDATE_FISH: true
-          VALIDATE_ELISP: true
-          VALIDATE_TOML: true
-          ACTIONS_RUNNER_DEBUG: true
-
-      - name: Debug - Show Super-Linter logs
-        if: failure()
-        run: |
-          cat /home/runner/work/_temp/linter.log || echo "Linter log not found"
-          ls -la /home/runner/work/_temp || echo "Temp directory not accessible"
