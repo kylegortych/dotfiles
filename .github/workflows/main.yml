@@ -53,6 +53,15 @@ jobs:
                       extract_content(os.path.join(root, file))
           EOF
 
+      - name: Debug - List extracted files
+        run: |
+          ls -R extracted_files
+
+      - name: Prepare environment for Super-Linter
+        run: |
+          sudo mkdir -p /home/runner/work/_temp
+          sudo chmod 777 /home/runner/work/_temp
+
       - name: Run Super-Linter
         uses: github/super-linter@v5
         env:
@@ -60,3 +69,10 @@ jobs:
           DEFAULT_BRANCH: main
           VALIDATE_ALL_CODEBASE: false
           FILTER_REGEX_INCLUDE: extracted_files/.*
+          ACTIONS_RUNNER_DEBUG: true
+
+      - name: Debug - Show Super-Linter logs
+        if: failure()
+        run: |
+          cat /home/runner/work/_temp/linter.log || echo "Linter log not found"
+          ls -la /home/runner/work/_temp || echo "Temp directory not accessible"
