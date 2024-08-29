@@ -65,7 +65,7 @@ jobs:
 
       - name: Install linters
         run: |
-          npm install -g luacheck toml-lint
+          npm install -g luacheck @panekj/lib
 
       - name: Lint Fish files
         run: |
@@ -90,5 +90,5 @@ jobs:
         run: |
           echo "Linting TOML files..."
           for file in extracted_files/*.toml; do
-            toml-lint "$file"
+            taplo check "$file"
           done
