@@ -49,7 +49,7 @@ jobs:
 
           for root, dirs, files in os.walk('dotfiles'):
               for file in files:
-                  if file.endswith('.nix'):
+                  if file.endswith('.nix') and file != 'neovim.nix':
                       extract_content(os.path.join(root, file))
           EOF
 
@@ -68,7 +68,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BRANCH: main
           VALIDATE_ALL_CODEBASE: false
-          FILTER_REGEX_INCLUDE: extracted_files/.*
+          FILTER_REGEX_INCLUDE: extracted_files/.*\.(toml|lua|el|fish)$
+          VALIDATE_TOML: true
+          VALIDATE_LUA: true
+          VALIDATE_ELISP: true
+          VALIDATE_FISH: true
           ACTIONS_RUNNER_DEBUG: true
 
       - name: Debug - Show Super-Linter logs
