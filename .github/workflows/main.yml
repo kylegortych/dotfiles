@@ -21,19 +21,37 @@ jobs:
         run: |
           nix-instantiate --eval configuration.nix dotfiles/*.nix
 
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
       - name: Extract content from Nix files
         run: |
-          mkdir -p extracted_files
-          for file in dotfiles/*.nix; do
-            filename=$(basename "$file" .nix)
-            nix eval --raw -f "$file" 'config.home-manager.users.blank.home.file' | 
-            jq -r 'to_entries[] | select(.key | endswith(".text")) | 
-            .key[1:-6] as $path | 
-            .value | 
-            @sh "mkdir -p extracted_files/$(dirname \($path)) && 
-            echo \(.) > extracted_files/\($path)"' | 
-            sh
-          done
+          python3 - <<EOF
+          import os
+          import re
+
+          def extract_content(file_path):
+              with open(file_path, 'r') as f:
+                  content = f.read()
+              
+              pattern = r'".config/([^"]+)".text\s*=\s*\'\'(.*?)\'\';\s*'
+              matches = re.findall(pattern, content, re.DOTALL)
+              
+              for file_name, file_content in matches:
+                  dir_path = os.path.join('extracted_files', os.path.dirname(file_name))
+                  os.makedirs(dir_path, exist_ok=True)
+                  
+                  full_path = os.path.join('extracted_files', file_name)
+                  with open(full_path, 'w') as f:
+                      f.write(file_content)
+
+          for root, dirs, files in os.walk('dotfiles'):
+              for file in files:
+                  if file.endswith('.nix'):
+                      extract_content(os.path.join(root, file))
+          EOF
 
       - name: Run Super-Linter
         uses: github/super-linter@v5
