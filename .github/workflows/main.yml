@@ -74,11 +74,6 @@ jobs:
             fish -n "$file"
           done
 
-      - name: Lint Lua files
-        run: |
-          echo "Linting Lua files..."
-          luacheck extracted_files/*.lua
-
       - name: Lint Emacs Lisp files
         run: |
           echo "Linting Emacs Lisp files..."
@@ -92,3 +87,8 @@ jobs:
           for file in extracted_files/*.toml; do
             taplo check "$file"
           done
+
+      - name: Lint Lua files
+        run: |
+          echo "Linting Lua files..."
+          luacheck extracted_files/*.lua
