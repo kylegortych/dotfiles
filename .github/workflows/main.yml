@@ -71,8 +71,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BRANCH: main
-          VALIDATE_ALL_CODEBASE: false
-          FILTER_REGEX_INCLUDE: extracted_files/.*\.(toml|lua|el|fish)$
           VALIDATE_LUA: true
           VALIDATE_FISH: true
           VALIDATE_ELISP: true
