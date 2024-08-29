@@ -36,17 +36,16 @@ jobs:
               with open(file_path, 'r') as f:
                   content = f.read()
               
-              pattern = r'".config/([^"]+)".text\s*=\s*\'\'(.*?)\'\';\s*'
+              pattern = r'"([^"]+)".text\s*=\s*\'\'(.*?)\'\';\s*'
               matches = re.findall(pattern, content, re.DOTALL)
               
-              for file_name, file_content in matches:
-                  dir_path = os.path.join('extracted_files', os.path.dirname(file_name))
-                  os.makedirs(dir_path, exist_ok=True)
-                  
+              for file_path, file_content in matches:
+                  file_name = os.path.basename(file_path)
                   full_path = os.path.join('extracted_files', file_name)
                   with open(full_path, 'w') as f:
                       f.write(file_content)
 
+          os.makedirs('extracted_files', exist_ok=True)
           for root, dirs, files in os.walk('dotfiles'):
               for file in files:
                   if file.endswith('.nix') and file != 'neovim.nix':
@@ -56,11 +55,6 @@ jobs:
       - name: Debug - List extracted files
         run: |
           ls -R extracted_files
-
-      - name: Prepare environment for Super-Linter
-        run: |
-          sudo mkdir -p /home/runner/work/_temp
-          sudo chmod 777 /home/runner/work/_temp
 
       - name: Run Super-Linter
         uses: github/super-linter@v5
