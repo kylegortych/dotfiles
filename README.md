@@ -466,49 +466,75 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      
       - uses: cachix/install-nix-action@v26
         with:
           nix_path: nixpkgs=channel:nixos-unstable
-      
-          # - name: Install linters
-          #   run: |
-          #     nix-env -iA nixpkgs.luacheck
-          #     nix-env -iA nixpkgs.emacs
-          #     nix-env -iA nixpkgs.nodePackages.jsonlint
-          #     nix-env -iA nixpkgs.fish
-          #     nix-env -iA nixpkgs.shellcheck
 
       - name: Evaluate Nix configurations
         run: |
           nix-instantiate --eval configuration.nix dotfiles/*.nix
 
-          # - name: Extract and lint Lua code (Wezterm)
-          #   run: |
-          #     nix eval --raw -f wezterm.nix 'config.home-manager.users.blank.home.file.".config/wezterm/wezterm.lua".text' > extracted_wezterm.lua
-          #     luacheck extracted_wezterm.lua
+      #- name: Set up Python
+      #  uses: actions/setup-python@v4
+      #  with:
+      #    python-version: '3.x'
 
-          # - name: Extract and lint Emacs Lisp code (Doom)
-          #   run: |
-          #     nix eval --raw -f doom.nix 'config.home-manager.users.blank.home.file.".config/doom/config.el".text' > extracted_doom_config.el
-          #     nix eval --raw -f doom.nix 'config.home-manager.users.blank.home.file.".config/doom/init.el".text' > extracted_doom_init.el
-          #     emacs --batch -f batch-byte-compile extracted_doom_config.el extracted_doom_init.el
+      #- name: Extract content from Nix files
+      #  run: |
+      #    python3 - <<EOF
+      #    import os
+      #    import re
 
-          # - name: Extract and lint TOML (Starship)
-          #   run: |
-          #     nix eval --raw -f starship.nix 'config.home-manager.users.blank.home.file.".config/starship.toml".text' > extracted_starship.toml
-          #     jsonlint -q extracted_starship.toml
+      #    def extract_content(file_path):
+      #        with open(file_path, 'r') as f:
+      #            content = f.read()
+      #        
+      #        # Updated regex pattern to capture content correctly
+      #        pattern = r'"([^"]+)".text\s*=\s*\'\'\s*([\s\S]*?)\'\'\s*;\s*'
+      #        matches = re.findall(pattern, content, re.DOTALL)
+      #        
+      #        for file_path, file_content in matches:
+      #            file_name = os.path.basename(file_path)
+      #            full_path = os.path.join('extracted_files', file_name)
+      #            with open(full_path, 'w') as f:
+      #                f.write(file_content.strip())  # Strip leading/trailing whitespace
 
-          # - name: Extract and lint Fish scripts
-          #   run: |
-          #     nix eval --raw -f fish.nix 'config.home-manager.users.blank.home.file.".config/fish/config.fish".text' > extracted_fish_config.fish
-          #     nix eval --raw -f fish.nix 'config.home-manager.users.blank.home.file.".config/fish/conf.d/aliases.fish".text' > extracted_fish_aliases.fish
-          #     fish -n extracted_fish_config.fish
-          #     fish -n extracted_fish_aliases.fish
+      #    os.makedirs('extracted_files', exist_ok=True)
+      #    for root, dirs, files in os.walk('dotfiles'):
+      #        for file in files:
+      #            if file.endswith('.nix') and file != 'neovim.nix':
+      #                extract_content(os.path.join(root, file))
+      #    EOF
 
-          # - name: Extract and lint TOML (Yazi)
-          #   run: |
-          #     nix eval --raw -f yazi.nix 'config.home-manager.users.blank.home.file.".config/yazi/yazi.toml".text' > extracted_yazi.toml
-          #     jsonlint -q extracted_yazi.toml
+      #- name: Install linters
+      #  run: |
+      #    pip install lua-lint fish-lint elisp-lint toml-lint
+
+      #- name: Lint Lua files
+      #  run: |
+      #    echo "Linting Lua files..."
+      #    lua-lint extracted_files/wezterm.lua
+
+      #- name: Lint Fish files
+      #  run: |
+      #    echo "Linting Fish files..."
+      #    fish-lint extracted_files/config.fish
+      #    fish-lint extracted_files/nix.fish
+      #    fish-lint extracted_files/aliases.fish
+
+      #- name: Lint Emacs Lisp files
+      #  run: |
+      #    echo "Linting Emacs Lisp files..."
+      #    elisp-lint extracted_files/config.el
+      #    elisp-lint extracted_files/init.el
+      #    elisp-lint extracted_files/packages.el
+
+      #- name: Lint TOML files
+      #  run: |
+      #    echo "Linting TOML files..."
+      #    toml-lint extracted_files/starship.toml
+      #    toml-lint extracted_files/yazi.toml
 ```
 
 </details>
