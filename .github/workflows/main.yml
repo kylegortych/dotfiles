@@ -36,14 +36,15 @@ jobs:
               with open(file_path, 'r') as f:
                   content = f.read()
               
-              pattern = r'"([^"]+)".text\s*=\s*\'\'(.*?)\'\';\s*'
+              # Updated regex pattern to capture content correctly
+              pattern = r'"([^"]+)".text\s*=\s*\'\'\s*([\s\S]*?)\'\'\s*;\s*'
               matches = re.findall(pattern, content, re.DOTALL)
               
               for file_path, file_content in matches:
                   file_name = os.path.basename(file_path)
                   full_path = os.path.join('extracted_files', file_name)
                   with open(full_path, 'w') as f:
-                      f.write(file_content)
+                      f.write(file_content.strip())  # Strip leading/trailing whitespace
 
           os.makedirs('extracted_files', exist_ok=True)
           for root, dirs, files in os.walk('dotfiles'):
@@ -56,15 +57,26 @@ jobs:
         run: |
           ls -R extracted_files
 
+      - name: Print contents of extracted files
+        run: |
+          echo "Contents of extracted files:"
+          find extracted_files -type f | while read file; do
+            echo "=== Contents of $file ==="
+            cat "$file"
+            echo ""
+          done
+
       - name: Run Super-Linter
         uses: github/super-linter@v5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BRANCH: main
-          VALIDATE_TOML: true
+          VALIDATE_ALL_CODEBASE: false
+          FILTER_REGEX_INCLUDE: extracted_files/.*\.(toml|lua|el|fish)$
           VALIDATE_LUA: true
-          VALIDATE_ELISP: true
           VALIDATE_FISH: true
+          VALIDATE_ELISP: true
+          VALIDATE_TOML: true
           ACTIONS_RUNNER_DEBUG: true
 
       - name: Debug - Show Super-Linter logs
