@@ -475,66 +475,94 @@ jobs:
         run: |
           nix-instantiate --eval configuration.nix dotfiles/*.nix
 
-      #- name: Set up Python
-      #  uses: actions/setup-python@v4
-      #  with:
-      #    python-version: '3.x'
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
 
-      #- name: Extract content from Nix files
-      #  run: |
-      #    python3 - <<EOF
-      #    import os
-      #    import re
+      - name: Extract content from Nix files
+        run: |
+          python3 - <<EOF
+          import os
+          import re
 
-      #    def extract_content(file_path):
-      #        with open(file_path, 'r') as f:
-      #            content = f.read()
-      #        
-      #        # Updated regex pattern to capture content correctly
-      #        pattern = r'"([^"]+)".text\s*=\s*\'\'\s*([\s\S]*?)\'\'\s*;\s*'
-      #        matches = re.findall(pattern, content, re.DOTALL)
-      #        
-      #        for file_path, file_content in matches:
-      #            file_name = os.path.basename(file_path)
-      #            full_path = os.path.join('extracted_files', file_name)
-      #            with open(full_path, 'w') as f:
-      #                f.write(file_content.strip())  # Strip leading/trailing whitespace
+          def extract_content(file_path):
+              with open(file_path, 'r') as f:
+                  content = f.read()
+              
+              # Updated regex pattern to capture content correctly
+              pattern = r'"([^"]+)".text\s*=\s*\'\'\s*([\s\S]*?)\'\'\s*;\s*'
+              matches = re.findall(pattern, content, re.DOTALL)
+              
+              for file_path, file_content in matches:
+                  file_name = os.path.basename(file_path)
+                  full_path = os.path.join('extracted_files', file_name)
+                  with open(full_path, 'w') as f:
+                      f.write(file_content.strip())
 
-      #    os.makedirs('extracted_files', exist_ok=True)
-      #    for root, dirs, files in os.walk('dotfiles'):
-      #        for file in files:
-      #            if file.endswith('.nix') and file != 'neovim.nix':
-      #                extract_content(os.path.join(root, file))
-      #    EOF
+          os.makedirs('extracted_files', exist_ok=True)
+          for root, dirs, files in os.walk('dotfiles'):
+              for file in files:
+                  if file.endswith('.nix') and file != 'neovim.nix':
+                      extract_content(os.path.join(root, file))
+          EOF
 
-      #- name: Install linters
-      #  run: |
-      #    pip install lua-lint fish-lint elisp-lint toml-lint
+      - name: Install Fish Shell and Emacs
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y fish emacs
 
-      #- name: Lint Lua files
-      #  run: |
-      #    echo "Linting Lua files..."
-      #    lua-lint extracted_files/wezterm.lua
+      - name: Install TOML linter
+        run: |
+          npm install -g @taplo/cli
+          echo "$(npm bin -g)" >> $GITHUB_PATH
 
-      #- name: Lint Fish files
-      #  run: |
-      #    echo "Linting Fish files..."
-      #    fish-lint extracted_files/config.fish
-      #    fish-lint extracted_files/nix.fish
-      #    fish-lint extracted_files/aliases.fish
+      - name: Install Lua & LuaCheck
+        run: |
+          sudo apt-get install -y lua5.4 luarocks
+          sudo luarocks install luacheck
+          echo "/usr/local/bin" >> $GITHUB_PATH
 
-      #- name: Lint Emacs Lisp files
-      #  run: |
-      #    echo "Linting Emacs Lisp files..."
-      #    elisp-lint extracted_files/config.el
-      #    elisp-lint extracted_files/init.el
-      #    elisp-lint extracted_files/packages.el
+      - name: Lint Fish files
+        run: |
+          echo "Linting Fish files..."
+          shopt -s nullglob
+          for file in extracted_files/*.fish; do
+            if [ -f "$file" ]; then
+              fish -n "$file"
+            fi
+          done
 
-      #- name: Lint TOML files
-      #  run: |
-      #    echo "Linting TOML files..."
-      #    toml-lint extracted_files/starship.toml
-      #    toml-lint extracted_files/yazi.toml
+      - name: Lint Emacs Lisp files
+        run: |
+          echo "Linting Emacs Lisp files..."
+          shopt -s nullglob
+          for file in extracted_files/*.el; do
+            if [ -f "$file" ]; then
+              emacs --batch -f batch-byte-compile "$file" \
+                || echo "Linting failed for $file"
+            fi
+          done
+
+      - name: Lint TOML files
+        run: |
+          echo "Linting TOML files..."
+          shopt -s nullglob
+          for file in extracted_files/*.toml; do
+            if [ -f "$file" ]; then
+              taplo check "$file"
+            fi
+          done
+
+      - name: Lint Lua files
+        run: |
+          echo "Linting Lua files..."
+          shopt -s nullglob
+          for file in extracted_files/*.lua; do
+            if [ -f "$file" ]; then
+              luacheck "$file"
+            fi
+          done
 ```
 
 </details>
