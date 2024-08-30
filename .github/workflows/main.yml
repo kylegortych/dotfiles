@@ -53,11 +53,6 @@ jobs:
                       extract_content(os.path.join(root, file))
           EOF
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 'latest'
-
       - name: Install Fish Shell and Emacs
         run: |
           sudo apt-get update
@@ -65,7 +60,15 @@ jobs:
 
       - name: Install linters
         run: |
-          npm install -g luacheck @panekj/lib
+          pip install tomllint
+
+      - name: Install luacheck 
+      - uses: MunifTanjim/luver-action@v1
+      - run: |
+          luver install lua 5.4.3
+          luver use 5.4.3
+          luver install luarocks 3.8.0
+          luarocks install luacheck
 
       - name: Lint Fish files
         run: |
@@ -85,7 +88,7 @@ jobs:
         run: |
           echo "Linting TOML files..."
           for file in extracted_files/*.toml; do
-            taplo check "$file"
+            tomllint "$file"
           done
 
       - name: Lint Lua files
