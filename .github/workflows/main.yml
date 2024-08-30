@@ -62,12 +62,15 @@ jobs:
         run: |
           pip install tomllint
 
-      - name: Install luacheck 
+      - name: Install lua & luarocks
       - uses: MunifTanjim/luver-action@v1
       - run: |
           luver install lua 5.4.3
           luver use 5.4.3
           luver install luarocks 3.8.0
+
+      - name: Install luacheck
+      - run: |
           luarocks install luacheck
 
       - name: Lint Fish files
